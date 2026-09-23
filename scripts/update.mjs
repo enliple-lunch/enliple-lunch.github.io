@@ -18,7 +18,7 @@ const hav = (lat, lon) => {
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const T = (ms = 8000) => AbortSignal.timeout(ms);   // 모든 요청 타임아웃
 const STARTED = Date.now();
-const budgetLeft = () => 12 * 60 * 1000 - (Date.now() - STARTED); // 전체 12분 예산
+const budgetLeft = () => 18 * 60 * 1000 - (Date.now() - STARTED); // 전체 18분 예산
 
 async function ksearch(q, page) {
   const u = `https://search.map.kakao.com/mapsearch/map.daum?callback=cb&q=${encodeURIComponent(q)}&msFlag=A&sort=0&page=${page}`;
@@ -93,21 +93,10 @@ const FF = ['패스트푸드', '햄버거', '치킨', '피자'];
 
 /* ---------- 1. 후보 수집 ---------- */
 const base = new Map();
-for (const q of QUERIES) {
-  for (let p = 1; p <= 6; p++) {
-    const j = await ksearch(q, p);
-    const arr = j.place || [];
-    if (!arr.length) break;
-    for (const pl of arr) {
-      const d = hav(+pl.lat, +pl.lon);
-      if (d <= RADIUS) base.set(pl.confirmid, {
-        id: pl.confirmid, name: pl.name, lat: +pl.lat, lon: +pl.lon, dist: d,
-        addr: pl.new_address || pl.address, tel: pl.tel, c2: pl.cate_name_depth2
-      });
-    }
-    await sleep(80);
-  }
-}
+// 키워드 5개씩 병렬 수집 (223개 키워드 × 최대 6페이지)
+const addPlaces = arr => { for (const pl of arr) { const d = hav(+pl.lat, +pl.lon); if (d <= RADIUS) base.set(pl.confirmid, { id: pl.confirmid, name: pl.name, lat: +pl.lat, lon: +pl.lon, dist: d, addr: pl.new_address || pl.address, tel: pl.tel, c2: pl.cate_name_depth2 }); } };
+async function collectQuery(q) { for (let p = 1; p <= 6; p++) { const j = await ksearch(q, p); const arr = j.place || []; if (!arr.length) break; addPlaces(arr); if (arr.length < 15) break; await sleep(40); } }
+for (let i = 0; i < QUERIES.length; i += 5) { await Promise.all(QUERIES.slice(i, i + 5).map(collectQuery)); }
 console.log(`[1/4] 반경 ${RADIUS}m 후보 ${base.size}곳`);
 
 /* ---------- 1.5 직원 추가 요청 처리 (Firebase /requests) ---------- */
@@ -214,7 +203,7 @@ const NQ = [...QUERIES, '구로동 찌개', '구로동 커피', '구로동 포�
 let nvFail = 0;
 for (const q of NQ) {
   if (nvFail >= 6 && nvBulk.size === 0) { console.log('  네이버 목록 응답 없음 -> 건너뜀'); break; }
-  if (budgetLeft() < 6 * 60 * 1000) break;
+  if (budgetLeft() < 5 * 60 * 1000) break;
   try {
     const r = await fetch(`https://pcmap.place.naver.com/restaurant/list?query=${encodeURIComponent(q)}&x=${CEN.lon}&y=${CEN.lat}`,
       { headers: { 'user-agent': UA, referer: 'https://map.naver.com/' }, signal: T(10000) });
