@@ -900,18 +900,18 @@ function popupHtml(r){
   return `<div class="mp"><div class="im">${imgTag(r,30)}</div><b>${esc(r.n)}</b><small>${emo(r.c)} ${r.c} · ${distTxt(r.d)}${r.hs?' · 🍻 회식':''}</small><div class="row">${rt?`<span class="${rt.src==='naver'?'nv':''}">★ ${rt.v} ${rt.src==='naver'?'네이버':'카카오'}</span>`:''}${r.pr?`<span>💸 ${won(r.pr)}</span>`:''}${RK[r.id]?`<span>🏆 이달 ${RK[r.id]}위</span>`:''}${(CMTCNT[r.id]||0)?`<span>💬 ${CMTCNT[r.id]}</span>`:''}</div><div class="act"><button class="p" onclick="openModal(BYID['${r.id}'])">상세·후기</button><a class="n" href="${naverUrl(r)}" target="_blank" rel="noopener">네이버지도</a></div></div>`;
 }
 function initMap(){
-  if(MAP || typeof L==='undefined') return;
+  if(MAP || !window.L || !window.L.map) return;
   const el = document.getElementById('map'); if(!el || !el.offsetWidth) return;
-  MAP = L.map('map', { center:[C.lat, C.lon], zoom:16, zoomControl:true, attributionControl:true, preferCanvas:true, scrollWheelZoom:false });
+  MAP = window.L.map('map', { center:[C.lat, C.lon], zoom:16, zoomControl:true, attributionControl:true, preferCanvas:true, scrollWheelZoom:false });
   MAP.on('focus', ()=>MAP.scrollWheelZoom.enable()); MAP.on('blur', ()=>MAP.scrollWheelZoom.disable());
-  MAP_TILES = L.tileLayer(tileUrl(), { maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>' }).addTo(MAP);
+  MAP_TILES = window.L.tileLayer(tileUrl(), { maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>' }).addTo(MAP);
   // 회사 + 100m 링
-  [100,200,300,400,500].forEach(m=>L.circle([C.lat,C.lon],{radius:m,color:'#7FBF31',weight:1,opacity:.35,fill:m===500,fillColor:'#7FBF31',fillOpacity:.04,dashArray:'4 6',interactive:false}).addTo(MAP));
+  [100,200,300,400,500].forEach(m=>window.L.circle([C.lat,C.lon],{radius:m,color:'#7FBF31',weight:1,opacity:.35,fill:m===500,fillColor:'#7FBF31',fillOpacity:.04,dashArray:'4 6',interactive:false}).addTo(MAP));
   const logo = document.querySelector('.logo img')?.src;
-  L.marker([C.lat,C.lon], { icon: L.divIcon({ className:'', html:`<div class="hq">${logo?`<img src="${logo}" alt="">`:'🏢'}</div>`, iconSize:[34,34], iconAnchor:[17,17] }), zIndexOffset:1000, interactive:false }).addTo(MAP);
-  L.marker([C.lat,C.lon], { icon: L.divIcon({ className:'', html:'<div class="hqlbl">한신아이티타워</div>', iconSize:[100,20], iconAnchor:[50,-22] }), interactive:false }).addTo(MAP);
-  MAP_LAYER = L.layerGroup().addTo(MAP);
-  MAP_SPECIAL = L.layerGroup().addTo(MAP);
+  window.L.marker([C.lat,C.lon], { icon: window.L.divIcon({ className:'', html:`<div class="hq">${logo?`<img src="${logo}" alt="">`:'🏢'}</div>`, iconSize:[34,34], iconAnchor:[17,17] }), zIndexOffset:1000, interactive:false }).addTo(MAP);
+  window.L.marker([C.lat,C.lon], { icon: window.L.divIcon({ className:'', html:'<div class="hqlbl">한신아이티타워</div>', iconSize:[100,20], iconAnchor:[50,-22] }), interactive:false }).addTo(MAP);
+  MAP_LAYER = window.L.layerGroup().addTo(MAP);
+  MAP_SPECIAL = window.L.layerGroup().addTo(MAP);
   renderMap();
 }
 function renderMap(){
@@ -925,9 +925,9 @@ function renderMap(){
     if(!r.la || !r.lo) continue; n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
-    if(isPick){ m = L.marker([r.la,r.lo], { icon: L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
-    else if(isTop){ m = L.marker([r.la,r.lo], { icon: L.divIcon({ className:'', html:`<div class="mk-top">${RK[r.id]===1?'🥇':RK[r.id]===2?'🥈':'🥉'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:800 }); }
-    else { const col = KIND_COLOR[r.k] || '#8ccf3c'; const alt = pickIds.has(r.id); m = L.circleMarker([r.la,r.lo], { radius: alt?8:(r.k==='밥집'?6:5), color:'#fff', weight: alt?2:1, fillColor: alt?'#ff3d7f':col, fillOpacity:.92 }); }
+    if(isPick){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
+    else if(isTop){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-top">${RK[r.id]===1?'🥇':RK[r.id]===2?'🥈':'🥉'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:800 }); }
+    else { const col = KIND_COLOR[r.k] || '#8ccf3c'; const alt = pickIds.has(r.id); m = window.L.circleMarker([r.la,r.lo], { radius: alt?8:(r.k==='밥집'?6:5), color:'#fff', weight: alt?2:1, fillColor: alt?'#ff3d7f':col, fillOpacity:.92 }); }
     const rt = rating(r);
     m.bindTooltip(`${esc(r.n)}<small>${r.c} · ${distTxt(r.d)}${rt?' · ★'+rt.v:''}${r.pr?' · '+won(r.pr):''}</small>`, { direction:'top', offset:[0,-8], opacity:1 });
     m.bindPopup(()=>popupHtml(r), { maxWidth:260, closeButton:true, autoPanPaddingTopLeft:[20,60] });
@@ -936,13 +936,13 @@ function renderMap(){
   }
   const mc = document.getElementById('mapCnt'); if(mc) mc.textContent = `(${n}곳)`;
 }
-const L_ALL_FOR_MAP = () => L;
+const L_ALL_FOR_MAP = () => D.list;
 function drawRadar(){ renderMap(); } // 호환 (테마 전환·추천 갱신 시 호출됨)
 function focusOnMap(r){
   const d = document.getElementById('foldRadar'); if(!d.open){ d.open = true; }
   initMap(); if(!MAP) return;
   document.getElementById('map').scrollIntoView({ behavior:'smooth', block:'center' });
-  setTimeout(()=>{ MAP.setView([r.la, r.lo], 17, { animate:true }); const m = MAP_MARKERS[r.id]; if(m) m.openPopup(); else L.popup({maxWidth:260}).setLatLng([r.la,r.lo]).setContent(popupHtml(r)).openOn(MAP); }, 350);
+  setTimeout(()=>{ MAP.setView([r.la, r.lo], 17, { animate:true }); const m = MAP_MARKERS[r.id]; if(m) m.openPopup(); else window.L.popup({maxWidth:260}).setLatLng([r.la,r.lo]).setContent(popupHtml(r)).openOn(MAP); }, 350);
 }
 document.getElementById('foldRadar').addEventListener('toggle', e=>{ if(e.target.open) setTimeout(initMap, 50); });
 document.getElementById('mapSync').onchange = renderMap;
