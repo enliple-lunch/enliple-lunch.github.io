@@ -276,7 +276,8 @@ html.dark .noimg.ph .lb{color:rgba(255,255,255,.55)}
 .sharebox{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-top:10px}
 .sharebox input{flex:1;min-width:0;background:none;border:none;outline:none;color:var(--tx2);font-size:13.5px}
 /* ================= MAP ================= */
-#map{height:440px;border-radius:16px;overflow:hidden;background:var(--card2);border:1px solid var(--line)}
+#map{height:440px;border-radius:16px;overflow:hidden;background:var(--card2);border:1px solid var(--line);position:relative;z-index:0;isolation:isolate}
+.radarbox,.fold .fb{position:relative;z-index:0}
 html.dark .leaflet-tile-pane{filter:invert(1) hue-rotate(190deg) brightness(.82) contrast(.95) saturate(.45)}
 html.dark .leaflet-control-attribution{background:rgba(11,13,18,.75);color:var(--tx3)}
 html.dark .leaflet-control-attribution a{color:var(--tx2)}
@@ -404,7 +405,7 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .sec-h{display:flex;align-items:baseline;gap:9px;margin-bottom:11px}
 .sec-h h2{font-size:18px;font-weight:800;letter-spacing:-.4px}
 .sec-h span{font-size:13.5px;color:var(--tx3)}
-.ctrl{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:13px;position:sticky;top:8px;z-index:30;backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+.ctrl{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:13px;position:sticky;top:8px;z-index:50;backdrop-filter:blur(14px);box-shadow:var(--shadow)}
 .row1{display:flex;gap:8px;flex-wrap:wrap}
 .search{flex:1;min-width:100%;display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--line2);border-radius:12px;padding:0 13px}
 @media(min-width:620px){.search{min-width:200px}}
@@ -457,7 +458,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 .more{display:block;margin:18px auto 0;padding:13px 26px;border-radius:13px;background:var(--card);border:1px solid var(--line2);font-weight:700;font-size:14.5px;box-shadow:var(--shadow)}
 
 /* ================= MODAL ================= */
-.ov{position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(5px);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.ov{position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:flex-end;justify-content:center}
 @media(min-width:620px){.ov{align-items:center;padding:20px}}
 .ov.on{display:flex}
 .md{background:var(--bg2);border:1px solid var(--line2);border-radius:22px 22px 0 0;width:100%;max-height:92vh;overflow:auto;position:relative;-webkit-overflow-scrolling:touch}
@@ -525,7 +526,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 .clike:active{transform:scale(.93)}
 .cempty{font-size:13.5px;color:var(--tx3);text-align:center;padding:16px 0}
 
-.epk{position:fixed;inset:0;background:var(--overlay);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.epk{position:fixed;inset:0;background:var(--overlay);z-index:2100;display:none;align-items:flex-end;justify-content:center}
 .epk.on{display:flex}
 @media(min-width:620px){.epk{align-items:center;padding:20px}}
 .epkb{background:var(--bg2);border:1px solid var(--line2);border-radius:22px 22px 0 0;width:100%;max-height:78vh;overflow:auto;padding:18px 16px calc(24px + var(--safe-b))}
@@ -566,7 +567,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 .rqd b{font-size:14px;font-weight:700;color:var(--tx)}
 .rqd small{font-size:12px;color:var(--tx3);flex:1}
 .rqd span{font-size:12.5px;font-weight:700;color:var(--t-hot-tx)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + var(--safe-b));background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:13px;font-size:14.5px;font-weight:600;z-index:300;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + var(--safe-b));background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:13px;font-size:14.5px;font-weight:600;z-index:2200;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(-6px)}
 footer{margin-top:36px;padding:20px 0;border-top:1px solid var(--line);color:var(--tx3);font-size:12.5px;line-height:1.7}
 .fbrand{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -1536,7 +1537,7 @@ document.getElementById('kinds').onclick = e=>{
 /* ---- 다시 뽑기: 슬롯밸신 연출 ---- */
 let ROLLING = false;
 function confetti(){
-  const c = document.createElement('canvas'); c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:400'; document.body.appendChild(c);
+  const c = document.createElement('canvas'); c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:2500'; document.body.appendChild(c);
   const ctx = c.getContext('2d'); c.width = innerWidth; c.height = innerHeight;
   const b = document.getElementById('pkImg').getBoundingClientRect(); const ox = b.left + b.width/2, oy = b.top + b.height/2;
   const cols = ['#7FBF31','#A6D93F','#f2b500','#ffffff','#4f8f16','#ffcc4d','#ff6a2b'];
