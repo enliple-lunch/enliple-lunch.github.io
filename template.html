@@ -229,6 +229,11 @@ html.dark .noimg.ph .lb{color:rgba(255,255,255,.55)}
 .poll-h .pst.end{background:var(--soft2);color:var(--tx2);border-color:transparent}
 .poll-h .pst.live:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ac);margin-right:6px;animation:pl 1.6s infinite;vertical-align:1px}
 .poll-sub{font-size:13px;color:var(--tx3);margin-top:3px}
+.pclose{position:absolute;top:10px;right:12px;width:30px;height:30px;border-radius:50%;background:var(--soft);color:var(--tx3);font-size:13px;z-index:2}
+.pclose:active{background:var(--soft2)}
+.poll .poll-h{padding-right:34px}
+.tiebtn{font-size:12px;font-weight:800;padding:5px 10px;border-radius:8px;background:var(--t-wx-bg);color:var(--t-wx-tx);border:1px solid var(--t-wx-bd);margin-left:6px}
+.tieres{font-weight:700;color:var(--tx)}
 .cands{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
 @media(min-width:620px){.cands{grid-template-columns:1fr 1fr}}
 .cand{display:flex;gap:11px;align-items:center;background:var(--bg2);border:1.5px solid var(--line);border-radius:15px;padding:10px;cursor:pointer;position:relative;overflow:hidden;text-align:left;width:100%}
@@ -385,6 +390,7 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .flike{margin-left:auto;font-size:12px;font-weight:800;color:var(--t-wx-tx);white-space:nowrap}
 .fitem{display:flex;gap:10px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:10px 12px;cursor:pointer}
 .fitem:active{background:var(--soft2)}
+.fitem.visit{border-style:dashed;opacity:.9}
 .fav{width:34px;height:34px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-size:19px;flex:none}
 .fbody{min-width:0;flex:1}
 .fmeta{font-size:12.5px;color:var(--tx3);display:flex;gap:6px;flex-wrap:wrap;align-items:baseline}
@@ -580,7 +586,7 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="logo"><img src="data:image/png;base64,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" alt="ENLiPLE"></div>
     <div style="min-width:0">
       <h1>오늘 뭐 먹지<span class="q">?</span></h1>
-      <div class="subline">한신아이티타워 · 반경 500m · <span id="mCnt">0</span>곳 · <span id="mUpd">–</span></div>
+      <div class="subline">한신아이티타워 · 반경 500m · <span id="mCnt">0</span>곳 · <span id="mUpd">–</span><span id="lunchCd"></span></div>
     </div>
     <button class="themeBtn" id="themeBtn" title="밝게/어둡게">🌙</button>
   </div>
@@ -963,7 +969,7 @@ async function fbDel(p){ try{ return (await fetch(FB+p+'.json',{method:'DELETE'}
 const REACTIONS = ['👍','🔥','😋','🍽️','💸','🫶','😐','👎'];
 const POS = ['👍','🔥','😋','🍽️','💸','🫶'];
 let STORE = { comments:{}, reactions:{}, visits:{}, requests:{}, clikes:{}, polls:{}, votes:{} };
-let CMTCNT = {}, RK = {};
+let CMTCNT = {}, RK = {}, VISITED_THIS_MONTH = new Set();
 
 async function loadAll(){
   const all = await fbGet('/') || {};
@@ -972,9 +978,11 @@ async function loadAll(){
   if(document.getElementById('reqList')) renderReqList();
   CMTCNT = {}; const flat = [];
   for(const rid in STORE.comments){ const o = STORE.comments[rid]||{}; CMTCNT[rid] = Object.keys(o).length; for(const k in o) flat.push({rid, cid:k, ...o[k]}); }
+  for(const rid in STORE.visits){ const o = STORE.visits[rid]||{}; for(const k in o){ const v = o[k]; if(v && v.ts && Date.now()-v.ts < 3*86400e3) flat.push({rid, visit:true, ts:v.ts, nick:v.nick||'익명', emoji:v.emoji||'🙂'}); } }
   flat.sort((a,b)=>b.ts-a.ts);
   renderFeed(flat.slice(0,40));
   RK = calcRanking('m0').shopRank;
+  { const {s,e} = periodRange('m0'); VISITED_THIS_MONTH = new Set(); for(const rid in STORE.visits) for(const k in STORE.visits[rid]){ const x=STORE.visits[rid][k]; if(x.ts>=s&&x.ts<e) VISITED_THIS_MONTH.add(rid); } for(const rid in STORE.comments) for(const k in STORE.comments[rid]){ const x=STORE.comments[rid][k]; if(x.ts>=s&&x.ts<e) VISITED_THIS_MONTH.add(rid); } }
   renderRanking();
   render();
 }
@@ -983,7 +991,7 @@ function renderFeed(items){
   document.getElementById('feedCnt').textContent = items.length? `(${items.length})` : '';
   const el = document.getElementById('feed');
   if(!items.length){ el.innerHTML = '<div class="cempty">아직 후기가 없어요. 첫 후기를 남겨보세요 🙌</div>'; return; }
-  el.innerHTML = items.map(it=>{ const r = BYID[it.rid]; return `<div class="fitem" data-rid="${it.rid}"><div class="fav">${it.emoji||'🙂'}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'알 수 없는 가게'}</span><span class="nick">${esc(it.nick)}</span><span>·</span><span>${ago(it.ts)}</span>${(n=>n?`<span class="flike">👍 ${n}</span>`:'')(Object.keys((STORE.clikes[it.rid]||{})[it.cid]||{}).length)}</div><div class="ftext">${esc(it.text)}</div></div></div>`; }).join('');
+  el.innerHTML = items.map(it=>{ const r = BYID[it.rid]; if(it.visit) return `<div class="fitem visit" data-rid="${it.rid}"><div class="fav">${it.emoji}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'?'}</span><span class="nick">${esc(it.nick)}</span><span>·</span><span>${ago(it.ts)}</span></div><div class="ftext" style="color:var(--tx2)">🍽️ 여기서 먹었어요</div></div></div>`; return `<div class="fitem" data-rid="${it.rid}"><div class="fav">${it.emoji||'🙂'}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'알 수 없는 가게'}</span><span class="nick">${esc(it.nick)}</span><span>·</span><span>${ago(it.ts)}</span>${(n=>n?`<span class="flike">👍 ${n}</span>`:'')(Object.keys((STORE.clikes[it.rid]||{})[it.cid]||{}).length)}</div><div class="ftext">${esc(it.text)}</div></div></div>`; }).join('');
   el.querySelectorAll('.fitem').forEach(e=>e.onclick=()=>{ const r=BYID[e.dataset.rid]; if(r) openModal(r); });
 }
 
@@ -1058,6 +1066,7 @@ function renderRanking(){
 document.getElementById('rkSeg').onclick = e=>{ const b=e.target.closest('button'); if(!b) return; RK_PERIOD=b.dataset.p; document.querySelectorAll('#rkSeg button').forEach(x=>x.classList.toggle('on',x===b)); renderRanking(); };
 
 /* ======================= 투표 ======================= */
+const HIDDEN_POLLS = { get(){ try{ return JSON.parse(LS.get('gl_polls_hide')||'[]'); }catch(e){ return []; } }, add(pid){ const a=this.get(); if(!a.includes(pid)) a.push(pid); LS.set('gl_polls_hide', JSON.stringify(a.slice(-50))); } };
 const MY_POLLS = { get(){ try{ return JSON.parse(LS.get('gl_polls')||'[]'); }catch(e){ return []; } }, add(pid){ const a = this.get().filter(x=>x!==pid); a.unshift(pid); LS.set('gl_polls', JSON.stringify(a.slice(0,20))); } };
 const fmtHM = ts => { const d = new Date(ts); return `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`; };
 const pollLink = pid => location.origin + location.pathname + '#p=' + pid;
@@ -1076,7 +1085,8 @@ function renderPolls(){
   const now = Date.now();
   const focus = (location.hash.match(/#p=([\w-]+)/)||[])[1];
   const mine = new Set(MY_POLLS.get());
-  const list = Object.entries(STORE.polls||{}).map(([id,p])=>({id,...p})).filter(p=>p.deadline && (p.id===focus || (mine.has(p.id) && p.deadline > now - 3*3600e3))).sort((a,b)=>(a.id===focus?-1:b.id===focus?1:0) || b.ts-a.ts).slice(0,3);
+  const hidden = new Set(HIDDEN_POLLS.get());
+  const list = Object.entries(STORE.polls||{}).map(([id,p])=>({id,...p})).filter(p=>p.deadline && (p.id===focus || (mine.has(p.id) && !hidden.has(p.id) && p.deadline > now - 20*60e3))).sort((a,b)=>(a.id===focus?-1:b.id===focus?1:0) || b.ts-a.ts).slice(0,3);
   if(!list.length){ el.innerHTML=''; return; }
   el.innerHTML = list.map(p=>{
     const st = pollState(p), T = tally(p.id, p);
@@ -1084,11 +1094,13 @@ function renderPolls(){
       return `<button class="cand ${mine?'mine':''} ${isWin?'win':''} ${st==='end'?'dis':''}" data-pid="${p.id}" data-rid="${rid}"><span class="bar" style="width:${pct}%"></span><span class="th">${imgTag(r,24)}</span><span class="ct"><b>${isWin?'🏆 ':''}${esc(r.n)}</b><small>${r.c} · ${r.d<=30?'건물 안':r.d+'m'}${r.pr?' · '+won(r.pr):''}</small></span><span class="vc">${n}<small>${pct}%</small></span></button>`; }).join('');
     const voters = T.voters.slice(0,12).map(v=>`<span title="${esc(v.nick)}">${v.emoji}</span>`).join('') + (T.voters.length>12?` +${T.voters.length-12}`:'');
     const head = st==='live' ? `<span class="pst live">투표 중 · ${fmtHM(p.deadline)} 마감</span>` : `<span class="pst end">마감 ${fmtHM(p.deadline)}</span>`;
-    const result = st==='end' ? (T.winners.length===1 ? `<div class="poll-sub">🎉 결과: <b>${esc(BYID[T.winners[0]]?.n||'')}</b> (${T.max}표) · 오늘은 여기다!</div>` : T.winners.length>1 ? `<div class="poll-sub">🤝 동률! ${T.winners.map(w=>esc(BYID[w]?.n||'')).join(' vs ')} · 사다리 타자</div>` : `<div class="poll-sub">아무도 투표 안 했어요 🥲</div>`) : `<div class="poll-sub">${esc(p.emoji||'🙂')} ${esc(p.nick||'익명')} 님이 만듦 · 🔒 링크 받은 사람만 보여요 · 탭하면 투표, 다시 탭하면 변경</div>`;
-    return `<div class="poll ${st}" id="poll-${p.id}"><div class="poll-h"><h2>🗳️ ${esc(p.title)}</h2>${head}</div>${result}<div class="cands">${cands}</div><div class="poll-f"><div class="voters">${T.total? voters+' <span style="font-size:13px">'+T.total+'명 참여</span>' : '아직 아무도 안 눌렀어요. 첫 표 주인공 되기 👆'}</div><button class="btn g" data-share="${p.id}">${st==='end'?'📤 결과 공유':'📤 초대 링크'}</button>${p.uid===ME.uid?`<button class="btn g" data-del="${p.id}">삭제</button>`:''}</div></div>`;
+    const result = st==='end' ? (T.winners.length===1 ? `<div class="poll-sub">🎉 결과: <b>${esc(BYID[T.winners[0]]?.n||'')}</b> (${T.max}표) · 오늘은 여기다!</div>` : T.winners.length>1 ? (()=>{ const seed = [...p.id].reduce((a,c)=>a*31+c.charCodeAt(0)|0, 7); const pick = T.winners[Math.abs(seed)%T.winners.length]; return `<div class="poll-sub">🤝 동률! ${T.winners.map(w=>esc(BYID[w]?.n||'')).join(' vs ')} <button class="tiebtn" data-draw="${p.id}">🎲 대신 뽑아줘</button><span id="tie-${p.id}" class="tieres"></span></div>`; })() : `<div class="poll-sub">아무도 투표 안 했어요 🥲</div>`) : `<div class="poll-sub">${esc(p.emoji||'🙂')} ${esc(p.nick||'익명')} 님이 만듦 · 🔒 링크 받은 사람만 보여요 · 탭하면 투표, 다시 탭하면 변경</div>`;
+    return `<div class="poll ${st}" id="poll-${p.id}"><button class="pclose" data-hide="${p.id}" title="이 기기에서 숨기기">✕</button><div class="poll-h"><h2>🗳️ ${esc(p.title)}</h2>${head}</div>${result}<div class="cands">${cands}</div><div class="poll-f"><div class="voters">${T.total? voters+' <span style="font-size:13px">'+T.total+'명 참여</span>' : '아직 아무도 안 눌렀어요. 첫 표 주인공 되기 👆'}</div><button class="btn g" data-share="${p.id}">${st==='end'?'📤 결과 공유':'📤 초대 링크'}</button>${p.uid===ME.uid?`<button class="btn g" data-del="${p.id}">삭제</button>`:''}</div></div>`;
   }).join('');
   el.querySelectorAll('.cand').forEach(b=>b.onclick=()=>vote(b.dataset.pid, b.dataset.rid));
   el.querySelectorAll('[data-share]').forEach(b=>b.onclick=()=>sharePoll(b.dataset.share));
+  el.querySelectorAll('[data-hide]').forEach(b=>b.onclick=()=>{ HIDDEN_POLLS.add(b.dataset.hide); if(location.hash.includes(b.dataset.hide)) history.replaceState(null,'',location.pathname); renderPolls(); toast('투표 카드를 숨겼어요'); });
+  el.querySelectorAll('[data-draw]').forEach(b=>b.onclick=()=>drawTie(b.dataset.draw));
   el.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{ if(!confirm('투표를 삭제할까요?')) return; await fbDel('/polls/'+b.dataset.del); await loadAll(); toast('삭제했어요'); });
   if(focus && document.getElementById('poll-'+focus) && !window.__pollFocused){ window.__pollFocused = true; setTimeout(()=>document.getElementById('poll-'+focus).scrollIntoView({behavior:'smooth',block:'center'}), 300); }
 }
@@ -1110,7 +1122,7 @@ async function sharePoll(pid){
   const T2 = tally(pid, p), ended = pollState(p)==='end';
   const win = ended && T2.winners.length===1 ? BYID[T2.winners[0]] : null;
   const text = ended
-    ? (win ? `🍽️ 오늘 점심은 ${win.n}! (${T2.max}표)\n${win.c} · 도보 ${walk(win.d)}${win.pr?' · 약 '+won(win.pr):''}\n${naverUrl(win)}` : `🗳️ ${p.title} 결과: ${T2.winners.map(w=>BYID[w]?.n).filter(Boolean).join(' vs ')} 동률 🤝`)
+    ? (win ? `🍽️ 오늘 점심은 ${win.n}! (${T2.max}표)\n${win.c} · ${distTxt(win.d)}${win.pr?' · 약 '+won(win.pr):''}\n${naverUrl(win)}` : `🗳️ ${p.title} 결과: ${T2.winners.map(w=>BYID[w]?.n).filter(Boolean).join(' vs ')} 동률 🤝`)
     : `🗳️ ${p.title}\n후보: ${names}\n${fmtHM(p.deadline)} 마감! 한 번만 눌러줘 👉`;
   if(navigator.share){ try{ await navigator.share({ title: p.title, text, url }); return; }catch(e){ if(e.name==='AbortError') return; } }
   try{ await navigator.clipboard.writeText(text + '\n' + url); toast('링크 복사됐어요. 카톡/웍스에 붙여넣기 📋'); }catch(e){ prompt('링크를 복사하세요', url); }
@@ -1163,9 +1175,17 @@ window.addEventListener('hashchange', ()=>{ window.__pollFocused=false; renderPo
 
 async function shareShop(r){
   const url = naverUrl(r);
-  const text = `🍽️ 오늘 점심 ${r.n} 어때?\n${r.c} · 도보 ${walk(r.d)}${r.pr?' · 약 '+won(r.pr):''}${r.nsc?' · 네이버 ★'+r.nsc:''}\n12시에 로비에서 보자 👋`;
+  const text = `🍽️ 오늘 점심 ${r.n} 어때?\n${r.c} · ${distTxt(r.d)}${r.pr?' · 약 '+won(r.pr):''}${r.nsc?' · 네이버 ★'+r.nsc:''}\n12시에 로비에서 보자 👋`;
   if(navigator.share){ try{ await navigator.share({ title: r.n, text, url }); return; }catch(e){ if(e.name==='AbortError') return; } }
   try{ await navigator.clipboard.writeText(text + '\n' + url); toast('복사됐어요. 단톡에 붙여넣기 📋'); }catch(e){ prompt('복사하세요', text + '\n' + url); }
+}
+function drawTie(pid){
+  const p = STORE.polls[pid]; if(!p) return; const T = tally(pid, p); if(T.winners.length<2) return;
+  const seed = [...pid].reduce((a,c)=>a*31+c.charCodeAt(0)|0, 7); const pick = T.winners[Math.abs(seed)%T.winners.length];
+  const out = document.getElementById('tie-'+pid); if(!out) return;
+  let i=0; const names = T.winners.map(w=>BYID[w]?.n||'?');
+  const iv = setInterval(()=>{ out.textContent = ' → ' + names[i++%names.length]; }, 90);
+  setTimeout(()=>{ clearInterval(iv); out.innerHTML = ' → <b style="color:var(--ac)">' + esc(BYID[pick]?.n||'') + '</b> 당첨! (누가 눌러도 같은 결과)'; confetti(); document.querySelectorAll('#poll-'+pid+' .cand').forEach(c=>c.classList.toggle('win', c.dataset.rid===pick)); }, 1600);
 }
 /* ======================= 명예의 전당 ======================= */
 function renderHof(){
@@ -1187,7 +1207,7 @@ function renderHof(){
 /* ======================= 리스트 ======================= */
 const KINDS = ['전체','밥집','샐러드','카페','패스트푸드','구내식당','회식'];
 const isSalad = r => r.c==='샐러드' || /샐러드|포케|poke|salad/i.test(r.n);
-let state = {kind:'전체', q:'', sort:'dist', cat:'', dist:520, price:25000, fresh:false, limit:30};
+let state = {kind:'전체', q:'', sort:'dist', cat:'', dist:520, price:25000, fresh:false, cheap:false, virgin:false, limit:30};
 const CAT_GROUPS = [
   ['🍚 한식', ['한식','국밥','해장국','곰탕','칼국수','국수','냉면','순대','찌개,전골','감자탕','육류,고기','곱창,막창','족발,보쌈','해물,생선','회','참치회','닭요리','삼계탕','한정식','한식뷔페','샤브샤브']],
   ['🍣 일식', ['일식','초밥,롤','돈까스,우동','일본식라면']],
@@ -1210,7 +1230,7 @@ const CAT_GROUPS = [
   document.getElementById('cat').innerHTML = html;
 })();
 const newCnt = L.filter(r=>r.nw).length;
-document.getElementById('kinds').innerHTML = KINDS.map(k=>`<button class="chip${k==='전체'?' on':''}${k==='회식'?' hs':''}" data-k="${k}">${k==='회식'?'🍻 회식':k==='샐러드'?'🥗 샐러드':k}</button>`).join('') + (newCnt?`<button class="chip alt2" id="chipNew">🆕 신규 ${newCnt}</button>`:'');
+document.getElementById('kinds').innerHTML = KINDS.map(k=>`<button class="chip${k==='전체'?' on':''}${k==='회식'?' hs':''}" data-k="${k}">${k==='회식'?'🍻 회식':k==='샐러드'?'🥗 샐러드':k}</button>`).join('') + (newCnt?`<button class="chip alt2" id="chipNew">🆕 신규 ${newCnt}</button>`:'') + `<button class="chip alt2" id="chipCheap">💸 1만원 이하</button><button class="chip alt2" id="chipVirgin">🧭 미개척</button>`;
 function filtered(){
   let a = L.filter(r=>{
     if(state.kind==='회식'){ if(!(r.k==='회식' || r.hs)) return false; }
@@ -1220,6 +1240,8 @@ function filtered(){
     if(r.d > state.dist) return false;
     if(state.price<25000 && (!r.pr || r.pr>state.price)) return false;
     if(state.fresh && !r.nw) return false;
+    if(state.cheap && !(r.pr && r.pr<=10000)) return false;
+    if(state.virgin && (VISITED_THIS_MONTH.has(r.id) || (r.k!=='밥집' && r.k!=='구내식당'))) return false;
     if(state.q){ const q = state.q.toLowerCase(); if(!((r.n+' '+r.c+' '+(r.a||'')+' '+(r.m||[]).map(m=>m.n).join(' ')).toLowerCase().includes(q))) return false; }
     return true;
   });
@@ -1506,6 +1528,8 @@ document.getElementById('more').onclick = ()=>{ state.limit+=30; render(); };
 document.getElementById('kinds').onclick = e=>{
   const b=e.target.closest('.chip'); if(!b) return;
   if(b.id==='chipNew'){ state.fresh=!state.fresh; b.classList.toggle('on',state.fresh); }
+  else if(b.id==='chipCheap'){ state.cheap=!state.cheap; b.classList.toggle('on',state.cheap); }
+  else if(b.id==='chipVirgin'){ state.virgin=!state.virgin; b.classList.toggle('on',state.virgin); if(state.virgin) toast('이번 달 아직 아무도 안 간 밥집만 보여요. 첫 개척자가 되어봐요 🧭'); }
   else { state.kind=b.dataset.k; document.querySelectorAll('.chip[data-k]').forEach(x=>x.classList.toggle('on',x===b)); }
   state.limit=30; render();
 };
@@ -1576,6 +1600,7 @@ const up = new Date(D.meta.updated);
 document.getElementById('mUpd').textContent = `${String(up.getMonth()+1).padStart(2,'0')}.${String(up.getDate()).padStart(2,'0')} 갱신`;
 document.getElementById('fUpd').textContent = '마지막 데이터 갱신: ' + up.toLocaleString('ko-KR');
 renderToday(); render(); renderRanking(); renderHof();
+(function tickLunch(){ const el=document.getElementById('lunchCd'); if(!el) return; const n=new Date(); const t=new Date(n); t.setHours(12,0,0,0); const diff=t-n; const day=n.getDay(); let txt=''; if(day===0||day===6) txt=''; else if(diff>0 && diff<4*3600e3){ const h=Math.floor(diff/3600e3), m=Math.floor(diff%3600e3/60e3); txt=` · 🍽️ 점심까지 ${h?h+'시간 ':''}${m}분`; } else if(diff<=0 && diff>-90*60e3) txt=' · 🍽️ 점심시간!'; el.textContent = txt; setTimeout(tickLunch, 30000); })();
 loadWeather();
 loadAll().then(()=>renderToday());
 setInterval(loadAll, 60000);
