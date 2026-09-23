@@ -99,6 +99,20 @@ h1{font-size:21px;font-weight:800;letter-spacing:-.5px}
 .themeBtn{margin-left:auto;width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line2);display:grid;place-items:center;font-size:19px;box-shadow:var(--shadow);flex:none}
 .themeBtn:active{transform:scale(.92)}
 #meBtn{margin-left:auto}
+.mepill{display:flex;align-items:center;gap:6px;height:40px;padding:0 12px 0 8px;border-radius:12px;background:var(--card);border:1px solid var(--line2);box-shadow:var(--shadow);font-size:13.5px;font-weight:700;color:var(--tx);max-width:190px;flex:none}
+.mepill #meEmo{font-size:19px}
+.mepill #meNickH{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mepill:active{transform:scale(.95)}
+@media(max-width:560px){.mepill #meNickH{display:none}.mepill{padding:0 9px}}
+.lkcard{background:linear-gradient(135deg,rgba(62,166,255,.16),rgba(127,191,49,.10));border:1.5px solid rgba(62,166,255,.45);border-radius:16px;padding:12px 14px;margin:4px 0 12px}
+.lkcard .t{font-size:14.5px;font-weight:800;display:flex;align-items:center;gap:6px}
+.lkcard .t .st{margin-left:auto;font-size:12px;font-weight:800;padding:3px 8px;border-radius:8px;background:var(--t-nv-bg);color:var(--t-nv-tx)}
+.lkcard .d{font-size:12.5px;color:var(--tx2);margin-top:4px;line-height:1.5}
+.lkcard .bt{display:flex;gap:8px;margin-top:10px}
+.lkcard .bt .btn{flex:1}
+.lkban{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:linear-gradient(90deg,rgba(62,166,255,.16),transparent);border:1px solid rgba(62,166,255,.4);border-radius:13px;padding:10px 12px;margin-bottom:12px;font-size:13.5px;color:var(--tx)}
+.lkban b{font-weight:800}
+.lkban .go{margin-left:auto;font-weight:800;color:#3ea6ff;white-space:nowrap;font-size:12.5px}
 #themeBtn{margin-left:8px}
 
 /* ================= WEATHER ================= */
@@ -706,7 +720,7 @@ html.dark .fbrand .fl.dark{display:inline}
       <h1>오늘 뭐 먹지<span class="q">?</span></h1>
       <div class="subline">한신아이티타워 · 반경 500m · <span id="mCnt">0</span>곳 · <span id="mUpd">–</span><span id="lunchCd"></span></div>
     </div>
-    <button class="themeBtn" id="meBtn" title="내 프로필">🙂</button><button class="themeBtn" id="themeBtn" title="밝게/어둡게">🌙</button>
+    <button class="mepill" id="meBtn" title="내 프로필 · 기기 연결"><span id="meEmo">🙂</span><span id="meNickH"></span></button><button class="themeBtn" id="themeBtn" title="밝게/어둡게">🌙</button>
   </div>
 
   <div class="wx" id="wx">
@@ -1542,12 +1556,13 @@ function renderMissions(){
   const nickOf = {}; for(const rid in STORE.comments) for(const k in STORE.comments[rid]){ const c=STORE.comments[rid][k]; if(c&&c.uid) nickOf[c.uid]={n:c.nick,e:c.emoji,ts:c.ts}; } for(const rid in STORE.visits) for(const k in STORE.visits[rid]){ const v=STORE.visits[rid][k]; if(v&&v.uid&&(!nickOf[v.uid]||v.ts>nickOf[v.uid].ts)) nickOf[v.uid]={n:v.nick||'익명',e:v.emoji||'🙂',ts:v.ts}; }
   const board = Object.entries(b).filter(([,a])=>a.length).sort((x,y)=>y[1].length-x[1].length).slice(0,8);
   const boardHtml = board.length ? `<div class="egrp" style="margin-top:0">🏅 이달의 배지 보드</div><div class="bboard">${board.map(([uid,a])=>`<span class="bu ${uid===ME.uid?'me':''}">${esc(nickOf[uid]?.e||'🙂')} <b>${esc(nickOf[uid]?.n||'익명')}</b> ${a.join('')}</span>`).join('')}</div>` : `<div class="egrp" style="margin-top:0">🏅 이달의 배지 보드</div><div class="rempty" style="padding:0 2px 10px">아직 배지 받은 사람이 없어요. 첫 배지의 주인공이 되어봐요!</div>`;
-  box.innerHTML = boardHtml + `<div class="rempty" style="padding:0 2px 10px">${now.getMonth()+1}월 미션 · ${dleft}일 남음 · 달성하면 닉네임 옆에 배지가 붙어요 ${(b[ME.uid]||[]).length?'· 내 배지 '+b[ME.uid].join(''):''}</div><div class="mis">` + MISSIONS.map(m=>{ const v = Math.min(m.goal, m.f(mine)); const ok = v>=m.goal; return `<div class="mi2 ${ok?'done':''}"><span class="bd">${m.badge}</span><div class="tx"><b>${m.name}</b><small>${m.desc}</small><div class="pb"><i style="width:${Math.round(v/m.goal*100)}%"></i></div></div><span class="pc">${ok?'달성!':v+'/'+m.goal}</span></div>`; }).join('') + '</div>';
+  const lkBan = `<button class="lkban" onclick="openEmoji();setTimeout(()=>document.getElementById('lkCard')?.scrollIntoView({block:'center'}),100)"><span style="font-size:20px">📱</span><span>${LS.get('gl_pcode')?'<b>기기 연결 코드 있음</b> · 다른 기기에서도 배지 이어가기':'<b>폰이랑 PC 배지 합치기</b> · 가입 없이 연결 코드로'}</span><span class="go">${LS.get('gl_pcode')?'코드 보기 ›':'연결하기 ›'}</span></button>`;
+  box.innerHTML = lkBan + boardHtml + `<div class="rempty" style="padding:0 2px 10px">${now.getMonth()+1}월 미션 · ${dleft}일 남음 · 달성하면 닉네임 옆에 배지가 붙어요 ${(b[ME.uid]||[]).length?'· 내 배지 '+b[ME.uid].join(''):''}</div><div class="mis">` + MISSIONS.map(m=>{ const v = Math.min(m.goal, m.f(mine)); const ok = v>=m.goal; return `<div class="mi2 ${ok?'done':''}"><span class="bd">${m.badge}</span><div class="tx"><b>${m.name}</b><small>${m.desc}</small><div class="pb"><i style="width:${Math.round(v/m.goal*100)}%"></i></div></div><span class="pc">${ok?'달성!':v+'/'+m.goal}</span></div>`; }).join('') + '</div>';
   const now2 = (b[ME.uid]||[]).join('');
   if(MY_BADGE_PREV!==null && now2.length > MY_BADGE_PREV.length){ const got = MISSIONS.find(m=>now2.includes(m.badge) && !MY_BADGE_PREV.includes(m.badge)); if(got){ toast(`🎉 미션 달성! ${got.badge} ${got.name}`); confetti(); } }
   MY_BADGE_PREV = now2;
 }
-function refreshMe(){ const a=document.getElementById('meBtn'); if(a) a.textContent = ME.emoji; const c=document.getElementById('chatMe'); if(c) c.textContent = ME.emoji; }
+function refreshMe(){ const a=document.getElementById('meEmo'); if(a) a.textContent = ME.emoji; const nh=document.getElementById('meNickH'); if(nh) nh.textContent = ME.nick; const c=document.getElementById('chatMe'); if(c) c.textContent = ME.emoji; }
 /* ======================= 점심 수다방 ======================= */
 let CHAT = [], CHATLK = {}, CHAT_LAST_SEND = 0, CHAT_OPEN = false;
 const CHAT_SEEN = { get(){ return +(LS.get('gl_chat_seen')||0); }, set(t){ LS.set('gl_chat_seen', String(t)); } };
@@ -1934,8 +1949,9 @@ function openEmoji(){
   document.getElementById('epkb').innerHTML = `
     <h4>내 프로필</h4>
     <div class="nkrow"><input id="nkIn" maxlength="24" value="${esc(ME.nick)}" placeholder="닉네임"><button class="btn g" id="nkRand">🎲</button></div>
+    <div class="lkcard" id="lkCard"><div class="t">📱 폰 · PC 같은 나로 쓰기 ${LS.get('gl_pcode')?'<span class="st">연결 코드 있음 ✓</span>':''}</div><div class="d">가입 없이 <b>연결 코드</b> 하나로 폰과 PC의 닉네임·미션·배지·투표를 합쳐요.<br>① 지금 기기에서 <b>코드 만들기</b> → ② 다른 기기에서 🙂 프로필 → <b>코드로 연결</b></div><div class="bt"><button class="btn p" id="lkMake">🔑 코드 만들기</button><button class="btn g" id="lkUse">📥 코드로 연결</button></div><div id="lkOut"></div></div>
+    <div class="egrp" style="margin-top:4px">내 이모지</div>
     ${Object.entries(EMOJI_SET).map(([g,list])=>`<div class="egrp">${g}</div><div class="egrid">${list.map(e=>`<button class="ee${e===ME.emoji?' on':''}" data-e="${e}">${e}</button>`).join('')}</div>`).join('')}
-    <div class="linkbox"><div class="egrp" style="margin-top:0">📱 다른 기기에서도 같은 나로 (가입 없이)</div><div class="reqnote">폰과 PC에서 같은 닉네임·미션·배지·투표를 쓰려면, 한쪽에서 <b>연결 코드</b>를 만들고 다른 쪽에서 입력하면 돼요. 코드는 열쇠라 남에게 주지 마세요.</div><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><button class="btn g" id="lkMake">🔑 연결 코드 만들기</button><button class="btn g" id="lkUse">📥 코드로 연결</button></div><div id="lkOut"></div></div>
     <div style="display:flex;gap:8px;margin-top:18px"><button class="btn g full" onclick="closeEmoji()">취소</button><button class="btn p full" id="nkSave">저장</button></div>`;
   document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
   let sel = ME.emoji;
@@ -1944,7 +1960,7 @@ function openEmoji(){
     let code = LS.get('gl_pcode'); if(!code){ const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; code=''; for(let i=0;i<8;i++) code += ch[Math.floor(Math.random()*ch.length)]; }
     const ok = await fbPut('/profiles/'+code, { uid: ME.uid, nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8), ts: Date.now() });
     if(!ok){ toast('실패 😢'); return; } LS.set('gl_pcode', code);
-    document.getElementById('lkOut').innerHTML = `<div style="text-align:center;font-size:28px;font-weight:900;letter-spacing:5px;margin:12px 0;color:var(--ac)">${code}</div><div class="reqnote">다른 기기에서 🙂 프로필 → <b>📥 코드로 연결</b>에 입력하세요.</div>`;
+    document.getElementById('lkOut').innerHTML = `<div style="text-align:center;font-size:30px;font-weight:900;letter-spacing:6px;margin:12px 0 6px;color:#3ea6ff">${code}</div><div class="reqnote" style="text-align:center">다른 기기에서 오른쪽 위 🙂 → <b>📥 코드로 연결</b>에 입력 · 이 코드는 열쇠라 남에게 주지 마세요</div>`;
   };
   document.getElementById('lkUse').onclick = async ()=>{
     const code = (prompt('다른 기기에서 만든 연결 코드 8자리')||'').trim().toUpperCase(); if(code.length<6) return;
