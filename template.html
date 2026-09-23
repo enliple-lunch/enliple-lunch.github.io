@@ -1011,7 +1011,7 @@ function pickToday(){
 const PHC = {'한식':['#ffe3c4','#ffc38a'],'중국요리':['#ffd6d6','#ff9c9c'],'중식':['#ffd6d6','#ff9c9c'],'일식':['#d9ecff','#9fc6ff'],'초밥,롤':['#d9ecff','#9fc6ff'],'돈까스,우동':['#ffe9c2','#ffd27a'],'분식':['#ffe0e8','#ffb3c6'],'카페':['#e8dccf','#c9b39a'],'커피전문점':['#e8dccf','#c9b39a'],'샐러드':['#dff5d8','#a9e29a'],'베트남음식':['#e0f5ea','#a3e0c0'],'육류,고기':['#f5d9cf','#e6a898'],'찌개,전골':['#ffe0cc','#ffb08a'],'국밥':['#f3e6d3','#dcc39d'],'양식':['#fff0d6','#ffd9a0'],'피자':['#ffe6d1','#ffbf8f'],'햄버거':['#ffe9c8','#ffcf8a'],'치킨':['#fff1c9','#ffd98a']};
 function phTag(r, size, label){
   const c = PHC[r.c] || ['#e9e4dc','#cfc6b8'];
-  return `<div class="noimg ph" style="--ph1:${c[0]};--ph2:${c[1]};font-size:${size}px"><span class="e">${emo(r.c)}</span>${label?`<span class="lb">${esc(r.c)}</span>`:''}</div>`;
+  return `<div class="noimg ph" style="--ph1:${c[0]};--ph2:${c[1]};font-size:${size}px"><span class="e">${emo(r.c)}</span>${label?`<span class="lb">${esc(r.c)}</span>`:''}${size===34?`<button class="phup" onclick="event.stopPropagation();uploadPhoto(BYID['${r.id}'])">📸 사진 올리기</button>`:size===56?`<button class="hdph" onclick="event.stopPropagation();uploadPhoto(BYID['${r.id}'])">📸 이 가게 첫 사진 올려주세요</button>`:''}</div>`;
 }
 function floorOf(r){
   const a = (r.a||'').replace(/\(.*?\)/g,'');
@@ -1365,7 +1365,7 @@ function drawTie(pid){
 }
 /* ======================= 사진 올리기 ======================= */
 async function loadUserPhotos(){
-  const need = Object.keys(PMETA).filter(id=>BYID[id] && !BYID[id].ph0 && UPH_LOADED[id]!==PMETA[id].ts);
+  const need = Object.keys(PMETA).filter(id=>BYID[id] && UPH_LOADED[id]!==PMETA[id].ts);
   if(!need.length) return;
   const res = await Promise.all(need.map(id=>fbGet('/photos/'+id)));
   let changed = false;
@@ -1685,7 +1685,7 @@ function card(r){
   const rep = (r.m||[]).filter(m=>m.p>=4000&&m.p<=20000)[0] || (r.m||[])[0];
   const rt = rating(r), cc = CMTCNT[r.id]||0;
   return `<div class="c" data-id="${r.id}">
-    <div class="im">${imgTag(r,34)}${(!r.ph0 && !PMETA[r.id])?`<button class="phup" data-ph="${r.id}">📸 사진 올리기</button>`:''}
+    <div class="im">${imgTag(r,34)}
       <div class="badges"><span class="b walk">${r.d}m</span>${RK[r.id]&&RK[r.id]<=3?`<span class="b rank">🏆${RK[r.id]}</span>`:''}${r.nw?'<span class="b top">🆕</span>':''}${(r.hs||r.k==='회식')?'<span class="b hs">🍻</span>':''}</div>
       <button class="favbtn ${isFav(r.id)?'on':''}" data-fav="${r.id}" title="즐겨찾기">${isFav(r.id)?favIcon(r.id):'☆'}</button><a class="nvbtn" href="${naverUrl(r)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="네이버지도">🟢</a>
     </div>
@@ -1727,7 +1727,7 @@ function openModal(r){
   const menus = (r.m||[]).slice().sort((a,b)=>a.p-b.p), rt = rating(r);
   document.getElementById('md').innerHTML = `
     <button class="xx" onclick="closeModal()">✕</button>
-    <div class="hd">${imgTag(r,56)}${(!r.ph0 && !PMETA[r.id])?`<button class="hdph" id="hdPh">📸 이 가게 첫 사진 올려주세요</button>`:''}${(!r.ph0 && PMETA[r.id])?`<span class="uphoto">📸 ${esc(PMETA[r.id].nick||'익명')}님 사진</span>`:''}</div>
+    <div class="hd">${imgTag(r,56)}${(PMETA[r.id])?`<span class="uphoto">📸 ${esc(PMETA[r.id].nick||'익명')}님 사진</span>`:''}</div>
     <div class="ct2">
       <h3>${esc(r.n)}</h3>
       <div class="mm">
@@ -1749,7 +1749,7 @@ function openModal(r){
         <button class="btn g" id="mMap" title="지도에서 보기">📍</button>
         <button class="btn g" id="mShare" title="여기 가자고 공유">📤</button>
       </div>
-      ${!r.ph0 ? `<button class="phbtn" id="phBtn">📸 ${PMETA[r.id]?'사진 바꾸기':'사진이 없어요 · 첫 사진 올리기'}</button>` : ''}
+      <button class="phbtn" id="phBtn">📸 ${PMETA[r.id]?'사진 바꾸기':(r.ph0?'직접 찍은 사진 올리기':'사진이 없어요 · 첫 사진 올리기')}</button>
       <div class="visitbox">
         <div class="vt" id="vText"></div>
         <button class="btn v" id="vBtn">🍽️ 오늘 여기서 먹었어요</button>
