@@ -424,6 +424,13 @@ html:not(.dark) .rainbtn{color:#1f6fb8}
 .bboard .bu.me{border-color:var(--ac)}
 .linkbox{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
 /* ================= HALL OF FAME ================= */
+.champ{display:flex;align-items:center;gap:8px;width:100%;text-align:left;margin:-4px 0 12px;padding:10px 14px;border-radius:14px;background:linear-gradient(90deg,rgba(242,181,0,.22),rgba(242,181,0,.05));border:1px solid rgba(242,181,0,.45);font-size:14.5px;color:var(--tx)}
+.champ b{font-weight:800}
+.champ .go{margin-left:auto;font-size:12.5px;font-weight:700;color:#f2b500;white-space:nowrap}
+html:not(.dark) .champ .go{color:#9a6b00}
+.champ:active{transform:scale(.99)}
+.champ .ci{width:28px;height:28px;border-radius:8px;overflow:hidden;flex:none;background:var(--card2);display:grid;place-items:center;font-size:15px}
+.champ .ci img{width:100%;height:100%;object-fit:cover}
 .hof{display:grid;grid-template-columns:1fr;gap:10px}
 @media(min-width:700px){.hof{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}
 .hofm{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:12px}
@@ -748,6 +755,7 @@ html.dark .fbrand .fl.dark{display:inline}
   </div>
 
   <section class="rank" id="rank">
+    <button class="champ" id="champ"></button>
     <div class="rank-h">
       <h2>🏆 랭킹 <small id="rkMonth"></small></h2>
       <div class="seg" id="rkSeg"><button data-p="d0">오늘</button><button data-p="m0" class="on">이번 달</button><button data-p="m1">지난 달</button><button data-p="q">3개월</button><button data-p="y">올해</button><button data-p="all">전체</button></div>
@@ -762,6 +770,11 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="rnote">맛집 점수 = 🍽️먹었어요 ×3 + 후기 ×2 + 좋아요 반응 ×1 − 👎. 가게 상세에서 "오늘 여기서 먹었어요"를 누르면 랭킹에 반영돼요. 후기 옆 👍를 누르면 베스트 한 줄에 올라가요.</div>
   </section>
 
+  <details class="fold" id="foldHof">
+    <summary><span>🏛️ 명예의 전당 <span id="hofCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
+    <div class="fb"><div id="hof"></div></div>
+  </details>
+
   <details class="fold" id="foldMission">
     <summary><span>🎯 이달의 미션 <span id="misCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
     <div class="fb"><div id="misBox"></div></div>
@@ -772,10 +785,6 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb"><div id="favBox"></div></div>
   </details>
 
-  <details class="fold" id="foldHof">
-    <summary><span>🏛️ 명예의 전당 <span id="hofCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
-    <div class="fb"><div id="hof"></div></div>
-  </details>
 
   <details class="fold" id="foldFeed" open>
     <summary><span>💬 방금 올라온 한 줄 후기 <span id="feedCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
@@ -1592,7 +1601,16 @@ document.getElementById('foldChat').addEventListener('toggle', e=>{ CHAT_OPEN = 
 setInterval(()=>{ if(document.visibilityState==='visible') loadChat(); }, CHAT_OPEN ? 10000 : 20000);
 setInterval(()=>{ if(CHAT_OPEN && document.visibilityState==='visible') loadChat(); }, 8000);
 /* ======================= 명예의 전당 ======================= */
+function renderChamp(){
+  const el = document.getElementById('champ'); if(!el) return;
+  const n = new Date(); const s = new Date(n.getFullYear(), n.getMonth()-1, 1).getTime(), e = new Date(n.getFullYear(), n.getMonth(), 1).getTime();
+  const top = statsIn(s, e)[0];
+  if(top && BYID[top.id]){ const r = BYID[top.id]; el.innerHTML = `<span style="font-size:18px">👑</span><span class="ci">${rimg(r)}</span><span>${new Date(s).getMonth()+1}월 챔피언: <b>${esc(r.n)}</b> (${top.score}점)</span><span class="go">명예의 전당 ›</span>`; }
+  else { const nx = new Date(n.getFullYear(), n.getMonth()+1, 1); el.innerHTML = `<span style="font-size:18px">👑</span><span>첫 챔피언은 <b>${nx.getMonth()+1}월 1일</b> 발표! 이번 달 1위가 명예의 전당에 올라가요</span><span class="go">명예의 전당 ›</span>`; }
+  el.onclick = ()=>{ const d = document.getElementById('foldHof'); d.open = true; d.scrollIntoView({behavior:'smooth', block:'start'}); };
+}
 function renderHof(){
+  renderChamp();
   const el = document.getElementById('hof'); if(!el) return;
   // 기록이 있는 가장 오래된 달부터 지난달까지, 완결된 달만
   let minTs = Infinity;
