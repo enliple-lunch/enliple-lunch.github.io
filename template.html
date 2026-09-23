@@ -313,6 +313,8 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .mlegend button,.mlegend .ml-sp{display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:var(--tx2);padding:5px 9px;border-radius:9px;background:var(--soft);border:1px solid var(--line)}
 .mlegend button.on{background:var(--mc,#ffd23f);color:#fff;border-color:transparent;box-shadow:0 0 0 2px rgba(255,255,255,.25) inset}
 .mlegend button.on i{border-color:#fff}
+.mk-crowd{border-radius:50%;background:#ff4d6d;border:2px solid #fff;display:flex;align-items:center;justify-content:center;gap:1px;font-size:12px;color:#fff;box-shadow:0 4px 14px rgba(255,77,109,.5)}
+.mk-crowd b{font-size:13px;font-weight:900}
 .mlegend button[data-mk="구내식당"].on,.mlegend button[data-mk="__fav"].on,.mlegend button[data-mk="__rank"].on{color:#3a2600}
 .mlegend button:active{transform:scale(.95)}
 .mchk{font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:6px;white-space:nowrap}
@@ -832,12 +834,12 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb">
       <div class="maptools">
         <div class="mlegend" id="mLegend">
-          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><button data-mk="__fav">⭐ 저장만</button><button data-mk="__pick"><i style="background:#ff3d7f"></i>추천</button><button data-mk="__rank">🥇 랭킹</button>
+          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><button data-mk="__fav">⭐ 저장만</button><button data-mk="__crowd">❤️ 인라이플 픽</button><button data-mk="__pick"><i style="background:#ff3d7f"></i>추천</button><button data-mk="__rank">🥇 랭킹</button>
         </div>
         <label class="mchk"><input type="checkbox" id="mapSync" checked> 리스트 필터와 연동</label>
       </div>
       <div id="map"></div>
-      <div class="mhint">범례를 누르면 그 종류<b>만</b> 보여요 (여러 개 선택 가능, 다시 누르면 해제) · 점에 마우스를 올리면 이름·평점, 클릭하면 사진·가격·상세 · 가운데가 회사(100m 간격)</div>
+      <div class="mhint">❤️ 인라이플 픽 = 우리 회사 사람들이 ☆저장한 곳 (숫자는 저장한 사람 수) · 범례를 누르면 그 종류<b>만</b> 보여요 (여러 개 선택 가능, 다시 누르면 해제) · 점에 마우스를 올리면 이름·평점, 클릭하면 사진·가격·상세 · 가운데가 회사(100m 간격)</div>
     </div>
   </details>
 </header>
@@ -850,6 +852,7 @@ html.dark .fbrand .fl.dark{display:inline}
       <select id="sort">
         <option value="dist">가까운 순</option>
         <option value="rank">이달 랭킹 순</option>
+        <option value="crowd">❤️ 인라이플 픽 많은 순</option>
         <option value="nrev">네이버 리뷰 많은 순</option>
         <option value="score">평점 높은 순</option>
         <option value="cheap">가격 낮은 순</option>
@@ -1085,11 +1088,11 @@ function renderToday(){
 let MAP = null, MAP_LAYER = null, MAP_TILES = null, MAP_MARKERS = {}, MAP_SPECIAL = null;
 const KIND_COLOR = { '밥집':'#7FBF31', '회식':'#b36bff', '카페':'#3ea6ff', '패스트푸드':'#ff4d3d', '구내식당':'#ffd23f' };
 const MAP_HIDE = new Set(); const MAP_ONLY = new Set(); const MAP_SP = new Set(); let MAP_FAVONLY = false;
-const SP_COLOR = { '__fav':'#ffd23f', '__pick':'#ff3d7f', '__rank':'#f2b500' };
+const SP_COLOR = { '__fav':'#ffd23f', '__pick':'#ff3d7f', '__rank':'#f2b500', '__crowd':'#ff4d6d' };
 const tileUrl = () => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 function popupHtml(r){
   const rt = rating(r);
-  return `<div class="mp"><div class="im">${imgTag(r,30)}</div><b>${esc(r.n)}</b><small>${emo(r.c)} ${r.c} · ${distTxt(r.d)}${r.hs?' · 🍻 회식':''}</small><div class="row">${rt?`<span class="${rt.src==='naver'?'nv':''}">★ ${rt.v} ${rt.src==='naver'?'네이버':'카카오'}</span>`:''}${r.pr?`<span>💸 ${won(r.pr)}</span>`:''}${RK[r.id]?`<span>🏆 이달 ${RK[r.id]}위</span>`:''}${(CMTCNT[r.id]||0)?`<span>💬 ${CMTCNT[r.id]}</span>`:''}</div><div class="act"><button class="g" onclick="openFavPicker(BYID['${r.id}'])">${isFav(r.id)?favIcon(r.id)+' 저장됨':'☆ 저장'}</button><button class="p" onclick="openModal(BYID['${r.id}'])">상세·후기</button><a class="n" href="${naverUrl(r)}" target="_blank" rel="noopener">네이버지도</a></div></div>`;
+  return `<div class="mp"><div class="im">${imgTag(r,30)}</div><b>${esc(r.n)}</b><small>${emo(r.c)} ${r.c} · ${distTxt(r.d)}${r.hs?' · 🍻 회식':''}</small><div class="row">${rt?`<span class="${rt.src==='naver'?'nv':''}">★ ${rt.v} ${rt.src==='naver'?'네이버':'카카오'}</span>`:''}${r.pr?`<span>💸 ${won(r.pr)}</span>`:''}${RK[r.id]?`<span>🏆 이달 ${RK[r.id]}위</span>`:''}${(CMTCNT[r.id]||0)?`<span>💬 ${CMTCNT[r.id]}</span>`:''}${FAVCNT[r.id]?`<span style="background:rgba(255,77,109,.16);color:#ff4d6d">❤️ ${FAVCNT[r.id]}명 저장</span>`:''}</div><div class="act"><button class="g" onclick="openFavPicker(BYID['${r.id}'])">${isFav(r.id)?favIcon(r.id)+' 저장됨':'☆ 저장'}</button><button class="p" onclick="openModal(BYID['${r.id}'])">상세·후기</button><a class="n" href="${naverUrl(r)}" target="_blank" rel="noopener">네이버지도</a></div></div>`;
 }
 function initMap(){
   if(MAP || !window.L || !window.L.map) return;
@@ -1116,11 +1119,12 @@ function renderMap(){
   for(const r of shown){
     if(!r.la || !r.lo) continue;
     if(!MAP_SHARED && MAP_ONLY.size && !(MAP_ONLY.has(r.k) || (MAP_ONLY.has('회식') && r.hs))) continue;
-    if(!MAP_SHARED && MAP_SP.size && !((MAP_SP.has('__fav') && isFav(r.id)) || (MAP_SP.has('__pick') && pickIds.has(r.id)) || (MAP_SP.has('__rank') && RK[r.id]))) continue;
+    if(!MAP_SHARED && MAP_SP.size && !((MAP_SP.has('__fav') && isFav(r.id)) || (MAP_SP.has('__pick') && pickIds.has(r.id)) || (MAP_SP.has('__rank') && RK[r.id]) || (MAP_SP.has('__crowd') && FAVCNT[r.id]))) continue;
     SP_PTS.push([r.la, r.lo]); n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
-    if(MAP_SHARED){ const sf = MAP_SHARED.folders.find(x=>x.id===(MAP_SHARED.items[r.id]||[])[0]); m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-fav">${sf?sf.emoji:'⭐'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:700 }); }
+    if(!MAP_SHARED && MAP_SP.has('__crowd') && FAVCNT[r.id]){ const c = FAVCNT[r.id]; const sz = Math.min(44, 26 + c*3); m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-crowd" style="width:${sz}px;height:${sz}px">❤️<b>${c}</b></div>`, iconSize:[sz,sz], iconAnchor:[sz/2,sz/2] }), zIndexOffset: 600 + c }); }
+    else if(MAP_SHARED){ const sf = MAP_SHARED.folders.find(x=>x.id===(MAP_SHARED.items[r.id]||[])[0]); m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-fav">${sf?sf.emoji:'⭐'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:700 }); }
     else if(isPick){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
     else if(isTop){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-top">${RK[r.id]===1?'🥇':RK[r.id]===2?'🥈':'🥉'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:800 }); }
     else if(isFav(r.id)){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-fav">${favIcon(r.id)}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:700 }); }
@@ -1148,7 +1152,7 @@ document.getElementById('mapSync').onchange = renderMap;
 document.getElementById('mLegend').onclick = e=>{
   const b = e.target.closest('button[data-mk]'); if(!b) return; const k = b.dataset.mk;
   if(k.startsWith('__')){ if(MAP_SP.has(k)) MAP_SP.delete(k); else MAP_SP.add(k); MAP_FAVONLY = MAP_SP.has('__fav'); b.classList.toggle('on', MAP_SP.has(k)); b.style.setProperty('--mc', SP_COLOR[k]); renderMap();
-    if(MAP_SP.has(k)){ if(k==='__fav' && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요. ☆를 눌러 저장해보세요'); else if(k==='__rank' && !Object.keys(RK).length) toast('이번 달 랭킹 기록이 아직 없어요'); else if(k==='__pick') toast('오늘 추천 점심 4곳만 보여요'); else if(k==='__rank') toast('이번 달 랭킹 TOP 10만 보여요'); }
+    if(MAP_SP.has(k)){ if(k==='__fav' && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요. ☆를 눌러 저장해보세요'); else if(k==='__rank' && !Object.keys(RK).length) toast('이번 달 랭킹 기록이 아직 없어요'); else if(k==='__pick') toast('오늘 추천 점심 4곳만 보여요'); else if(k==='__rank') toast('이번 달 랭킹 TOP 10만 보여요'); else if(k==='__crowd') toast(Object.keys(FAVCNT).length ? `❤️ 인라이플 사람들이 저장한 ${Object.keys(FAVCNT).length}곳 · 숫자는 저장한 사람 수` : '아직 아무도 저장 안 했어요. 첫 ☆를 눌러보세요'); }
     return; }
   if(MAP_ONLY.has(k)) MAP_ONLY.delete(k); else MAP_ONLY.add(k);
   document.querySelectorAll('#mLegend button[data-mk]').forEach(x=>{ if(x.dataset.mk==='__fav') return; const on = MAP_ONLY.has(x.dataset.mk); x.classList.toggle('on', on); x.style.setProperty('--mc', KIND_COLOR[x.dataset.mk]); });
@@ -1168,14 +1172,15 @@ async function fbDel(p){ try{ return (await fetch(FB+p+'.json',{method:'DELETE'}
 const REACTIONS = ['👍','🔥','😋','🍽️','💸','🫶','😐','👎'];
 const POS = ['👍','🔥','😋','🍽️','💸','🫶'];
 let STORE = { comments:{}, reactions:{}, visits:{}, requests:{}, clikes:{}, polls:{}, votes:{} };
-let CMTCNT = {}, RK = {}, VISITED_THIS_MONTH = new Set(), PMETA = {}, UPH_LOADED = {};
+let CMTCNT = {}, RK = {}, VISITED_THIS_MONTH = new Set(), PMETA = {}, UPH_LOADED = {}, FAVCNT = {};
 D.list.forEach(r=>{ r.ph0 = r.ph || ''; });
 
 async function loadAll(){
-  const NODES = ['comments','reactions','clikes','visits','requests','polls','votes','pmeta'];
+  const NODES = ['comments','reactions','clikes','visits','requests','polls','votes','pmeta','favpub'];
   const got = await Promise.all(NODES.map(n=>fbGet('/'+n)));
   const all = {}; NODES.forEach((n,i)=>all[n]=got[i]||{});
   PMETA = all.pmeta || {}; loadUserPhotos();
+  FAVCNT = {}; for(const uid in (all.favpub||{})){ for(const rid in (all.favpub[uid]||{})) FAVCNT[rid] = (FAVCNT[rid]||0) + 1; }
   STORE = { comments: all.comments||{}, reactions: all.reactions||{}, visits: all.visits||{}, requests: all.requests||{}, clikes: all.clikes||{}, polls: all.polls||{}, votes: all.votes||{} };
   renderMissions(); renderPolls(); renderHof();
   if(document.getElementById('reqList')) renderReqList();
@@ -1417,11 +1422,14 @@ const FAV_EMOJI = ['⭐','❤️','🍚','🍜','🍣','🍖','🍻','☕','🥗
 const FAV_COLOR = { '⭐':'#ffd23f','❤️':'#ff4d6d','🍚':'#7FBF31','🍜':'#ff9d1a','🍣':'#3ea6ff','🍖':'#c0703a','🍻':'#b36bff','☕':'#a47551','🥗':'#4dd4ac','🍔':'#ff4d3d','💼':'#7a8699','🎉':'#ff3d7f','👍':'#3ea6ff','🔥':'#ff5a1f','🤫':'#9aa3b5','🏆':'#f2b500' };
 let FAV = (()=>{ try{ const f = JSON.parse(LS.get('gl_favs')||'null'); if(f && Array.isArray(f.folders) && f.items) return f; }catch(e){} return { folders:[{ id:'f0', name:'기본', emoji:'⭐' }], items:{}, ts:0 }; })();
 let FAV_TAB = 'all';
+let FAVCNT_MINE = null;
 const isFav = id => (FAV.items[id]||[]).length > 0;
 const favIcon = id => { const f = FAV.folders.find(x=>x.id===(FAV.items[id]||[])[0]); return f ? f.emoji : '⭐'; };
 let FAV_SYNC_T = null;
 const favPayload = () => ({ folders: FAV.folders, items: FAV.items, ts: Date.now(), uid: ME.uid, nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8) });
-function saveFav(){ FAV.ts = Date.now(); LS.set('gl_favs', JSON.stringify(FAV)); if(FAV.code){ clearTimeout(FAV_SYNC_T); FAV_SYNC_T = setTimeout(()=>fbPut('/favs/'+FAV.code, favPayload()), 1200); } renderFavs(); render(); if(typeof MAP!=='undefined' && MAP) renderMap(); if(CUR){ const b=document.getElementById('mFav'); if(b){ b.textContent = isFav(CUR.id)?favIcon(CUR.id)+' 저장됨':'☆ 저장'; b.classList.toggle('on', isFav(CUR.id)); } } }
+let FAVPUB_T = null;
+function pushFavPub(){ clearTimeout(FAVPUB_T); FAVPUB_T = setTimeout(()=>{ const ids = Object.keys(FAV.items); if(ids.length) fbPut('/favpub/'+ME.uid, Object.fromEntries(ids.map(id=>[id,1]))); else fbDel('/favpub/'+ME.uid); }, 1500); }
+function saveFav(){ FAV.ts = Date.now(); LS.set('gl_favs', JSON.stringify(FAV)); pushFavPub(); { const was = new Set(Object.keys(FAVCNT_MINE||{})); const now = new Set(Object.keys(FAV.items)); for(const id of now) if(!was.has(id)) FAVCNT[id]=(FAVCNT[id]||0)+1; for(const id of was) if(!now.has(id)) FAVCNT[id]=Math.max(0,(FAVCNT[id]||1)-1); FAVCNT_MINE = Object.fromEntries([...now].map(i=>[i,1])); } if(FAV.code){ clearTimeout(FAV_SYNC_T); FAV_SYNC_T = setTimeout(()=>fbPut('/favs/'+FAV.code, favPayload()), 1200); } renderFavs(); render(); if(typeof MAP!=='undefined' && MAP) renderMap(); if(CUR){ const b=document.getElementById('mFav'); if(b){ b.textContent = isFav(CUR.id)?favIcon(CUR.id)+' 저장됨':'☆ 저장'; b.classList.toggle('on', isFav(CUR.id)); } } }
 function toggleFavIn(rid, fid){ const a = FAV.items[rid] || []; const i = a.indexOf(fid); if(i>=0) a.splice(i,1); else a.push(fid); if(a.length) FAV.items[rid]=a; else delete FAV.items[rid]; saveFav(); }
 function openFavPicker(r){
   if(!r) return;
@@ -1710,6 +1718,7 @@ function filtered(){
   const S = state.sort;
   a.sort((x,y)=>{
     if(S==='dist') return x.d-y.d;
+    if(S==='crowd') return (FAVCNT[y.id]||0)-(FAVCNT[x.id]||0) || x.d-y.d;
     if(S==='rank') return (RK[x.id]||999)-(RK[y.id]||999) || (y.nvr||0)-(x.nvr||0);
     if(S==='nrev') return (y.nvr||0)-(x.nvr||0);
     if(S==='score') return (y.nsc||y.s||0)-(x.nsc||x.s||0);
@@ -1723,7 +1732,7 @@ function card(r){
   const rt = rating(r), cc = CMTCNT[r.id]||0;
   return `<div class="c" data-id="${r.id}">
     <div class="im">${imgTag(r,34)}
-      <div class="badges"><span class="b walk">${r.d}m</span>${RK[r.id]&&RK[r.id]<=3?`<span class="b rank">🏆${RK[r.id]}</span>`:''}${r.nw?'<span class="b top">🆕</span>':''}${(r.hs||r.k==='회식')?'<span class="b hs">🍻</span>':''}</div>
+      <div class="badges"><span class="b walk">${r.d}m</span>${RK[r.id]&&RK[r.id]<=3?`<span class="b rank">🏆${RK[r.id]}</span>`:''}${r.nw?'<span class="b top">🆕</span>':''}${(r.hs||r.k==='회식')?'<span class="b hs">🍻</span>':''}${FAVCNT[r.id]>=2?`<span class="b" style="background:rgba(255,77,109,.95);color:#fff">❤️${FAVCNT[r.id]}</span>`:''}</div>
       <button class="favbtn ${isFav(r.id)?'on':''}" data-fav="${r.id}" title="즐겨찾기">${isFav(r.id)?favIcon(r.id):'☆'}</button><a class="nvbtn" href="${naverUrl(r)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="네이버지도">🟢</a>
     </div>
     <div class="bd">
@@ -1773,6 +1782,7 @@ function openModal(r){
         ${rt?`<span class="tag ${rt.src==='naver'?'nv':'hot'}">★ ${rt.v} ${rt.src==='naver'?'네이버':'카카오'}</span>`:''}
         ${RK[r.id]?`<span class="tag hot">🏆 이달 ${RK[r.id]}위</span>`:''}
         ${r.nw?`<span class="tag hot">🆕 신규</span>`:''}
+        ${FAVCNT[r.id]?`<span class="tag" style="color:#ff4d6d;border-color:rgba(255,77,109,.4);background:rgba(255,77,109,.1)">❤️ 인라이플 ${FAVCNT[r.id]}명 저장</span>`:''}
         ${(r.hs||r.k==='회식')?`<span class="tag hot">🍻 회식 가능</span>`:''}
       </div>
       <div class="info">
@@ -2086,6 +2096,7 @@ const up = new Date(D.meta.updated);
 document.getElementById('mUpd').textContent = `${String(up.getMonth()+1).padStart(2,'0')}.${String(up.getDate()).padStart(2,'0')} 갱신`;
 document.getElementById('fUpd').textContent = '마지막 데이터 갱신: ' + up.toLocaleString('ko-KR');
 renderToday(); render(); renderRanking(); renderHof(); renderFavs(); renderNewBanner(); renderA2HS();
+FAVCNT_MINE = Object.fromEntries(Object.keys(FAV.items).map(i=>[i,1])); if(Object.keys(FAV.items).length) pushFavPub();
 refreshMe(); document.getElementById('meBtn').onclick = ()=>openEmoji(); loadChat();
 { const sm = location.hash.match(/#fmap=([A-Za-z0-9]{6,10})/); if(sm) setTimeout(()=>loadSharedMap(sm[1]), 800); }
 { const fm = location.hash.match(/#fav=([A-Za-z0-9]{6,10})/); if(fm){ setTimeout(()=>{ importFavCode(fm[1]); history.replaceState(null,'',location.pathname); }, 1200); } }
