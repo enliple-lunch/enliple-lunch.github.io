@@ -393,7 +393,12 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .mi2 .pc{font-size:12.5px;font-weight:800;color:var(--tx2);white-space:nowrap}
 .mi2.done .pc{color:var(--ac)}
 .bdg{font-size:12px;margin-left:3px;letter-spacing:-1px}
-.newbn:empty,.sharedmap:empty{display:none}
+.newbn:empty,.sharedmap:empty,.a2hs:empty{display:none}
+.a2hs{margin-top:12px;display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,rgba(62,166,255,.18),rgba(62,166,255,.04));border:1px solid rgba(62,166,255,.45);border-radius:16px;padding:11px 14px;font-size:14px}
+.a2hs .t{flex:1;min-width:0;line-height:1.5}
+.a2hs .t small{color:var(--tx2);font-size:12.5px}
+.a2hs a{font-weight:800;color:#3ea6ff;white-space:nowrap;text-decoration:none;font-size:13px}
+.a2hs .x{width:28px;height:28px;border-radius:50%;background:var(--soft);color:var(--tx3);flex:none}
 .newbn{margin-top:12px;display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,rgba(245,165,36,.18),rgba(245,165,36,.04));border:1px solid rgba(245,165,36,.4);border-radius:16px;padding:11px 14px;font-size:14px}
 .newbn .nb{flex:1;min-width:0;line-height:1.5}
 .newbn .nb a{font-weight:800;color:var(--tx);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
@@ -745,6 +750,7 @@ html.dark .fbrand .fl.dark{display:inline}
     </div>
   </div>
 
+  <section class="a2hs" id="a2hs"></section>
   <section class="sharedmap" id="sharedMap"></section>
   <section class="newbn" id="newBanner"></section>
   <section class="polls" id="polls"></section>
@@ -1519,6 +1525,16 @@ async function importFavCode(code){
 }
 function importFavPrompt(){ const c = prompt('받은 6자리 코드를 입력하세요'); if(c) importFavCode(c); }
 /* ======================= 신규 배너 ======================= */
+function renderA2HS(){
+  const el = document.getElementById('a2hs'); if(!el) return;
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  const mobile = /iphone|ipad|android/i.test(navigator.userAgent);
+  if(standalone || !mobile || LS.get('gl_a2hs')==='1'){ el.innerHTML=''; return; }
+  const ios = /iphone|ipad/i.test(navigator.userAgent), kakao = /kakaotalk/i.test(navigator.userAgent);
+  const how = kakao ? '카톡 안에서는 안 돼요 · ⋯ → 다른 브라우저로 열기 후 추가' : ios ? '아래 공유(□↑) → 홈 화면에 추가' : '오른쪽 위 ⋮ → 홈 화면에 추가';
+  el.innerHTML = `<span style="font-size:22px">📲</span><div class="t"><b>홈 화면에 추가하면 앱처럼 써요</b><br><small>${how}</small></div><a href="guide.html#home">방법 ›</a><button class="x" title="다시 안 보기">✕</button>`;
+  el.querySelector('.x').onclick = ()=>{ LS.set('gl_a2hs','1'); el.innerHTML=''; };
+}
 function renderNewBanner(){
   const el = document.getElementById('newBanner'); if(!el) return;
   const today = ymd(); if(LS.get('gl_nb')===today){ el.innerHTML=''; return; }
@@ -2069,7 +2085,7 @@ document.getElementById('mCnt').textContent = D.meta.count;
 const up = new Date(D.meta.updated);
 document.getElementById('mUpd').textContent = `${String(up.getMonth()+1).padStart(2,'0')}.${String(up.getDate()).padStart(2,'0')} 갱신`;
 document.getElementById('fUpd').textContent = '마지막 데이터 갱신: ' + up.toLocaleString('ko-KR');
-renderToday(); render(); renderRanking(); renderHof(); renderFavs(); renderNewBanner();
+renderToday(); render(); renderRanking(); renderHof(); renderFavs(); renderNewBanner(); renderA2HS();
 refreshMe(); document.getElementById('meBtn').onclick = ()=>openEmoji(); loadChat();
 { const sm = location.hash.match(/#fmap=([A-Za-z0-9]{6,10})/); if(sm) setTimeout(()=>loadSharedMap(sm[1]), 800); }
 { const fm = location.hash.match(/#fav=([A-Za-z0-9]{6,10})/); if(fm){ setTimeout(()=>{ importFavCode(fm[1]); history.replaceState(null,'',location.pathname); }, 1200); } }

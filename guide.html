@@ -42,6 +42,13 @@ a{color:inherit}
 .hero .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .hero .facts span{font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2)}
 
+/* 모바일 안내 */
+.mob{display:flex;gap:14px;align-items:flex-start;margin-top:14px;padding:18px 20px;border-radius:20px;background:linear-gradient(135deg,rgba(62,166,255,.16),rgba(127,191,49,.10));border:1.5px solid rgba(62,166,255,.45)}
+.mob .mi{font-size:34px;line-height:1}
+.mob .mt b{font-size:16.5px;font-weight:800}
+.mob .mt p{font-size:15px;color:var(--tx2)}
+.mob .mt p b{font-size:15px}
+.mbtn{display:inline-block;margin-top:10px;text-decoration:none;font-size:14px;font-weight:800;padding:9px 14px;border-radius:11px;background:#3ea6ff;color:#fff}
 /* 목차 */
 .toc{display:flex;gap:7px;flex-wrap:wrap;padding:14px 0 10px;position:sticky;top:58px;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
 @media(max-width:699px){.toc{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-right:28px;mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}}
@@ -129,6 +136,17 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
   </div>
 </div>
 
+<div class="mob">
+  <div class="mi">📱</div>
+  <div class="mt">
+    <b>모바일에서도 편하게 볼 수 있어요.</b>
+    <p>폰 화면에 맞게 자동으로 바뀌어요.</p>
+    <p><b>홈 화면(바탕화면)에 추가</b>하면 더 좋아요.</p>
+    <p>앱처럼 아이콘 하나로 바로 열리고, 두 번째부터는 더 빨리 떠요.</p>
+    <a href="#home" class="mbtn">📲 홈 화면에 추가하는 법 보기</a>
+  </div>
+</div>
+
 <nav class="toc">
   <a href="#start">처음 오셨다면</a>
   <a href="#pick">추천 점심</a>
@@ -142,7 +160,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
   <a href="#chat">수다방</a>
   <a href="#request">맛집 추가</a>
   <a href="#profile">프로필·기기 연결</a>
-  <a href="#home">홈 화면 추가</a>
+  <a href="#home">📲 홈 화면 추가</a>
   <a href="#faq">자주 묻는 질문</a>
 </nav>
 
@@ -419,7 +437,9 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
 <!-- 13 -->
 <section id="home">
   <h2><span class="n">13</span> 폰 홈 화면에 추가하기</h2>
-  <p class="lead">앱처럼 아이콘 하나로 바로 열 수 있어요.</p>
+  <p class="lead">모바일에서도 편하게 볼 수 있어요.</p>
+  <p class="lead">홈 화면(바탕화면)에 추가하면 <b>앱처럼 아이콘 하나로</b> 바로 열 수 있어요.</p>
+  <p class="lead">두 번째부터는 저장된 화면이 먼저 떠서 더 빨라요.</p>
   <div class="grid2">
     <div class="card">
       <h3>🍎 아이폰 (사파리)</h3>
@@ -434,6 +454,13 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
       <p>③ 인라이플 아이콘이 홈 화면에 생겨요.</p>
     </div>
   </div>
+  <div class="card">
+    <h3>💻 PC 바탕화면에 두고 싶다면 (크롬 · 엣지)</h3>
+    <p>① 사이트를 열고 주소창 오른쪽 <b>설치 아이콘(⊕)</b>이나 <b>⋮ 메뉴 → 앱 설치 / 바로가기 만들기</b>를 눌러요.</p>
+    <p>② "창으로 열기"를 체크하면 앱처럼 따로 떠요.</p>
+    <p>③ 바탕화면과 시작 메뉴에 인라이플 아이콘이 생겨요.</p>
+  </div>
+  <div class="tip">💡 카톡으로 링크를 받았다면, 카톡 안 브라우저 말고 <b>사파리나 크롬으로 열어서</b> 추가해야 해요.<br>카톡 화면 오른쪽 아래 <b>⋯ → 다른 브라우저로 열기</b>를 누르면 돼요.</div>
 </section>
 
 <!-- 14 -->
