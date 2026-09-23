@@ -353,6 +353,33 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .femo button.on{border-color:var(--ac)}
 .mk-fav{width:26px;height:26px;border-radius:50%;background:#ffd23f;border:2px solid #fff;display:grid;place-items:center;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,.4)}
 .mp .act .g{background:var(--soft2);color:var(--tx)}
+/* ================= MISSIONS / BANNERS / SHARED MAP ================= */
+.mis{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:700px){.mis{grid-template-columns:1fr 1fr}}
+.mi2{display:flex;gap:11px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.mi2 .bd{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:var(--soft);flex:none;filter:grayscale(1);opacity:.55}
+.mi2.done .bd{filter:none;opacity:1;background:var(--t-wx-bg);box-shadow:0 0 0 2px var(--ac) inset}
+.mi2 .tx{flex:1;min-width:0}
+.mi2 .tx b{display:block;font-size:14px}
+.mi2 .tx small{display:block;font-size:12px;color:var(--tx3);margin-top:2px}
+.mi2 .pb{height:6px;border-radius:4px;background:var(--soft);overflow:hidden;margin-top:6px}
+.mi2 .pb i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2));border-radius:4px}
+.mi2 .pc{font-size:12.5px;font-weight:800;color:var(--tx2);white-space:nowrap}
+.mi2.done .pc{color:var(--ac)}
+.bdg{font-size:12px;margin-left:3px;letter-spacing:-1px}
+.newbn:empty,.sharedmap:empty{display:none}
+.newbn{margin-top:12px;display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,rgba(245,165,36,.18),rgba(245,165,36,.04));border:1px solid rgba(245,165,36,.4);border-radius:16px;padding:11px 14px;font-size:14px}
+.newbn .nb{flex:1;min-width:0;line-height:1.5}
+.newbn .nb a{font-weight:800;color:var(--tx);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.newbn .x{width:28px;height:28px;border-radius:50%;background:var(--soft);color:var(--tx3);flex:none}
+.sharedmap{margin-top:12px;background:var(--card);border:2px solid #ffd23f;border-radius:22px;padding:16px;box-shadow:var(--shadow)}
+.sharedmap h2{font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sharedmap h2 small{font-size:13px;color:var(--tx3);font-weight:600}
+.rainbtn{display:inline-flex;margin-top:8px;font-size:13px;font-weight:800;padding:7px 12px;border-radius:10px;background:rgba(62,166,255,.18);color:#8cc8ff;border:1px solid rgba(62,166,255,.45)}
+html:not(.dark) .rainbtn{color:#1f6fb8}
+.flr{display:inline-block;font-size:11.5px;font-weight:700;color:var(--t-near-tx);background:var(--t-near-bg);border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:1px}
+.uphoto{position:absolute;left:12px;bottom:12px;z-index:3;font-size:12px;font-weight:700;background:rgba(0,0,0,.6);color:#fff;padding:4px 9px;border-radius:8px}
+.phbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:12px;padding:11px;border-radius:12px;background:var(--soft);border:1.5px dashed var(--line2);color:var(--tx2);font-size:14px;font-weight:700}
 /* ================= HALL OF FAME ================= */
 .hof{display:grid;grid-template-columns:1fr;gap:10px}
 @media(min-width:700px){.hof{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}
@@ -648,6 +675,8 @@ html.dark .fbrand .fl.dark{display:inline}
     </div>
   </div>
 
+  <section class="sharedmap" id="sharedMap"></section>
+  <section class="newbn" id="newBanner"></section>
   <section class="polls" id="polls"></section>
 
   <div class="hero">
@@ -689,6 +718,11 @@ html.dark .fbrand .fl.dark{display:inline}
     </div>
     <div class="rnote">맛집 점수 = 🍽️먹었어요 ×3 + 후기 ×2 + 좋아요 반응 ×1 − 👎. 가게 상세에서 "오늘 여기서 먹었어요"를 누르면 랭킹에 반영돼요. 후기 옆 👍를 누르면 베스트 한 줄에 올라가요.</div>
   </section>
+
+  <details class="fold" id="foldMission">
+    <summary><span>🎯 이달의 미션 <span id="misCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
+    <div class="fb"><div id="misBox"></div></div>
+  </details>
 
   <details class="fold" id="foldFav">
     <summary><span>⭐ 내 즐겨찾기 <span id="favCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
@@ -838,7 +872,7 @@ async function loadWeather(){
     const c = r1.current, d = r1.daily, wc = WXC[c.weather_code] || ['–','🌡️','cloud'];
     WX = { t:Math.round(c.temperature_2m), at:Math.round(c.apparent_temperature), hum:c.relative_humidity_2m, wind:Math.round(c.wind_speed_10m), label:wc[0], icon:wc[1], kind:wc[2],
            tmax:Math.round(d.temperature_2m_max[0]), tmin:Math.round(d.temperature_2m_min[0]), pop:d.precipitation_probability_max[0], pm10:r2?.current?.pm10 ?? null, pm25:r2?.current?.pm2_5 ?? null,
-           hours:(function(){ const h=r1.hourly; if(!h) return null; const now=new Date(); const useTomorrow = now.getHours()>=15; const day = useTomorrow ? 1 : 0; const out=[]; for(const hr of [11,12,13,14]){ const idx = day*24+hr; if(h.time[idx]===undefined) continue; out.push({hr, t:Math.round(h.temperature_2m[idx]), code:h.weather_code[idx], pop:h.precipitation_probability[idx] ?? 0}); } return {tomorrow:useTomorrow, list:out}; })() };
+           hours:(function(){ const h=r1.hourly; if(!h) return null; const now=new Date(); const useTomorrow = now.getHours()>=16; const day = useTomorrow ? 1 : 0; const out=[]; for(const hr of [12,13,14,15]){ const idx = day*24+hr; if(h.time[idx]===undefined) continue; out.push({hr, t:Math.round(h.temperature_2m[idx]), code:h.weather_code[idx], pop:h.precipitation_probability[idx] ?? 0}); } return {tomorrow:useTomorrow, list:out}; })() };
     LS.set('gl_wx', JSON.stringify({ t: Date.now(), wx: WX }));
   }catch(e){ if(!WX) WX = null; }
   renderWeather(); renderToday();
@@ -858,7 +892,12 @@ function renderWeather(){
   document.getElementById('wxChips').innerHTML = ch.join('');
   const rule = wxRule(); let tip = rule ? rule.line(WX) : '';
   if(p25 && (p25[1]==='y'||p25[1]==='r')) tip += ' 미세먼지 안 좋으니 <b>이동 짧은 곳</b> 추천.';
+  const rain13 = (WX.hours && WX.hours.list || []).find(x=>x.hr===13);
+  const rainy = WX.kind==='rain' || WX.kind==='snow' || (rain13 && rain13.pop>=60);
+  document.documentElement.classList.toggle('rainy', !!rainy);
+  if(rainy) tip += `<br><button class="rainbtn" id="rainBtn">☔ 비 오는 날 모드: 우리 건물 + 200m 이내만 보기</button>`;
   document.getElementById('wxTip').innerHTML = tip;
+  const rb = document.getElementById('rainBtn'); if(rb) rb.onclick = ()=>{ state.dist = 200; const dr=document.getElementById('dR'); dr.value=200; document.getElementById('dV').textContent='200'; state.kind='전체'; render(); document.querySelector('.sec').scrollIntoView({behavior:'smooth'}); toast('☔ 200m 이내 가게만 보여요 (거리 슬라이더로 풀 수 있어요)'); };
   const hb = document.getElementById('wxHours');
   if(WX.hours && WX.hours.list.length){
     const nowH = new Date().getHours();
@@ -911,6 +950,13 @@ function phTag(r, size, label){
   const c = PHC[r.c] || ['#e9e4dc','#cfc6b8'];
   return `<div class="noimg ph" style="--ph1:${c[0]};--ph2:${c[1]};font-size:${size}px"><span class="e">${emo(r.c)}</span>${label?`<span class="lb">${esc(r.c)}</span>`:''}</div>`;
 }
+function floorOf(r){
+  const a = (r.a||'').replace(/\(.*?\)/g,'');
+  const fl = a.match(/(지하\s?\d+층|B\d+층?|\d+층)/), room = a.match(/\b([A-Z]?\d{2,4}(?:-\d+)?호)/), bld = a.match(/([가-힣A-Za-z0-9]*(?:타워|빌딩|센터|밸리|몰|플라자|스퀘어|아이티|IT|포스트|하이엔드|벤처)[가-힣A-Za-z0-9]*(?:\d차)?)/);
+  if(!fl && !room) return null;
+  return { bld: bld ? bld[1] : '', fl: fl ? fl[1].replace(/\s/g,'').replace(/^B(\d+)층?$/,'지하$1층') : '', room: room ? room[1] : '' };
+}
+const floorShort = r => { const f = floorOf(r); if(!f || !f.fl) return ''; const fl = f.fl.replace('지하','B').replace('층','F'); return r.d<=30 ? `우리 건물 ${fl}` : `${f.bld?f.bld.slice(0,8)+' ':''}${fl}`; };
 function imgTag(r, size){
   return r.ph ? `<img loading="lazy" src="${r.ph}" alt="" data-c="${esc(r.c)}" onerror="this.outerHTML=phTag(BYID['${r.id}'],${size},${size>=34})">`
               : phTag(r, size, size>=34);
@@ -974,16 +1020,17 @@ function renderMap(){
   if(!MAP) return;
   MAP_LAYER.clearLayers(); MAP_SPECIAL.clearLayers(); MAP_MARKERS = {};
   const sync = document.getElementById('mapSync')?.checked;
-  const shown = sync ? filtered() : L_ALL_FOR_MAP();
+  const shown = MAP_SHARED ? Object.keys(MAP_SHARED.items).filter(id=>BYID[id] && (MAP_SHARED.tab==='all' || (MAP_SHARED.items[id]||[]).includes(MAP_SHARED.tab))).map(id=>BYID[id]) : (sync ? filtered() : L_ALL_FOR_MAP());
   const pickIds = new Set(TODAY ? [TODAY.main?.id, ...(TODAY.alts||[]).map(a=>a.id)].filter(Boolean) : []);
   let n = 0;
   for(const r of shown){
     if(!r.la || !r.lo) continue;
-    if(MAP_HIDE.has(r.k)) continue;
-    if(MAP_FAVONLY && !isFav(r.id)) continue; n++;
+    if(!MAP_SHARED && MAP_HIDE.has(r.k)) continue;
+    if(!MAP_SHARED && MAP_FAVONLY && !isFav(r.id)) continue; n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
-    if(isPick){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
+    if(MAP_SHARED){ const sf = MAP_SHARED.folders.find(x=>x.id===(MAP_SHARED.items[r.id]||[])[0]); m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-fav">${sf?sf.emoji:'⭐'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:700 }); }
+    else if(isPick){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
     else if(isTop){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-top">${RK[r.id]===1?'🥇':RK[r.id]===2?'🥈':'🥉'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:800 }); }
     else if(isFav(r.id)){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-fav">${favIcon(r.id)}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:700 }); }
     else { const col = KIND_COLOR[r.k] || '#8ccf3c'; const alt = pickIds.has(r.id); m = window.L.circleMarker([r.la,r.lo], { radius: alt?9:7, color: document.documentElement.classList.contains('dark')?'#0b0d12':'#ffffff', weight: 2, fillColor: alt?'#ff3d7f':col, fillOpacity:1 }); }
@@ -993,7 +1040,8 @@ function renderMap(){
     (isPick||isTop ? MAP_SPECIAL : MAP_LAYER).addLayer(m);
     MAP_MARKERS[r.id] = m;
   }
-  const mc = document.getElementById('mapCnt'); if(mc) mc.textContent = `(${n}곳)`;
+  const mc = document.getElementById('mapCnt'); if(mc) mc.textContent = MAP_SHARED ? `· ${MAP_SHARED.nick}님 맛지도 (${n}곳)` : `(${n}곳)`;
+  if(MAP_SHARED && n){ try{ const b = window.L.latLngBounds(shown.filter(r=>r.la).map(r=>[r.la,r.lo])); b.extend([C.lat,C.lon]); MAP.fitBounds(b.pad(0.15), {maxZoom:17}); }catch(e){} }
 }
 const L_ALL_FOR_MAP = () => D.list;
 function drawRadar(){ renderMap(); } // 호환 (테마 전환·추천 갱신 시 호출됨)
@@ -1019,16 +1067,20 @@ async function fbDel(p){ try{ return (await fetch(FB+p+'.json',{method:'DELETE'}
 const REACTIONS = ['👍','🔥','😋','🍽️','💸','🫶','😐','👎'];
 const POS = ['👍','🔥','😋','🍽️','💸','🫶'];
 let STORE = { comments:{}, reactions:{}, visits:{}, requests:{}, clikes:{}, polls:{}, votes:{} };
-let CMTCNT = {}, RK = {}, VISITED_THIS_MONTH = new Set();
+let CMTCNT = {}, RK = {}, VISITED_THIS_MONTH = new Set(), PMETA = {}, UPH_LOADED = {};
+D.list.forEach(r=>{ r.ph0 = r.ph || ''; });
 
 async function loadAll(){
-  const all = await fbGet('/') || {};
+  const NODES = ['comments','reactions','clikes','visits','requests','polls','votes','pmeta'];
+  const got = await Promise.all(NODES.map(n=>fbGet('/'+n)));
+  const all = {}; NODES.forEach((n,i)=>all[n]=got[i]||{});
+  PMETA = all.pmeta || {}; loadUserPhotos();
   STORE = { comments: all.comments||{}, reactions: all.reactions||{}, visits: all.visits||{}, requests: all.requests||{}, clikes: all.clikes||{}, polls: all.polls||{}, votes: all.votes||{} };
-  renderPolls(); renderHof();
+  renderMissions(); renderPolls(); renderHof();
   if(document.getElementById('reqList')) renderReqList();
   CMTCNT = {}; const flat = [];
   for(const rid in STORE.comments){ const o = STORE.comments[rid]||{}; CMTCNT[rid] = Object.keys(o).length; for(const k in o) flat.push({rid, cid:k, ...o[k]}); }
-  for(const rid in STORE.visits){ const o = STORE.visits[rid]||{}; for(const k in o){ const v = o[k]; if(v && v.ts && Date.now()-v.ts < 3*86400e3) flat.push({rid, visit:true, ts:v.ts, nick:v.nick||'익명', emoji:v.emoji||'🙂'}); } }
+  for(const rid in STORE.visits){ const o = STORE.visits[rid]||{}; for(const k in o){ const v = o[k]; if(v && v.ts && Date.now()-v.ts < 3*86400e3) flat.push({rid, visit:true, ts:v.ts, uid:v.uid, nick:v.nick||'익명', emoji:v.emoji||'🙂'}); } }
   flat.sort((a,b)=>b.ts-a.ts);
   renderFeed(flat.slice(0,40));
   RK = calcRanking('m0').shopRank;
@@ -1041,7 +1093,7 @@ function renderFeed(items){
   document.getElementById('feedCnt').textContent = items.length? `(${items.length})` : '';
   const el = document.getElementById('feed');
   if(!items.length){ el.innerHTML = '<div class="cempty">아직 후기가 없어요. 첫 후기를 남겨보세요 🙌</div>'; return; }
-  el.innerHTML = items.map(it=>{ const r = BYID[it.rid]; if(it.visit) return `<div class="fitem visit" data-rid="${it.rid}"><div class="fav">${it.emoji}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'?'}</span><span class="nick">${esc(it.nick)}</span><span>·</span><span>${ago(it.ts)}</span></div><div class="ftext" style="color:var(--tx2)">🍽️ 여기서 먹었어요</div></div></div>`; return `<div class="fitem" data-rid="${it.rid}"><div class="fav">${it.emoji||'🙂'}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'알 수 없는 가게'}</span><span class="nick">${esc(it.nick)}</span><span>·</span><span>${ago(it.ts)}</span>${(n=>n?`<span class="flike">👍 ${n}</span>`:'')(Object.keys((STORE.clikes[it.rid]||{})[it.cid]||{}).length)}</div><div class="ftext">${esc(it.text)}</div></div></div>`; }).join('');
+  el.innerHTML = items.map(it=>{ const r = BYID[it.rid]; if(it.visit) return `<div class="fitem visit" data-rid="${it.rid}"><div class="fav">${it.emoji}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'?'}</span><span class="nick">${esc(it.nick)}${badgeOf(it.uid)}</span><span>·</span><span>${ago(it.ts)}</span></div><div class="ftext" style="color:var(--tx2)">🍽️ 여기서 먹었어요</div></div></div>`; return `<div class="fitem" data-rid="${it.rid}"><div class="fav">${it.emoji||'🙂'}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'알 수 없는 가게'}</span><span class="nick">${esc(it.nick)}</span><span>·</span><span>${ago(it.ts)}</span>${(n=>n?`<span class="flike">👍 ${n}</span>`:'')(Object.keys((STORE.clikes[it.rid]||{})[it.cid]||{}).length)}</div><div class="ftext">${esc(it.text)}</div></div></div>`; }).join('');
   el.querySelectorAll('.fitem').forEach(e=>e.onclick=()=>{ const r=BYID[e.dataset.rid]; if(r) openModal(r); });
 }
 
@@ -1182,7 +1234,7 @@ function openPollMaker(){
   let picked = base.slice(0,4).map(r=>r.id);
   const now = new Date();
   const mk = (h,m)=>{ const d=new Date(now); d.setHours(h,m,0,0); return d.getTime(); };
-  const opts = [ {l:'11:30', t:mk(11,30)}, {l:'11:45', t:mk(11,45)}, {l:'12:00', t:mk(12,0)}, {l:'30분 뒤', t:Date.now()+30*60e3}, {l:'1시간 뒤', t:Date.now()+60*60e3} ].filter(o=>o.t>Date.now()+2*60e3);
+  const opts = [ {l:'12:30', t:mk(12,30)}, {l:'12:45', t:mk(12,45)}, {l:'13:00', t:mk(13,0)}, {l:'30분 뒤', t:Date.now()+30*60e3}, {l:'1시간 뒤', t:Date.now()+60*60e3} ].filter(o=>o.t>Date.now()+2*60e3);
   if(!opts.length) opts.push({l:'30분 뒤', t:Date.now()+30*60e3});
   let dl = opts[0].t;
   const box = document.getElementById('epkb');
@@ -1225,7 +1277,7 @@ window.addEventListener('hashchange', ()=>{ window.__pollFocused=false; renderPo
 
 async function shareShop(r){
   const url = naverUrl(r);
-  const text = `🍽️ 오늘 점심 ${r.n} 어때?\n${r.c} · ${distTxt(r.d)}${r.pr?' · 약 '+won(r.pr):''}${r.nsc?' · 네이버 ★'+r.nsc:''}\n12시에 로비에서 보자 👋`;
+  const text = `🍽️ 오늘 점심 ${r.n} 어때?\n${r.c} · ${distTxt(r.d)}${r.pr?' · 약 '+won(r.pr):''}${r.nsc?' · 네이버 ★'+r.nsc:''}\n1시에 로비에서 보자 👋`;
   if(navigator.share){ try{ await navigator.share({ title: r.n, text, url }); return; }catch(e){ if(e.name==='AbortError') return; } }
   try{ await navigator.clipboard.writeText(text + '\n' + url); toast('복사됐어요. 단톡에 붙여넣기 📋'); }catch(e){ prompt('복사하세요', text + '\n' + url); }
 }
@@ -1237,6 +1289,29 @@ function drawTie(pid){
   const iv = setInterval(()=>{ out.textContent = ' → ' + names[i++%names.length]; }, 90);
   setTimeout(()=>{ clearInterval(iv); out.innerHTML = ' → <b style="color:var(--ac)">' + esc(BYID[pick]?.n||'') + '</b> 당첨! (누가 눌러도 같은 결과)'; confetti(); document.querySelectorAll('#poll-'+pid+' .cand').forEach(c=>c.classList.toggle('win', c.dataset.rid===pick)); }, 1600);
 }
+/* ======================= 사진 올리기 ======================= */
+async function loadUserPhotos(){
+  const need = Object.keys(PMETA).filter(id=>BYID[id] && !BYID[id].ph0 && UPH_LOADED[id]!==PMETA[id].ts);
+  if(!need.length) return;
+  const res = await Promise.all(need.map(id=>fbGet('/photos/'+id)));
+  let changed = false;
+  need.forEach((id,i)=>{ if(typeof res[i]==='string' && res[i].startsWith('data:image/')){ BYID[id].ph = res[i]; UPH_LOADED[id] = PMETA[id].ts; changed = true; } });
+  if(changed){ render(); renderToday(); renderFavs(); }
+}
+function resizeImg(file, max, q){ return new Promise((res,rej)=>{ const img = new Image(); img.onload = ()=>{ const s = Math.min(1, max/Math.max(img.width, img.height)); const c = document.createElement('canvas'); c.width = Math.round(img.width*s); c.height = Math.round(img.height*s); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(img.src); res(c.toDataURL('image/jpeg', q)); }; img.onerror = rej; img.src = URL.createObjectURL(file); }); }
+function uploadPhoto(r){
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = async ()=>{
+    const f = inp.files && inp.files[0]; if(!f) return;
+    toast('📸 사진 줄이는 중…');
+    let url; try{ url = await resizeImg(f, 720, .72); if(url.length > 300000) url = await resizeImg(f, 520, .6); }catch(e){ toast('사진을 읽을 수 없어요'); return; }
+    const ok1 = await fbPut('/photos/'+r.id, url), meta = { ts: Date.now(), uid: ME.uid, nick: ME.nick.slice(0,24) };
+    const ok2 = ok1 && await fbPut('/pmeta/'+r.id, meta);
+    if(ok1 && ok2){ r.ph = url; PMETA[r.id] = meta; UPH_LOADED[r.id] = meta.ts; toast('📸 사진 등록 완료! 모두에게 보여요'); openModal(r); render(); renderToday(); }
+    else toast('업로드 실패 😢 (사진이 너무 크면 다른 사진으로)');
+  };
+  inp.click();
+}
 /* ======================= 즐겨찾기 (폴더) ======================= */
 const FAV_EMOJI = ['⭐','❤️','🍚','🍜','🍣','🍖','🍻','☕','🥗','🍔','💼','🎉','👍','🔥','🤫','🏆'];
 const FAV_COLOR = { '⭐':'#ffd23f','❤️':'#ff4d6d','🍚':'#7FBF31','🍜':'#ff9d1a','🍣':'#3ea6ff','🍖':'#c0703a','🍻':'#b36bff','☕':'#a47551','🥗':'#4dd4ac','🍔':'#ff4d3d','💼':'#7a8699','🎉':'#ff3d7f','👍':'#3ea6ff','🔥':'#ff5a1f','🤫':'#9aa3b5','🏆':'#f2b500' };
@@ -1244,7 +1319,9 @@ let FAV = (()=>{ try{ const f = JSON.parse(LS.get('gl_favs')||'null'); if(f && A
 let FAV_TAB = 'all';
 const isFav = id => (FAV.items[id]||[]).length > 0;
 const favIcon = id => { const f = FAV.folders.find(x=>x.id===(FAV.items[id]||[])[0]); return f ? f.emoji : '⭐'; };
-function saveFav(){ FAV.ts = Date.now(); LS.set('gl_favs', JSON.stringify(FAV)); renderFavs(); render(); if(typeof MAP!=='undefined' && MAP) renderMap(); if(CUR){ const b=document.getElementById('mFav'); if(b) b.textContent = isFav(CUR.id)?favIcon(CUR.id):'☆'; } }
+let FAV_SYNC_T = null;
+const favPayload = () => ({ folders: FAV.folders, items: FAV.items, ts: Date.now(), uid: ME.uid, nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8) });
+function saveFav(){ FAV.ts = Date.now(); LS.set('gl_favs', JSON.stringify(FAV)); if(FAV.code){ clearTimeout(FAV_SYNC_T); FAV_SYNC_T = setTimeout(()=>fbPut('/favs/'+FAV.code, favPayload()), 1200); } renderFavs(); render(); if(typeof MAP!=='undefined' && MAP) renderMap(); if(CUR){ const b=document.getElementById('mFav'); if(b) b.textContent = isFav(CUR.id)?favIcon(CUR.id):'☆'; } }
 function toggleFavIn(rid, fid){ const a = FAV.items[rid] || []; const i = a.indexOf(fid); if(i>=0) a.splice(i,1); else a.push(fid); if(a.length) FAV.items[rid]=a; else delete FAV.items[rid]; saveFav(); }
 function openFavPicker(r){
   if(!r) return;
@@ -1265,7 +1342,7 @@ function openFavPicker(r){
   draw();
   document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
 }
-function renderFavs(){
+function renderFavs(){ if(typeof renderShared==='function' && SHARED) renderShared();
   const box = document.getElementById('favBox'); if(!box) return;
   const ids = Object.keys(FAV.items).filter(id=>BYID[id]);
   document.getElementById('favCnt').textContent = ids.length ? `(${ids.length})` : '';
@@ -1275,7 +1352,7 @@ function renderFavs(){
   const tabs = `<div class="ftabs"><button class="ftab ${FAV_TAB==='all'?'on':''}" data-t="all">전체<small>${ids.length}</small></button>${FAV.folders.map(f=>`<button class="ftab ${FAV_TAB===f.id?'on':''}" data-t="${f.id}" style="--fc:${FAV_COLOR[f.emoji]||'#ffd23f'}">${f.emoji} ${esc(f.name)}<small>${cnt(f.id)}</small></button>`).join('')}</div>`;
   const shown = ids.filter(id=>FAV_TAB==='all' || (FAV.items[id]||[]).includes(FAV_TAB)).map(id=>BYID[id]).sort((a,b)=>a.d-b.d);
   const rows = shown.length ? shown.map(r=>{ const rt=rating(r); const fs=(FAV.items[r.id]||[]).map(fid=>FAV.folders.find(f=>f.id===fid)?.emoji).filter(Boolean).join(''); return `<div class="frow" data-id="${r.id}"><span class="th">${imgTag(r,22)}</span><div class="ct"><b>${esc(r.n)}</b><small>${fs} ${r.c} · ${distTxt(r.d)}${rt?' · ★'+rt.v:''}${r.pr?' · '+won(r.pr):''}</small></div><button class="fx" data-edit="${r.id}">폴더</button></div>`; }).join('') : '<div class="rempty">이 폴더는 비어 있어요</div>';
-  box.innerHTML = tabs + `<div class="flist">${rows}</div><div class="ftools"><button id="fPick">🎲 이 폴더에서 뽑기</button><button id="fMap">📍 지도에서 보기</button><button id="fManage">✏️ 폴더 관리</button><button id="fShare">📤 다른 기기로 옮기기·공유</button><button id="fImport">📥 코드로 가져오기</button></div>`;
+  box.innerHTML = tabs + `<div class="flist">${rows}</div><div class="ftools"><button id="fPick">🎲 이 폴더에서 뽑기</button><button id="fMap">📍 지도에서 보기</button><button id="fManage">✏️ 폴더 관리</button><button id="fShare">🗺️ 내 맛지도 공유</button><button id="fImport">📥 코드로 가져오기</button></div>`;
   box.querySelectorAll('.ftab').forEach(b=>b.onclick=()=>{ FAV_TAB=b.dataset.t; renderFavs(); });
   box.querySelectorAll('.frow').forEach(e=>e.onclick=ev=>{ if(ev.target.closest('.fx')) return; openModal(BYID[e.dataset.id]); });
   box.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openFavPicker(BYID[b.dataset.edit]));
@@ -1294,14 +1371,47 @@ function openFavManage(){
   draw(); document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
 }
 async function shareFavs(){
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let code=''; for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
-  const ok = await fbPut('/favs/'+code, { folders: FAV.folders, items: FAV.items, ts: Date.now() });
+  if(!FAV.code){ const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let code=''; for(let i=0;i<7;i++) code += chars[Math.floor(Math.random()*chars.length)]; FAV.code = code; LS.set('gl_favs', JSON.stringify(FAV)); }
+  const ok = await fbPut('/favs/'+FAV.code, favPayload());
   if(!ok){ toast('저장 실패 😢'); return; }
-  const url = location.origin + location.pathname + '#fav=' + code;
-  document.getElementById('epkb').innerHTML = `<h4>📤 다른 기기로 옮기기 · 공유</h4><div class="reqnote">다른 기기(폰↔PC)에서 이 사이트를 열고 <b>📥 코드로 가져오기</b>에 아래 코드를 넣거나, 링크를 그대로 열면 돼요.<br>동료에게 보내면 내 폴더를 그대로 받아갈 수 있어요 (받는 쪽 즐겨찾기에 합쳐짐).</div><div style="text-align:center;font-size:34px;font-weight:900;letter-spacing:6px;margin:14px 0;color:var(--ac)">${code}</div><div class="sharebox"><input readonly value="${url}" id="fUrl"><button class="btn g" id="fCopy">복사</button></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn p full" id="fShareGo">📤 공유하기</button><button class="btn g full" onclick="closeEmoji()">닫기</button></div>`;
+  const base = location.origin + location.pathname;
+  const mapUrl = base + '#fmap=' + FAV.code, copyUrl = base + '#fav=' + FAV.code;
+  document.getElementById('epkb').innerHTML = `<h4>📤 내 맛지도 공유</h4>
+    <div class="reqnote">🗺️ <b>맛지도 링크</b>를 보내면 받은 사람이 <b>${esc(ME.nick)}님의 맛지도</b>를 폴더별 목록과 지도로 볼 수 있어요. 링크는 <b>한 번만 보내면</b> 내가 저장·삭제하는 대로 자동으로 업데이트돼요.</div>
+    <div class="sharebox"><input readonly value="${mapUrl}" id="fUrl"><button class="btn g" id="fCopy">복사</button></div>
+    <div style="display:flex;gap:8px;margin-top:10px"><button class="btn p full" id="fShareGo">🗺️ 맛지도 공유하기</button></div>
+    <div class="rqdl" style="margin-top:16px">내 다른 기기(폰↔PC)로 옮기기</div>
+    <div class="reqnote">다른 기기에서 <b>📥 코드로 가져오기</b>에 아래 코드를 넣으면 즐겨찾기가 그대로 복사돼요.</div>
+    <div style="text-align:center;font-size:30px;font-weight:900;letter-spacing:6px;margin:10px 0;color:var(--ac)">${FAV.code}</div>
+    <div style="display:flex;gap:8px;margin-top:6px"><button class="btn g full" onclick="closeEmoji()">닫기</button></div>`;
   document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
-  document.getElementById('fCopy').onclick = async ()=>{ try{ await navigator.clipboard.writeText(url); toast('복사됐어요 📋'); }catch(e){ document.getElementById('fUrl').select(); } };
-  document.getElementById('fShareGo').onclick = async ()=>{ const text = `⭐ 내 점심 즐겨찾기 (${Object.keys(FAV.items).length}곳)`; if(navigator.share){ try{ await navigator.share({ title:text, text, url }); return; }catch(e){ if(e.name==='AbortError') return; } } try{ await navigator.clipboard.writeText(text+'\n'+url); toast('복사됐어요 📋'); }catch(e){} };
+  document.getElementById('fCopy').onclick = async ()=>{ try{ await navigator.clipboard.writeText(mapUrl); toast('복사됐어요 📋'); }catch(e){ document.getElementById('fUrl').select(); } };
+  document.getElementById('fShareGo').onclick = async ()=>{ const n = Object.keys(FAV.items).length; const text = `🗺️ ${ME.nick}의 점심 맛지도 (${n}곳, 폴더 ${FAV.folders.length}개)`; if(navigator.share){ try{ await navigator.share({ title:text, text, url:mapUrl }); return; }catch(e){ if(e.name==='AbortError') return; } } try{ await navigator.clipboard.writeText(text+'\n'+mapUrl); toast('복사됐어요 📋'); }catch(e){} };
+}
+/* ---- 공유받은 맛지도 보기 ---- */
+let SHARED = null, MAP_SHARED = null;
+async function loadSharedMap(code){
+  const d = await fbGet('/favs/'+code); if(!d || !d.folders){ toast('맛지도를 찾을 수 없어요'); return; }
+  SHARED = { code, nick: d.nick||'익명', emoji: d.emoji||'🙂', folders: d.folders, items: d.items||{}, tab:'all', mine: d.uid===ME.uid };
+  renderShared();
+  document.getElementById('sharedMap').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function renderShared(){
+  const el = document.getElementById('sharedMap'); if(!el) return;
+  if(!SHARED){ el.innerHTML=''; return; }
+  const S = SHARED; const ids = Object.keys(S.items).filter(id=>BYID[id]);
+  const cnt = fid => ids.filter(id=>(S.items[id]||[]).includes(fid)).length;
+  const shown = ids.filter(id=>S.tab==='all' || (S.items[id]||[]).includes(S.tab)).map(id=>BYID[id]).sort((a,b)=>a.d-b.d);
+  el.innerHTML = `<button class="pclose" id="shClose" title="닫기" style="position:relative;float:right;top:-4px;right:-4px">✕</button><h2>🗺️ ${S.emoji} ${esc(S.nick)}님의 맛지도 <small>${ids.length}곳${S.mine?' · 내 맛지도':''}</small></h2>
+    <div class="ftabs" style="margin-top:10px"><button class="ftab ${S.tab==='all'?'on':''}" data-t="all">전체<small>${ids.length}</small></button>${S.folders.map(f=>`<button class="ftab ${S.tab===f.id?'on':''}" data-t="${f.id}" style="--fc:${FAV_COLOR[f.emoji]||'#ffd23f'}">${f.emoji} ${esc(f.name)}<small>${cnt(f.id)}</small></button>`).join('')}</div>
+    <div class="flist">${shown.map(r=>{ const rt=rating(r); const fs=(S.items[r.id]||[]).map(fid=>S.folders.find(f=>f.id===fid)?.emoji).filter(Boolean).join(''); return `<div class="frow" data-id="${r.id}"><span class="th">${imgTag(r,22)}</span><div class="ct"><b>${esc(r.n)}</b><small>${fs} ${r.c} · ${distTxt(r.d)}${rt?' · ★'+rt.v:''}${r.pr?' · '+won(r.pr):''}</small></div>${isFav(r.id)?'<span class="fx">⭐</span>':''}</div>`; }).join('') || '<div class="rempty">이 폴더는 비어 있어요</div>'}</div>
+    <div class="ftools"><button id="shMap">📍 지도에서 보기</button><button id="shPick">🎲 여기서 뽑기</button>${S.mine?'':'<button id="shImport">⭐ 내 즐겨찾기에 담기</button>'}</div>`;
+  el.querySelectorAll('.ftab').forEach(b=>b.onclick=()=>{ S.tab=b.dataset.t; renderShared(); if(MAP_SHARED) renderMap(); });
+  el.querySelectorAll('.frow').forEach(e=>e.onclick=()=>openModal(BYID[e.dataset.id]));
+  document.getElementById('shMap').onclick = ()=>{ MAP_SHARED = S; const d=document.getElementById('foldRadar'); d.open=true; initMap(); renderMap(); document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'}); };
+  document.getElementById('shPick').onclick = ()=>{ if(!shown.length) return; const r = shown[Math.floor(Math.random()*shown.length)]; toast(`🎲 ${S.nick}님 맛지도에서: ${r.n}!`); openModal(r); confetti(); };
+  const im = document.getElementById('shImport'); if(im) im.onclick = ()=>importFavCode(S.code);
+  document.getElementById('shClose').onclick = ()=>{ SHARED = null; MAP_SHARED = null; history.replaceState(null,'',location.pathname); renderShared(); if(typeof MAP!=='undefined' && MAP) renderMap(); };
 }
 async function importFavCode(code){
   code = (code||'').trim().toUpperCase(); if(code.length<6) return;
@@ -1314,6 +1424,52 @@ async function importFavCode(code){
   saveFav(); toast(`⭐ ${n}곳 가져왔어요`); document.getElementById('foldFav').open = true; document.getElementById('foldFav').scrollIntoView({behavior:'smooth'});
 }
 function importFavPrompt(){ const c = prompt('받은 6자리 코드를 입력하세요'); if(c) importFavCode(c); }
+/* ======================= 신규 배너 ======================= */
+function renderNewBanner(){
+  const el = document.getElementById('newBanner'); if(!el) return;
+  const today = ymd(); if(LS.get('gl_nb')===today){ el.innerHTML=''; return; }
+  const nw = D.list.filter(r=>r.nw && (r.k==='밥집'||r.k==='구내식당'||r.hs||r.k==='카페'||r.k==='패스트푸드')).sort((a,b)=>(b.fs||'').localeCompare(a.fs||'')).slice(0,4);
+  if(!nw.length){ el.innerHTML=''; return; }
+  el.innerHTML = `<span style="font-size:22px">🆕</span><div class="nb"><b>새로 생긴 곳</b> · ${nw.map(r=>`<a data-id="${r.id}">${esc(r.n)}</a>`).join(' · ')}<br><small style="color:var(--tx3)">첫 방문 인증하면 🆕 얼리어답터 배지!</small></div><button class="x" title="오늘은 그만 보기">✕</button>`;
+  el.querySelectorAll('a[data-id]').forEach(a=>a.onclick=()=>openModal(BYID[a.dataset.id]));
+  el.querySelector('.x').onclick = ()=>{ LS.set('gl_nb', today); el.innerHTML=''; };
+}
+/* ======================= 이달의 미션 ======================= */
+const MISSIONS = [
+  { id:'visit10', badge:'🔥', name:'개근왕', desc:'이번 달 "먹었어요" 10번', goal:10, f:s=>s.visits },
+  { id:'shops5', badge:'🧭', name:'탐험가', desc:'서로 다른 가게 5곳 방문', goal:5, f:s=>s.shops },
+  { id:'cat5', badge:'🌏', name:'미식가', desc:'서로 다른 카테고리 5종', goal:5, f:s=>s.cats },
+  { id:'review3', badge:'✍️', name:'리뷰어', desc:'후기 3개 남기기', goal:3, f:s=>s.reviews },
+  { id:'first3', badge:'👑', name:'개척자', desc:'이번 달 그 가게 첫 방문자 되기 3번', goal:3, f:s=>s.firsts },
+  { id:'hs2', badge:'🍻', name:'회식러', desc:'회식 가능한 가게 2곳 방문', goal:2, f:s=>s.hs },
+  { id:'new1', badge:'🆕', name:'얼리어답터', desc:'새로 생긴 가게 1곳 방문', goal:1, f:s=>s.news },
+  { id:'bld3', badge:'🏢', name:'방콕러', desc:'우리 건물 가게 3번 방문', goal:3, f:s=>s.bld }
+];
+let BADGES = {};
+function missionStats(){
+  const {s,e} = periodRange('m0'); const per = {}; const firstBy = {};
+  const P = uid => (per[uid] ||= { visits:0, shopSet:new Set(), catSet:new Set(), reviews:0, firsts:0, hsSet:new Set(), newSet:new Set(), bld:0 });
+  for(const rid in STORE.visits){ const r = BYID[rid]; if(!r) continue; let first=null; for(const k in STORE.visits[rid]){ const v = STORE.visits[rid][k]; if(!v || !(v.ts>=s && v.ts<e) || !v.uid) continue; const p=P(v.uid); p.visits++; p.shopSet.add(rid); p.catSet.add(r.c); if(r.hs||r.k==='회식') p.hsSet.add(rid); if(r.nw || (r.fs && r.fs >= new Date(s).toISOString().slice(0,10))) p.newSet.add(rid); if(r.d<=30) p.bld++; if(!first || v.ts<first.ts) first=v; } if(first) firstBy[rid]=first.uid; }
+  for(const rid in STORE.comments){ const r = BYID[rid]; for(const k in STORE.comments[rid]){ const c = STORE.comments[rid][k]; if(!c || !(c.ts>=s && c.ts<e) || !c.uid) continue; const p=P(c.uid); p.reviews++; if(r) p.catSet.add(r.c); } }
+  for(const rid in firstBy) P(firstBy[rid]).firsts++;
+  const out = {}; for(const uid in per){ const p=per[uid]; out[uid] = { visits:p.visits, shops:p.shopSet.size, cats:p.catSet.size, reviews:p.reviews, firsts:p.firsts, hs:p.hsSet.size, news:p.newSet.size, bld:p.bld }; }
+  return out;
+}
+function computeBadges(){ const st = missionStats(); const b = {}; for(const uid in st){ b[uid] = MISSIONS.filter(m=>m.f(st[uid])>=m.goal).map(m=>m.badge); } return { st, b }; }
+const badgeOf = uid => { const a = BADGES[uid]||[]; return a.length ? `<span class="bdg" title="이달의 배지">${a.slice(-3).join('')}</span>` : ''; };
+let MY_BADGE_PREV = null;
+function renderMissions(){
+  const { st, b } = computeBadges(); BADGES = b;
+  const mine = st[ME.uid] || { visits:0, shops:0, cats:0, reviews:0, firsts:0, hs:0, news:0, bld:0 };
+  const done = MISSIONS.filter(m=>m.f(mine)>=m.goal);
+  document.getElementById('misCnt').textContent = `(${done.length}/${MISSIONS.length})`;
+  const box = document.getElementById('misBox'); if(!box) return;
+  const now = new Date(); const left = new Date(now.getFullYear(), now.getMonth()+1, 1) - now; const dleft = Math.ceil(left/86400e3);
+  box.innerHTML = `<div class="rempty" style="padding:0 2px 10px">${now.getMonth()+1}월 미션 · ${dleft}일 남음 · 달성하면 닉네임 옆에 배지가 붙어요 ${(b[ME.uid]||[]).length?'· 내 배지 '+b[ME.uid].join(''):''}</div><div class="mis">` + MISSIONS.map(m=>{ const v = Math.min(m.goal, m.f(mine)); const ok = v>=m.goal; return `<div class="mi2 ${ok?'done':''}"><span class="bd">${m.badge}</span><div class="tx"><b>${m.name}</b><small>${m.desc}</small><div class="pb"><i style="width:${Math.round(v/m.goal*100)}%"></i></div></div><span class="pc">${ok?'달성!':v+'/'+m.goal}</span></div>`; }).join('') + '</div>';
+  const now2 = (b[ME.uid]||[]).join('');
+  if(MY_BADGE_PREV!==null && now2.length > MY_BADGE_PREV.length){ const got = MISSIONS.find(m=>now2.includes(m.badge) && !MY_BADGE_PREV.includes(m.badge)); if(got){ toast(`🎉 미션 달성! ${got.badge} ${got.name}`); confetti(); } }
+  MY_BADGE_PREV = now2;
+}
 /* ======================= 명예의 전당 ======================= */
 function renderHof(){
   const el = document.getElementById('hof'); if(!el) return;
@@ -1334,7 +1490,7 @@ function renderHof(){
 /* ======================= 리스트 ======================= */
 const KINDS = ['전체','밥집','샐러드','카페','패스트푸드','구내식당','회식'];
 const isSalad = r => r.c==='샐러드' || /샐러드|포케|poke|salad/i.test(r.n);
-let state = {kind:'전체', q:'', sort:'dist', cat:'', dist:520, price:25000, fresh:false, cheap:false, virgin:false, fav:false, limit:30};
+let state = {kind:'전체', q:'', sort:'dist', cat:'', dist:520, price:25000, fresh:false, cheap:false, virgin:false, fav:false, bld:false, limit:30};
 const CAT_GROUPS = [
   ['🍚 한식', ['한식','국밥','해장국','곰탕','칼국수','국수','냉면','순대','찌개,전골','감자탕','육류,고기','곱창,막창','족발,보쌈','해물,생선','회','참치회','닭요리','삼계탕','한정식','한식뷔페','샤브샤브']],
   ['🍣 일식', ['일식','초밥,롤','돈까스,우동','일본식라면']],
@@ -1357,7 +1513,7 @@ const CAT_GROUPS = [
   document.getElementById('cat').innerHTML = html;
 })();
 const newCnt = L.filter(r=>r.nw).length;
-document.getElementById('kinds').innerHTML = KINDS.map(k=>`<button class="chip${k==='전체'?' on':''}${k==='회식'?' hs':''}" data-k="${k}">${k==='회식'?'🍻 회식':k==='샐러드'?'🥗 샐러드':k}</button>`).join('') + (newCnt?`<button class="chip alt2" id="chipNew">🆕 신규 ${newCnt}</button>`:'') + `<button class="chip alt2" id="chipFav">⭐ 저장한 곳</button><button class="chip alt2" id="chipCheap">💸 1만원 이하</button><button class="chip alt2" id="chipVirgin">🧭 미개척</button>`;
+document.getElementById('kinds').innerHTML = KINDS.map(k=>`<button class="chip${k==='전체'?' on':''}${k==='회식'?' hs':''}" data-k="${k}">${k==='회식'?'🍻 회식':k==='샐러드'?'🥗 샐러드':k}</button>`).join('') + (newCnt?`<button class="chip alt2" id="chipNew">🆕 신규 ${newCnt}</button>`:'') + `<button class="chip alt2" id="chipFav">⭐ 저장한 곳</button><button class="chip alt2" id="chipBld">🏢 우리 건물</button><button class="chip alt2" id="chipCheap">💸 1만원 이하</button><button class="chip alt2" id="chipVirgin">🧭 미개척</button>`;
 function filtered(){
   let a = L.filter(r=>{
     if(state.kind==='회식'){ if(!(r.k==='회식' || r.hs)) return false; }
@@ -1369,6 +1525,7 @@ function filtered(){
     if(state.fresh && !r.nw) return false;
     if(state.cheap && !(r.pr && r.pr<=10000)) return false;
     if(state.fav && !isFav(r.id)) return false;
+    if(state.bld && !(r.d<=30 || /한신아이티타워|한신IT타워/i.test(r.a||''))) return false;
     if(state.virgin && (VISITED_THIS_MONTH.has(r.id) || (r.k!=='밥집' && r.k!=='구내식당'))) return false;
     if(state.q){ const q = state.q.toLowerCase(); if(!((r.n+' '+r.c+' '+(r.a||'')+' '+(r.m||[]).map(m=>m.n).join(' ')).toLowerCase().includes(q))) return false; }
     return true;
@@ -1394,7 +1551,7 @@ function card(r){
     </div>
     <div class="bd">
       <div class="nm">${esc(r.n)}</div>
-      <div class="ct">${emo(r.c)} ${r.c} · ${r.d<=30?'건물 안':'도보 '+walk(r.d)}</div>
+      <div class="ct">${floorShort(r)?`<span class="flr">🏢 ${esc(floorShort(r))}</span> `:''}${emo(r.c)} ${r.c} · ${r.d<=30?'건물 안':'도보 '+walk(r.d)}</div>
       ${rep?`<div class="repm">${esc(rep.n)} ${won(rep.p)}</div>`:''}
       <div class="mrow">
         <div class="star ${rt&&rt.src==='naver'?'nv':''}">${rt?`★ ${rt.v} <em>${rt.src==='naver'?'네이버':'카카오'}</em>`:'<em>평점없음</em>'}</div>
@@ -1429,7 +1586,7 @@ function openModal(r){
   const menus = (r.m||[]).slice().sort((a,b)=>a.p-b.p), rt = rating(r);
   document.getElementById('md').innerHTML = `
     <button class="xx" onclick="closeModal()">✕</button>
-    <div class="hd">${imgTag(r,56)}</div>
+    <div class="hd">${imgTag(r,56)}${(!r.ph0 && PMETA[r.id])?`<span class="uphoto">📸 ${esc(PMETA[r.id].nick||'익명')}님 사진</span>`:''}</div>
     <div class="ct2">
       <h3>${esc(r.n)}</h3>
       <div class="mm">
@@ -1441,7 +1598,7 @@ function openModal(r){
         ${(r.hs||r.k==='회식')?`<span class="tag hot">🍻 회식 가능</span>`:''}
       </div>
       <div class="info">
-        <div><b>주소</b><span>${esc(r.a||'–')}</span></div>
+        ${(f=>f?`<div><b>위치</b><span>🏢 ${esc([f.bld,f.fl,f.room].filter(Boolean).join(' '))}${r.d<=30?' <b style="color:var(--ac);width:auto">(우리 건물)</b>':''}</span></div>`:'')(floorOf(r))}<div><b>주소</b><span>${esc(r.a||'–')}</span></div>
         ${r.t?`<div><b>전화</b><span><a href="tel:${r.t}" style="color:var(--t-near-tx)">${r.t}</a></span></div>`:''}
         ${r.pr?`<div><b>가격</b><span>${won(r.pmin)} ~ ${won(r.pmax)} · 대표 ${won(r.pr)}</span></div>`:''}
       </div>
@@ -1452,6 +1609,7 @@ function openModal(r){
         <button class="btn g" id="mMap" title="지도에서 보기">📍</button>
         <button class="btn g" id="mShare" title="여기 가자고 공유">📤</button>
       </div>
+      ${!r.ph0 ? `<button class="phbtn" id="phBtn">📸 ${PMETA[r.id]?'사진 바꾸기':'사진이 없어요 · 첫 사진 올리기'}</button>` : ''}
       <div class="visitbox">
         <div class="vt" id="vText"></div>
         <button class="btn v" id="vBtn">🍽️ 오늘 여기서 먹었어요</button>
@@ -1478,6 +1636,7 @@ function openModal(r){
   document.getElementById('mShare').onclick = ()=>shareShop(r);
   document.getElementById('mMap').onclick = ()=>{ closeModal(); focusOnMap(r); };
   document.getElementById('mFav').onclick = ()=>openFavPicker(r);
+  const phb = document.getElementById('phBtn'); if(phb) phb.onclick = ()=>uploadPhoto(r);
   SHOW_ALL_C = false;
   const mMoreBtn = document.getElementById('mMoreBtn');
   if(mMoreBtn) mMoreBtn.onclick = ()=>{ const x = document.getElementById('mMore'); const open = x.classList.toggle('open'); mMoreBtn.textContent = open ? '메뉴 접기 ▴' : `메뉴 ${menus.length-8}개 더 보기 ▾`; };
@@ -1510,7 +1669,7 @@ async function toggleVisit(){
     if(await fbPut(p, rec)){ (STORE.visits[r.id] ||= {})[vid] = rec; toast('맛점 체크 완료 🍽️ 후기도 남겨주면 +2점!'); }
     else toast('저장 실패 😢');
   }
-  renderVisit(); RK = calcRanking('m0').shopRank; renderRanking(); render();
+  renderVisit(); RK = calcRanking('m0').shopRank; renderRanking(); renderMissions(); render();
 }
 async function loadReactions(){
   const r = CUR; if(!r) return;
@@ -1543,7 +1702,7 @@ async function loadComments(){
   const el = document.getElementById('clist');
   const shown = SHOW_ALL_C ? arr : arr.slice(0,3);
   const CL = STORE.clikes[r.id] || {};
-  el.innerHTML = arr.length ? shown.map(c=>{ const lk = CL[c.cid]||{}; const n = Object.keys(lk).length; const mine = !!lk[ME.uid]; return `<div class="ci"><div class="av">${c.emoji||'🙂'}</div><div class="cb"><div class="ch"><b>${esc(c.nick)}</b><span>${ago(c.ts)}</span>${c.uid===ME.uid?`<button class="del" data-cid="${c.cid}">삭제</button>`:''}</div><div class="cx">${esc(c.text)}</div><div class="cf"><button class="clike ${mine?'on':''}" data-cid="${c.cid}">👍 <span>${n||'공감'}</span></button></div></div></div>`; }).join('')
+  el.innerHTML = arr.length ? shown.map(c=>{ const lk = CL[c.cid]||{}; const n = Object.keys(lk).length; const mine = !!lk[ME.uid]; return `<div class="ci"><div class="av">${c.emoji||'🙂'}</div><div class="cb"><div class="ch"><b>${esc(c.nick)}</b>${badgeOf(c.uid)}<span>${ago(c.ts)}</span>${c.uid===ME.uid?`<button class="del" data-cid="${c.cid}">삭제</button>`:''}</div><div class="cx">${esc(c.text)}</div><div class="cf"><button class="clike ${mine?'on':''}" data-cid="${c.cid}">👍 <span>${n||'공감'}</span></button></div></div></div>`; }).join('')
     : '<div class="cempty">아직 후기가 없어요. 첫 번째로 남겨보세요 🙌</div>';
   if(arr.length > 3){
     const tb = document.createElement('button'); tb.className = 'morebtn';
@@ -1660,6 +1819,7 @@ document.getElementById('more').onclick = ()=>{ state.limit+=30; render(); };
 document.getElementById('kinds').onclick = e=>{
   const b=e.target.closest('.chip'); if(!b) return;
   if(b.id==='chipNew'){ state.fresh=!state.fresh; b.classList.toggle('on',state.fresh); }
+  else if(b.id==='chipBld'){ state.bld=!state.bld; b.classList.toggle('on',state.bld); if(state.bld) toast('비 와도 우산 없이 가는 우리 건물 가게만 ☔'); }
   else if(b.id==='chipFav'){ state.fav=!state.fav; b.classList.toggle('on',state.fav); }
   else if(b.id==='chipCheap'){ state.cheap=!state.cheap; b.classList.toggle('on',state.cheap); }
   else if(b.id==='chipVirgin'){ state.virgin=!state.virgin; b.classList.toggle('on',state.virgin); if(state.virgin) toast('이번 달 아직 아무도 안 간 밥집만 보여요. 첫 개척자가 되어봐요 🧭'); }
@@ -1732,10 +1892,11 @@ document.getElementById('mCnt').textContent = D.meta.count;
 const up = new Date(D.meta.updated);
 document.getElementById('mUpd').textContent = `${String(up.getMonth()+1).padStart(2,'0')}.${String(up.getDate()).padStart(2,'0')} 갱신`;
 document.getElementById('fUpd').textContent = '마지막 데이터 갱신: ' + up.toLocaleString('ko-KR');
-renderToday(); render(); renderRanking(); renderHof(); renderFavs();
+renderToday(); render(); renderRanking(); renderHof(); renderFavs(); renderNewBanner();
+{ const sm = location.hash.match(/#fmap=([A-Za-z0-9]{6,10})/); if(sm) setTimeout(()=>loadSharedMap(sm[1]), 800); }
 { const fm = location.hash.match(/#fav=([A-Za-z0-9]{6,10})/); if(fm){ setTimeout(()=>{ importFavCode(fm[1]); history.replaceState(null,'',location.pathname); }, 1200); } }
 if(Object.keys(FAV.items).length) document.getElementById('foldFav').open = true;
-(function tickLunch(){ const el=document.getElementById('lunchCd'); if(!el) return; const n=new Date(); const t=new Date(n); t.setHours(12,0,0,0); const diff=t-n; const day=n.getDay(); let txt=''; if(day===0||day===6) txt=''; else if(diff>0 && diff<4*3600e3){ const h=Math.floor(diff/3600e3), m=Math.floor(diff%3600e3/60e3); txt=` · 🍽️ 점심까지 ${h?h+'시간 ':''}${m}분`; } else if(diff<=0 && diff>-90*60e3) txt=' · 🍽️ 점심시간!'; el.textContent = txt; setTimeout(tickLunch, 30000); })();
+(function tickLunch(){ const el=document.getElementById('lunchCd'); if(!el) return; const n=new Date(); const t=new Date(n); t.setHours(13,0,0,0); const diff=t-n; const day=n.getDay(); let txt=''; if(day===0||day===6) txt=''; else if(diff>0 && diff<5*3600e3){ const h=Math.floor(diff/3600e3), m=Math.floor(diff%3600e3/60e3); txt=` · 🍽️ 점심까지 ${h?h+'시간 ':''}${m}분`; } else if(diff<=0 && diff>-60*60e3) txt=' · 🍽️ 점심시간! (~2시)'; el.textContent = txt; setTimeout(tickLunch, 30000); })();
 loadWeather();
 loadAll().then(()=>renderToday());
 setInterval(loadAll, 60000);
