@@ -272,6 +272,10 @@ html.dark .noimg.ph .lb{color:rgba(255,255,255,.55)}
 .sharebox input{flex:1;min-width:0;background:none;border:none;outline:none;color:var(--tx2);font-size:13.5px}
 /* ================= MAP ================= */
 #map{height:440px;border-radius:16px;overflow:hidden;background:var(--card2);border:1px solid var(--line)}
+html.dark .leaflet-tile-pane{filter:invert(1) hue-rotate(190deg) brightness(.82) contrast(.95) saturate(.45)}
+html.dark .leaflet-control-attribution{background:rgba(11,13,18,.75);color:var(--tx3)}
+html.dark .leaflet-control-attribution a{color:var(--tx2)}
+html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var(--line2)}
 @media(max-width:620px){#map{height:360px}}
 .maptools{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .mlegend{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--tx3)}
@@ -894,7 +898,7 @@ function renderToday(){
 /* ======================= 인라이플 맛집 지도 (Leaflet + OSM) ======================= */
 let MAP = null, MAP_LAYER = null, MAP_TILES = null, MAP_MARKERS = {}, MAP_SPECIAL = null;
 const KIND_COLOR = { '밥집':'#8ccf3c', '회식':'#f5a524', '카페':'#b08968', '패스트푸드':'#ff6a2b', '구내식당':'#4dd4ac' };
-const tileUrl = () => document.documentElement.classList.contains('dark') ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.basemaps.cartocdn.com/rapid/{z}/{x}/{y}{r}.png';
+const tileUrl = () => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 function popupHtml(r){
   const rt = rating(r);
   return `<div class="mp"><div class="im">${imgTag(r,30)}</div><b>${esc(r.n)}</b><small>${emo(r.c)} ${r.c} · ${distTxt(r.d)}${r.hs?' · 🍻 회식':''}</small><div class="row">${rt?`<span class="${rt.src==='naver'?'nv':''}">★ ${rt.v} ${rt.src==='naver'?'네이버':'카카오'}</span>`:''}${r.pr?`<span>💸 ${won(r.pr)}</span>`:''}${RK[r.id]?`<span>🏆 이달 ${RK[r.id]}위</span>`:''}${(CMTCNT[r.id]||0)?`<span>💬 ${CMTCNT[r.id]}</span>`:''}</div><div class="act"><button class="p" onclick="openModal(BYID['${r.id}'])">상세·후기</button><a class="n" href="${naverUrl(r)}" target="_blank" rel="noopener">네이버지도</a></div></div>`;
@@ -904,7 +908,7 @@ function initMap(){
   const el = document.getElementById('map'); if(!el || !el.offsetWidth) return;
   MAP = window.L.map('map', { center:[C.lat, C.lon], zoom:16, zoomControl:true, attributionControl:true, preferCanvas:true, scrollWheelZoom:false });
   MAP.on('focus', ()=>MAP.scrollWheelZoom.enable()); MAP.on('blur', ()=>MAP.scrollWheelZoom.disable());
-  MAP_TILES = window.L.tileLayer(tileUrl(), { maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>' }).addTo(MAP);
+  MAP_TILES = window.L.tileLayer(tileUrl(), { maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(MAP);
   // 회사 + 100m 링
   [100,200,300,400,500].forEach(m=>window.L.circle([C.lat,C.lon],{radius:m,color:'#7FBF31',weight:1,opacity:.35,fill:m===500,fillColor:'#7FBF31',fillOpacity:.04,dashArray:'4 6',interactive:false}).addTo(MAP));
   const logo = document.querySelector('.logo img')?.src;
@@ -949,7 +953,7 @@ document.getElementById('mapSync').onchange = renderMap;
 window.addEventListener('load', ()=>{ setTimeout(initMap, 200); });
 // 테마 전환 시 타일 교체
 const _applyTheme = applyTheme;
-applyTheme = function(t){ _applyTheme(t); if(MAP_TILES) MAP_TILES.setUrl(tileUrl()); };
+applyTheme = function(t){ _applyTheme(t); };
 
 /* ======================= Firebase ======================= */
 async function fbGet(p){ try{ const r = await fetch(FB+p+'.json'); if(!r.ok) return null; return await r.json(); }catch(e){ return null; } }
