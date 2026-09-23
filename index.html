@@ -1297,6 +1297,7 @@ const visitId = () => ME.uid + '_' + ymd();
 function monthVisits(rid){ const {s,e}=monthRange(0); const o = STORE.visits[rid]||{}; return Object.values(o).filter(x=>x.ts>=s&&x.ts<e).length; }
 function openModal(r){
   if(!r) return; CUR = r;
+  try{ if(MAP) MAP.closePopup(); }catch(e){}
   const menus = (r.m||[]).slice().sort((a,b)=>a.p-b.p), rt = rating(r);
   document.getElementById('md').innerHTML = `
     <button class="xx" onclick="closeModal()">✕</button>

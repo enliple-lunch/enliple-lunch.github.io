@@ -1,5 +1,5 @@
 // 구로 점심지도 서비스워커
-const VER = 'v2';
+const VER = 'v3';
 const SHELL = 'gl-shell-' + VER, IMG = 'gl-img-' + VER;
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => !k.endsWith(VER)).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
