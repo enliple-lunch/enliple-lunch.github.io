@@ -966,7 +966,7 @@ let STORE = { comments:{}, reactions:{}, visits:{}, requests:{}, clikes:{}, poll
 let CMTCNT = {}, RK = {};
 
 async function loadAll(){
-  const all = await fbGet('') || {};
+  const all = await fbGet('/') || {};
   STORE = { comments: all.comments||{}, reactions: all.reactions||{}, visits: all.visits||{}, requests: all.requests||{}, clikes: all.clikes||{}, polls: all.polls||{}, votes: all.votes||{} };
   renderPolls(); renderHof();
   if(document.getElementById('reqList')) renderReqList();
