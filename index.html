@@ -294,7 +294,7 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .mlegend button,.mlegend .ml-sp{display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:var(--tx2);padding:5px 9px;border-radius:9px;background:var(--soft);border:1px solid var(--line)}
 .mlegend button.on{background:var(--mc,#ffd23f);color:#fff;border-color:transparent;box-shadow:0 0 0 2px rgba(255,255,255,.25) inset}
 .mlegend button.on i{border-color:#fff}
-.mlegend button[data-mk="구내식당"].on,.mlegend button[data-mk="__fav"].on{color:#3a2600}
+.mlegend button[data-mk="구내식당"].on,.mlegend button[data-mk="__fav"].on,.mlegend button[data-mk="__rank"].on{color:#3a2600}
 .mlegend button:active{transform:scale(.95)}
 .mchk{font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:6px;white-space:nowrap}
 .mhint{font-size:11px;color:var(--tx3);margin-top:8px}
@@ -797,7 +797,7 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb">
       <div class="maptools">
         <div class="mlegend" id="mLegend">
-          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><button data-mk="__fav">⭐ 저장만</button><span class="ml-sp"><i style="background:#ff3d7f"></i>추천</span><span class="ml-sp">🥇 랭킹</span>
+          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><button data-mk="__fav">⭐ 저장만</button><button data-mk="__pick"><i style="background:#ff3d7f"></i>추천</button><button data-mk="__rank">🥇 랭킹</button>
         </div>
         <label class="mchk"><input type="checkbox" id="mapSync" checked> 리스트 필터와 연동</label>
       </div>
@@ -1048,7 +1048,8 @@ function renderToday(){
 /* ======================= 인라이플 맛집 지도 (Leaflet + OSM) ======================= */
 let MAP = null, MAP_LAYER = null, MAP_TILES = null, MAP_MARKERS = {}, MAP_SPECIAL = null;
 const KIND_COLOR = { '밥집':'#7FBF31', '회식':'#b36bff', '카페':'#3ea6ff', '패스트푸드':'#ff4d3d', '구내식당':'#ffd23f' };
-const MAP_HIDE = new Set(); const MAP_ONLY = new Set(); let MAP_FAVONLY = false;
+const MAP_HIDE = new Set(); const MAP_ONLY = new Set(); const MAP_SP = new Set(); let MAP_FAVONLY = false;
+const SP_COLOR = { '__fav':'#ffd23f', '__pick':'#ff3d7f', '__rank':'#f2b500' };
 const tileUrl = () => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 function popupHtml(r){
   const rt = rating(r);
@@ -1075,11 +1076,12 @@ function renderMap(){
   const sync = document.getElementById('mapSync')?.checked;
   const shown = MAP_SHARED ? Object.keys(MAP_SHARED.items).filter(id=>BYID[id] && (MAP_SHARED.tab==='all' || (MAP_SHARED.items[id]||[]).includes(MAP_SHARED.tab))).map(id=>BYID[id]) : (sync ? filtered() : L_ALL_FOR_MAP());
   const pickIds = new Set(TODAY ? [TODAY.main?.id, ...(TODAY.alts||[]).map(a=>a.id)].filter(Boolean) : []);
-  let n = 0;
+  let n = 0; const SP_PTS = [];
   for(const r of shown){
     if(!r.la || !r.lo) continue;
     if(!MAP_SHARED && MAP_ONLY.size && !(MAP_ONLY.has(r.k) || (MAP_ONLY.has('회식') && r.hs))) continue;
-    if(!MAP_SHARED && MAP_FAVONLY && !isFav(r.id)) continue; n++;
+    if(!MAP_SHARED && MAP_SP.size && !((MAP_SP.has('__fav') && isFav(r.id)) || (MAP_SP.has('__pick') && pickIds.has(r.id)) || (MAP_SP.has('__rank') && RK[r.id]))) continue;
+    SP_PTS.push([r.la, r.lo]); n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
     if(MAP_SHARED){ const sf = MAP_SHARED.folders.find(x=>x.id===(MAP_SHARED.items[r.id]||[])[0]); m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-fav">${sf?sf.emoji:'⭐'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:700 }); }
@@ -1094,6 +1096,7 @@ function renderMap(){
     MAP_MARKERS[r.id] = m;
   }
   const mc = document.getElementById('mapCnt'); if(mc) mc.textContent = MAP_SHARED ? `· ${MAP_SHARED.nick}님 맛지도 (${n}곳)` : `(${n}곳)`;
+  if(!MAP_SHARED && MAP_SP.size && n && n <= 40){ try{ const b = window.L.latLngBounds(SP_PTS); b.extend([C.lat,C.lon]); MAP.fitBounds(b.pad(0.2), {maxZoom:17}); }catch(e){} }
   if(MAP_SHARED && n){ try{ const b = window.L.latLngBounds(shown.filter(r=>r.la).map(r=>[r.la,r.lo])); b.extend([C.lat,C.lon]); MAP.fitBounds(b.pad(0.15), {maxZoom:17}); }catch(e){} }
 }
 const L_ALL_FOR_MAP = () => D.list;
@@ -1108,7 +1111,9 @@ document.getElementById('foldRadar').addEventListener('toggle', e=>{ if(e.target
 document.getElementById('mapSync').onchange = renderMap;
 document.getElementById('mLegend').onclick = e=>{
   const b = e.target.closest('button[data-mk]'); if(!b) return; const k = b.dataset.mk;
-  if(k==='__fav'){ MAP_FAVONLY = !MAP_FAVONLY; b.classList.toggle('on', MAP_FAVONLY); b.style.setProperty('--mc','#ffd23f'); renderMap(); if(MAP_FAVONLY && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요. ☆를 눌러 저장해보세요'); return; }
+  if(k.startsWith('__')){ if(MAP_SP.has(k)) MAP_SP.delete(k); else MAP_SP.add(k); MAP_FAVONLY = MAP_SP.has('__fav'); b.classList.toggle('on', MAP_SP.has(k)); b.style.setProperty('--mc', SP_COLOR[k]); renderMap();
+    if(MAP_SP.has(k)){ if(k==='__fav' && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요. ☆를 눌러 저장해보세요'); else if(k==='__rank' && !Object.keys(RK).length) toast('이번 달 랭킹 기록이 아직 없어요'); else if(k==='__pick') toast('오늘 추천 점심 4곳만 보여요'); else if(k==='__rank') toast('이번 달 랭킹 TOP 10만 보여요'); }
+    return; }
   if(MAP_ONLY.has(k)) MAP_ONLY.delete(k); else MAP_ONLY.add(k);
   document.querySelectorAll('#mLegend button[data-mk]').forEach(x=>{ if(x.dataset.mk==='__fav') return; const on = MAP_ONLY.has(x.dataset.mk); x.classList.toggle('on', on); x.style.setProperty('--mc', KIND_COLOR[x.dataset.mk]); });
   renderMap();
@@ -1416,7 +1421,7 @@ function renderFavs(){ if(typeof renderShared==='function' && SHARED) renderShar
   box.querySelectorAll('.frow').forEach(e=>e.onclick=ev=>{ if(ev.target.closest('.fx')) return; openModal(BYID[e.dataset.id]); });
   box.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openFavPicker(BYID[b.dataset.edit]));
   document.getElementById('fPick').onclick = ()=>{ if(!shown.length) return; const r = shown[Math.floor(Math.random()*shown.length)]; toast(`🎲 오늘은 ${r.n}!`); openModal(r); confetti(); };
-  document.getElementById('fMap').onclick = ()=>{ MAP_FAVONLY = true; const lb=document.querySelector('#mLegend [data-mk="__fav"]'); if(lb){ lb.classList.add('on'); lb.style.setProperty('--mc','#ffd23f'); } const d=document.getElementById('foldRadar'); d.open=true; initMap(); renderMap(); document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'}); };
+  document.getElementById('fMap').onclick = ()=>{ MAP_FAVONLY = true; MAP_SP.add('__fav'); const lb=document.querySelector('#mLegend [data-mk="__fav"]'); if(lb){ lb.classList.add('on'); lb.style.setProperty('--mc','#ffd23f'); } const d=document.getElementById('foldRadar'); d.open=true; initMap(); renderMap(); document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'}); };
   document.getElementById('fManage').onclick = openFavManage;
   document.getElementById('fShare').onclick = shareFavs;
   document.getElementById('fImport').onclick = importFavPrompt;
