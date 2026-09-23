@@ -1,0 +1,41 @@
+name: 점심지도 데이터 갱신
+
+on:
+  schedule:
+    # 매일 09:20 KST (= 00:20 UTC), 주말 포함
+    - cron: '20 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lunch-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 식당 데이터 수집
+        run: node scripts/update.mjs
+
+      - name: 변경사항 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "data: 자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+            git pull --rebase -X theirs origin main || git pull --rebase origin main
+            git push
+          fi
