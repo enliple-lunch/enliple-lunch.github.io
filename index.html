@@ -956,7 +956,7 @@ function floorOf(r){
   if(!fl && !room) return null;
   return { bld: bld ? bld[1] : '', fl: fl ? fl[1].replace(/\s/g,'').replace(/^B(\d+)층?$/,'지하$1층') : '', room: room ? room[1] : '' };
 }
-const floorShort = r => { const f = floorOf(r); if(!f || !f.fl) return ''; const fl = f.fl.replace('지하','B').replace('층','F'); return r.d<=30 ? `우리 건물 ${fl}` : `${f.bld?f.bld.slice(0,8)+' ':''}${fl}`; };
+const floorShort = r => { const f = floorOf(r); if(!f || !f.fl) return ''; const fl = f.fl.replace('지하','B').replace('층','F'); return (r.d<=30 || /한신아이티타워|한신IT타워/i.test(r.a||'')) ? `우리 건물 ${fl}` : `${f.bld?f.bld.slice(0,8)+' ':''}${fl}`; };
 function imgTag(r, size){
   return r.ph ? `<img loading="lazy" src="${r.ph}" alt="" data-c="${esc(r.c)}" onerror="this.outerHTML=phTag(BYID['${r.id}'],${size},${size>=34})">`
               : phTag(r, size, size>=34);
@@ -1598,7 +1598,7 @@ function openModal(r){
         ${(r.hs||r.k==='회식')?`<span class="tag hot">🍻 회식 가능</span>`:''}
       </div>
       <div class="info">
-        ${(f=>f?`<div><b>위치</b><span>🏢 ${esc([f.bld,f.fl,f.room].filter(Boolean).join(' '))}${r.d<=30?' <b style="color:var(--ac);width:auto">(우리 건물)</b>':''}</span></div>`:'')(floorOf(r))}<div><b>주소</b><span>${esc(r.a||'–')}</span></div>
+        ${(f=>f?`<div><b>위치</b><span>🏢 ${esc([f.bld,f.fl,f.room].filter(Boolean).join(' '))}${(r.d<=30 || /한신아이티타워|한신IT타워/i.test(r.a||''))?' <b style="color:var(--ac);width:auto">(우리 건물)</b>':''}</span></div>`:'')(floorOf(r))}<div><b>주소</b><span>${esc(r.a||'–')}</span></div>
         ${r.t?`<div><b>전화</b><span><a href="tel:${r.t}" style="color:var(--t-near-tx)">${r.t}</a></span></div>`:''}
         ${r.pr?`<div><b>가격</b><span>${won(r.pmin)} ~ ${won(r.pmax)} · 대표 ${won(r.pr)}</span></div>`:''}
       </div>
