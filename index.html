@@ -317,6 +317,42 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .hqlbl{background:var(--tx);color:var(--bg);font-size:11px;font-weight:800;padding:3px 8px;border-radius:8px;white-space:nowrap}
 .mk-top{width:26px;height:26px;border-radius:50%;background:#f2b500;border:2px solid #fff;display:grid;place-items:center;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,.4)}
 .mk-pick{width:30px;height:30px;border-radius:50%;background:#ff3d7f;border:3px solid #fff;display:grid;place-items:center;font-size:14px;box-shadow:0 0 0 5px rgba(255,61,127,.3),0 6px 16px rgba(0,0,0,.4);animation:pl 1.8s infinite}
+/* ================= FAVORITES ================= */
+.favbtn{position:absolute;top:6px;right:46px;width:34px;height:34px;border-radius:10px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;font-size:16px;z-index:3;border:1px solid rgba(255,255,255,.2)}
+.favbtn.on{background:rgba(255,210,63,.95);color:#3a2600;border-color:transparent}
+.favbtn:active{transform:scale(.9)}
+.ftabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.ftabs::-webkit-scrollbar{display:none}
+.ftab{flex:none;padding:8px 12px;border-radius:11px;background:var(--bg2);border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--tx2);white-space:nowrap}
+.ftab.on{background:var(--card);border-color:var(--fc,var(--ac));color:var(--tx);box-shadow:inset 0 -3px 0 var(--fc,var(--ac))}
+.ftab small{color:var(--tx3);font-weight:600;margin-left:3px}
+.flist{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px;max-height:420px;overflow-y:auto}
+@media(min-width:700px){.flist{grid-template-columns:1fr 1fr}}
+.frow{display:flex;gap:10px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:8px 10px;cursor:pointer}
+.frow:active{background:var(--soft2)}
+.frow .th{width:48px;height:48px;border-radius:11px;overflow:hidden;background:var(--card2);flex:none}
+.frow .th img{width:100%;height:100%;object-fit:cover}
+.frow .th .noimg{font-size:22px}
+.frow .ct{flex:1;min-width:0}
+.frow .ct b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frow .ct small{display:block;font-size:12px;color:var(--tx3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frow .fx{font-size:12px;color:var(--tx3);padding:6px 8px;border-radius:8px;background:var(--soft)}
+.ftools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ftools button{font-size:12.5px;font-weight:700;padding:8px 11px;border-radius:10px;background:var(--card);border:1px solid var(--line2);color:var(--tx2)}
+.fpick{display:flex;flex-direction:column;gap:7px;margin:10px 0}
+.fpk{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;background:var(--card);border:1.5px solid var(--line);font-size:14px;font-weight:700;text-align:left;width:100%}
+.fpk .fe{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:17px;flex:none}
+.fpk .fn{flex:1}
+.fpk .ck{width:22px;height:22px;border-radius:7px;border:2px solid var(--line2);display:grid;place-items:center;font-size:13px}
+.fpk.on{border-color:var(--ac)}
+.fpk.on .ck{background:var(--ac);border-color:var(--ac);color:var(--on-ac)}
+.fnew{display:flex;gap:6px;margin-top:6px}
+.fnew input{flex:1;background:var(--card);border:1px solid var(--line2);border-radius:11px;color:var(--tx);padding:10px 12px;font-size:14px;outline:none;min-width:0}
+.femo{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.femo button{width:36px;height:36px;border-radius:10px;background:var(--card2);font-size:18px;border:1.5px solid transparent}
+.femo button.on{border-color:var(--ac)}
+.mk-fav{width:26px;height:26px;border-radius:50%;background:#ffd23f;border:2px solid #fff;display:grid;place-items:center;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.mp .act .g{background:var(--soft2);color:var(--tx)}
 /* ================= HALL OF FAME ================= */
 .hof{display:grid;grid-template-columns:1fr;gap:10px}
 @media(min-width:700px){.hof{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}
@@ -654,6 +690,11 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="rnote">맛집 점수 = 🍽️먹었어요 ×3 + 후기 ×2 + 좋아요 반응 ×1 − 👎. 가게 상세에서 "오늘 여기서 먹었어요"를 누르면 랭킹에 반영돼요. 후기 옆 👍를 누르면 베스트 한 줄에 올라가요.</div>
   </section>
 
+  <details class="fold" id="foldFav">
+    <summary><span>⭐ 내 즐겨찾기 <span id="favCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
+    <div class="fb"><div id="favBox"></div></div>
+  </details>
+
   <details class="fold" id="foldHof">
     <summary><span>🏛️ 명예의 전당 <span id="hofCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
     <div class="fb"><div id="hof"></div></div>
@@ -669,7 +710,7 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb">
       <div class="maptools">
         <div class="mlegend" id="mLegend">
-          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><span class="ml-sp"><i style="background:#ff3d7f"></i>추천</span><span class="ml-sp">🥇 랭킹</span>
+          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><button data-mk="__fav">⭐ 저장만</button><span class="ml-sp"><i style="background:#ff3d7f"></i>추천</span><span class="ml-sp">🥇 랭킹</span>
         </div>
         <label class="mchk"><input type="checkbox" id="mapSync" checked> 리스트 필터와 연동</label>
       </div>
@@ -908,11 +949,11 @@ function renderToday(){
 /* ======================= 인라이플 맛집 지도 (Leaflet + OSM) ======================= */
 let MAP = null, MAP_LAYER = null, MAP_TILES = null, MAP_MARKERS = {}, MAP_SPECIAL = null;
 const KIND_COLOR = { '밥집':'#7FBF31', '회식':'#b36bff', '카페':'#3ea6ff', '패스트푸드':'#ff4d3d', '구내식당':'#ffd23f' };
-const MAP_HIDE = new Set();
+const MAP_HIDE = new Set(); let MAP_FAVONLY = false;
 const tileUrl = () => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 function popupHtml(r){
   const rt = rating(r);
-  return `<div class="mp"><div class="im">${imgTag(r,30)}</div><b>${esc(r.n)}</b><small>${emo(r.c)} ${r.c} · ${distTxt(r.d)}${r.hs?' · 🍻 회식':''}</small><div class="row">${rt?`<span class="${rt.src==='naver'?'nv':''}">★ ${rt.v} ${rt.src==='naver'?'네이버':'카카오'}</span>`:''}${r.pr?`<span>💸 ${won(r.pr)}</span>`:''}${RK[r.id]?`<span>🏆 이달 ${RK[r.id]}위</span>`:''}${(CMTCNT[r.id]||0)?`<span>💬 ${CMTCNT[r.id]}</span>`:''}</div><div class="act"><button class="p" onclick="openModal(BYID['${r.id}'])">상세·후기</button><a class="n" href="${naverUrl(r)}" target="_blank" rel="noopener">네이버지도</a></div></div>`;
+  return `<div class="mp"><div class="im">${imgTag(r,30)}</div><b>${esc(r.n)}</b><small>${emo(r.c)} ${r.c} · ${distTxt(r.d)}${r.hs?' · 🍻 회식':''}</small><div class="row">${rt?`<span class="${rt.src==='naver'?'nv':''}">★ ${rt.v} ${rt.src==='naver'?'네이버':'카카오'}</span>`:''}${r.pr?`<span>💸 ${won(r.pr)}</span>`:''}${RK[r.id]?`<span>🏆 이달 ${RK[r.id]}위</span>`:''}${(CMTCNT[r.id]||0)?`<span>💬 ${CMTCNT[r.id]}</span>`:''}</div><div class="act"><button class="g" onclick="openFavPicker(BYID['${r.id}'])">${isFav(r.id)?favIcon(r.id)+' 저장됨':'☆ 저장'}</button><button class="p" onclick="openModal(BYID['${r.id}'])">상세·후기</button><a class="n" href="${naverUrl(r)}" target="_blank" rel="noopener">네이버지도</a></div></div>`;
 }
 function initMap(){
   if(MAP || !window.L || !window.L.map) return;
@@ -938,11 +979,13 @@ function renderMap(){
   let n = 0;
   for(const r of shown){
     if(!r.la || !r.lo) continue;
-    if(MAP_HIDE.has(r.k)) continue; n++;
+    if(MAP_HIDE.has(r.k)) continue;
+    if(MAP_FAVONLY && !isFav(r.id)) continue; n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
     if(isPick){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
     else if(isTop){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-top">${RK[r.id]===1?'🥇':RK[r.id]===2?'🥈':'🥉'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:800 }); }
+    else if(isFav(r.id)){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-fav">${favIcon(r.id)}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:700 }); }
     else { const col = KIND_COLOR[r.k] || '#8ccf3c'; const alt = pickIds.has(r.id); m = window.L.circleMarker([r.la,r.lo], { radius: alt?9:7, color: document.documentElement.classList.contains('dark')?'#0b0d12':'#ffffff', weight: 2, fillColor: alt?'#ff3d7f':col, fillOpacity:1 }); }
     const rt = rating(r);
     m.bindTooltip(`${esc(r.n)}<small>${r.c} · ${distTxt(r.d)}${rt?' · ★'+rt.v:''}${r.pr?' · '+won(r.pr):''}</small>`, { direction:'top', offset:[0,-8], opacity:1 });
@@ -962,7 +1005,7 @@ function focusOnMap(r){
 }
 document.getElementById('foldRadar').addEventListener('toggle', e=>{ if(e.target.open) setTimeout(initMap, 50); });
 document.getElementById('mapSync').onchange = renderMap;
-document.getElementById('mLegend').onclick = e=>{ const b=e.target.closest('button[data-mk]'); if(!b) return; const k=b.dataset.mk; if(MAP_HIDE.has(k)) MAP_HIDE.delete(k); else MAP_HIDE.add(k); b.classList.toggle('off', MAP_HIDE.has(k)); renderMap(); };
+document.getElementById('mLegend').onclick = e=>{ const b=e.target.closest('button[data-mk]'); if(!b) return; const k=b.dataset.mk; if(k==='__fav'){ MAP_FAVONLY=!MAP_FAVONLY; b.classList.toggle('on2',MAP_FAVONLY); b.style.background=MAP_FAVONLY?'#ffd23f':''; b.style.color=MAP_FAVONLY?'#3a2600':''; renderMap(); if(MAP_FAVONLY && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요. ☆를 눌러 저장해보세요'); return; } if(MAP_HIDE.has(k)) MAP_HIDE.delete(k); else MAP_HIDE.add(k); b.classList.toggle('off', MAP_HIDE.has(k)); renderMap(); };
 window.addEventListener('load', ()=>{ setTimeout(initMap, 200); });
 // 테마 전환 시 타일 교체
 const _applyTheme = applyTheme;
@@ -1194,6 +1237,83 @@ function drawTie(pid){
   const iv = setInterval(()=>{ out.textContent = ' → ' + names[i++%names.length]; }, 90);
   setTimeout(()=>{ clearInterval(iv); out.innerHTML = ' → <b style="color:var(--ac)">' + esc(BYID[pick]?.n||'') + '</b> 당첨! (누가 눌러도 같은 결과)'; confetti(); document.querySelectorAll('#poll-'+pid+' .cand').forEach(c=>c.classList.toggle('win', c.dataset.rid===pick)); }, 1600);
 }
+/* ======================= 즐겨찾기 (폴더) ======================= */
+const FAV_EMOJI = ['⭐','❤️','🍚','🍜','🍣','🍖','🍻','☕','🥗','🍔','💼','🎉','👍','🔥','🤫','🏆'];
+const FAV_COLOR = { '⭐':'#ffd23f','❤️':'#ff4d6d','🍚':'#7FBF31','🍜':'#ff9d1a','🍣':'#3ea6ff','🍖':'#c0703a','🍻':'#b36bff','☕':'#a47551','🥗':'#4dd4ac','🍔':'#ff4d3d','💼':'#7a8699','🎉':'#ff3d7f','👍':'#3ea6ff','🔥':'#ff5a1f','🤫':'#9aa3b5','🏆':'#f2b500' };
+let FAV = (()=>{ try{ const f = JSON.parse(LS.get('gl_favs')||'null'); if(f && Array.isArray(f.folders) && f.items) return f; }catch(e){} return { folders:[{ id:'f0', name:'기본', emoji:'⭐' }], items:{}, ts:0 }; })();
+let FAV_TAB = 'all';
+const isFav = id => (FAV.items[id]||[]).length > 0;
+const favIcon = id => { const f = FAV.folders.find(x=>x.id===(FAV.items[id]||[])[0]); return f ? f.emoji : '⭐'; };
+function saveFav(){ FAV.ts = Date.now(); LS.set('gl_favs', JSON.stringify(FAV)); renderFavs(); render(); if(typeof MAP!=='undefined' && MAP) renderMap(); if(CUR){ const b=document.getElementById('mFav'); if(b) b.textContent = isFav(CUR.id)?favIcon(CUR.id):'☆'; } }
+function toggleFavIn(rid, fid){ const a = FAV.items[rid] || []; const i = a.indexOf(fid); if(i>=0) a.splice(i,1); else a.push(fid); if(a.length) FAV.items[rid]=a; else delete FAV.items[rid]; saveFav(); }
+function openFavPicker(r){
+  if(!r) return;
+  let newEmoji = '❤️';
+  const draw = ()=>{
+    const mine = FAV.items[r.id] || [];
+    document.getElementById('epkb').innerHTML = `<h4>⭐ 즐겨찾기에 저장</h4>
+      <div class="reqnote" style="margin-bottom:4px"><b>${esc(r.n)}</b> · ${r.c} · ${distTxt(r.d)}</div>
+      <div class="fpick">${FAV.folders.map(f=>`<button class="fpk ${mine.includes(f.id)?'on':''}" data-f="${f.id}"><span class="fe" style="background:${(FAV_COLOR[f.emoji]||'#ffd23f')}33">${f.emoji}</span><span class="fn">${esc(f.name)} <small style="color:var(--tx3);font-weight:600">${Object.values(FAV.items).filter(a=>a.includes(f.id)).length}곳</small></span><span class="ck">${mine.includes(f.id)?'✓':''}</span></button>`).join('')}</div>
+      <div class="rqdl">새 폴더 만들기</div>
+      <div class="fnew"><input id="fNewName" maxlength="16" placeholder="예: 회식 후보, 혼밥, 비 오는 날"><button class="btn p" id="fNewGo">추가</button></div>
+      <div class="femo">${FAV_EMOJI.map(e=>`<button data-e="${e}" class="${e===newEmoji?'on':''}">${e}</button>`).join('')}</div>
+      <div style="display:flex;gap:8px;margin-top:16px"><button class="btn p full" onclick="closeEmoji()">완료</button></div>`;
+    document.querySelectorAll('#epkb .fpk').forEach(b=>b.onclick=()=>{ toggleFavIn(r.id, b.dataset.f); draw(); });
+    document.querySelectorAll('#epkb .femo button').forEach(b=>b.onclick=()=>{ newEmoji=b.dataset.e; document.querySelectorAll('#epkb .femo button').forEach(x=>x.classList.toggle('on',x===b)); });
+    document.getElementById('fNewGo').onclick = ()=>{ const nm = document.getElementById('fNewName').value.trim(); if(!nm){ toast('폴더 이름을 입력해주세요'); return; } const id = 'f'+Date.now().toString(36); FAV.folders.push({ id, name:nm.slice(0,16), emoji:newEmoji }); (FAV.items[r.id] ||= []).push(id); saveFav(); draw(); toast(`${newEmoji} ${nm} 폴더에 저장했어요`); };
+  };
+  draw();
+  document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
+}
+function renderFavs(){
+  const box = document.getElementById('favBox'); if(!box) return;
+  const ids = Object.keys(FAV.items).filter(id=>BYID[id]);
+  document.getElementById('favCnt').textContent = ids.length ? `(${ids.length})` : '';
+  if(!ids.length){ box.innerHTML = `<div class="rempty">가게 카드의 <b>☆</b>나 상세 화면의 <b>☆</b>를 눌러 저장해보세요. 네이버지도처럼 폴더로 나눠 담을 수 있어요 (예: 회식 후보, 혼밥, 비 오는 날).<br>저장은 이 기기에만 되고, 아래 "다른 기기로 옮기기"로 폰↔PC 이동이나 폴더 공유도 돼요.</div><div class="ftools"><button id="fImport">📥 코드로 가져오기</button></div>`; document.getElementById('fImport').onclick = importFavPrompt; return; }
+  if(FAV_TAB!=='all' && !FAV.folders.find(f=>f.id===FAV_TAB)) FAV_TAB='all';
+  const cnt = fid => ids.filter(id=>(FAV.items[id]||[]).includes(fid)).length;
+  const tabs = `<div class="ftabs"><button class="ftab ${FAV_TAB==='all'?'on':''}" data-t="all">전체<small>${ids.length}</small></button>${FAV.folders.map(f=>`<button class="ftab ${FAV_TAB===f.id?'on':''}" data-t="${f.id}" style="--fc:${FAV_COLOR[f.emoji]||'#ffd23f'}">${f.emoji} ${esc(f.name)}<small>${cnt(f.id)}</small></button>`).join('')}</div>`;
+  const shown = ids.filter(id=>FAV_TAB==='all' || (FAV.items[id]||[]).includes(FAV_TAB)).map(id=>BYID[id]).sort((a,b)=>a.d-b.d);
+  const rows = shown.length ? shown.map(r=>{ const rt=rating(r); const fs=(FAV.items[r.id]||[]).map(fid=>FAV.folders.find(f=>f.id===fid)?.emoji).filter(Boolean).join(''); return `<div class="frow" data-id="${r.id}"><span class="th">${imgTag(r,22)}</span><div class="ct"><b>${esc(r.n)}</b><small>${fs} ${r.c} · ${distTxt(r.d)}${rt?' · ★'+rt.v:''}${r.pr?' · '+won(r.pr):''}</small></div><button class="fx" data-edit="${r.id}">폴더</button></div>`; }).join('') : '<div class="rempty">이 폴더는 비어 있어요</div>';
+  box.innerHTML = tabs + `<div class="flist">${rows}</div><div class="ftools"><button id="fPick">🎲 이 폴더에서 뽑기</button><button id="fMap">📍 지도에서 보기</button><button id="fManage">✏️ 폴더 관리</button><button id="fShare">📤 다른 기기로 옮기기·공유</button><button id="fImport">📥 코드로 가져오기</button></div>`;
+  box.querySelectorAll('.ftab').forEach(b=>b.onclick=()=>{ FAV_TAB=b.dataset.t; renderFavs(); });
+  box.querySelectorAll('.frow').forEach(e=>e.onclick=ev=>{ if(ev.target.closest('.fx')) return; openModal(BYID[e.dataset.id]); });
+  box.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openFavPicker(BYID[b.dataset.edit]));
+  document.getElementById('fPick').onclick = ()=>{ if(!shown.length) return; const r = shown[Math.floor(Math.random()*shown.length)]; toast(`🎲 오늘은 ${r.n}!`); openModal(r); confetti(); };
+  document.getElementById('fMap').onclick = ()=>{ MAP_FAVONLY = true; const lb=document.querySelector('#mLegend [data-mk="__fav"]'); if(lb){ lb.style.background='#ffd23f'; lb.style.color='#3a2600'; } const d=document.getElementById('foldRadar'); d.open=true; initMap(); renderMap(); document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'}); };
+  document.getElementById('fManage').onclick = openFavManage;
+  document.getElementById('fShare').onclick = shareFavs;
+  document.getElementById('fImport').onclick = importFavPrompt;
+}
+function openFavManage(){
+  const draw = ()=>{
+    document.getElementById('epkb').innerHTML = `<h4>✏️ 폴더 관리</h4><div class="fpick">${FAV.folders.map(f=>`<div class="fpk" style="cursor:default"><span class="fe" style="background:${(FAV_COLOR[f.emoji]||'#ffd23f')}33">${f.emoji}</span><input data-rn="${f.id}" value="${esc(f.name)}" maxlength="16" style="flex:1;background:none;border:none;outline:none;color:var(--tx);font-size:14px;font-weight:700;min-width:0">${f.id==='f0'?'<small style="color:var(--tx3)">기본</small>':`<button class="fx" data-del="${f.id}" style="font-size:12px;color:var(--tx3);padding:6px 8px;border-radius:8px;background:var(--soft)">삭제</button>`}</div>`).join('')}</div><div class="reqnote">이름은 바로 고쳐져요. 폴더를 지워도 가게가 다른 폴더에 있으면 그대로 남아요.</div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn p full" onclick="closeEmoji()">완료</button></div>`;
+    document.querySelectorAll('#epkb [data-rn]').forEach(i=>i.onchange=()=>{ const f=FAV.folders.find(x=>x.id===i.dataset.rn); if(f){ f.name=(i.value.trim()||f.name).slice(0,16); saveFav(); } });
+    document.querySelectorAll('#epkb [data-del]').forEach(b=>b.onclick=()=>{ const f=FAV.folders.find(x=>x.id===b.dataset.del); if(!f || !confirm(`"${f.name}" 폴더를 지울까요?`)) return; FAV.folders = FAV.folders.filter(x=>x.id!==f.id); for(const k in FAV.items){ FAV.items[k]=FAV.items[k].filter(x=>x!==f.id); if(!FAV.items[k].length) delete FAV.items[k]; } saveFav(); draw(); });
+  };
+  draw(); document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
+}
+async function shareFavs(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let code=''; for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
+  const ok = await fbPut('/favs/'+code, { folders: FAV.folders, items: FAV.items, ts: Date.now() });
+  if(!ok){ toast('저장 실패 😢'); return; }
+  const url = location.origin + location.pathname + '#fav=' + code;
+  document.getElementById('epkb').innerHTML = `<h4>📤 다른 기기로 옮기기 · 공유</h4><div class="reqnote">다른 기기(폰↔PC)에서 이 사이트를 열고 <b>📥 코드로 가져오기</b>에 아래 코드를 넣거나, 링크를 그대로 열면 돼요.<br>동료에게 보내면 내 폴더를 그대로 받아갈 수 있어요 (받는 쪽 즐겨찾기에 합쳐짐).</div><div style="text-align:center;font-size:34px;font-weight:900;letter-spacing:6px;margin:14px 0;color:var(--ac)">${code}</div><div class="sharebox"><input readonly value="${url}" id="fUrl"><button class="btn g" id="fCopy">복사</button></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn p full" id="fShareGo">📤 공유하기</button><button class="btn g full" onclick="closeEmoji()">닫기</button></div>`;
+  document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
+  document.getElementById('fCopy').onclick = async ()=>{ try{ await navigator.clipboard.writeText(url); toast('복사됐어요 📋'); }catch(e){ document.getElementById('fUrl').select(); } };
+  document.getElementById('fShareGo').onclick = async ()=>{ const text = `⭐ 내 점심 즐겨찾기 (${Object.keys(FAV.items).length}곳)`; if(navigator.share){ try{ await navigator.share({ title:text, text, url }); return; }catch(e){ if(e.name==='AbortError') return; } } try{ await navigator.clipboard.writeText(text+'\n'+url); toast('복사됐어요 📋'); }catch(e){} };
+}
+async function importFavCode(code){
+  code = (code||'').trim().toUpperCase(); if(code.length<6) return;
+  const d = await fbGet('/favs/'+code); if(!d || !d.folders){ toast('코드를 찾을 수 없어요'); return; }
+  const n = Object.keys(d.items||{}).filter(id=>BYID[id]).length;
+  if(!confirm(`즐겨찾기 ${n}곳 (폴더 ${d.folders.length}개)을 가져올까요?\n지금 내 즐겨찾기에 합쳐져요.`)) return;
+  const map = {};
+  for(const f of d.folders){ const same = FAV.folders.find(x=>x.name===f.name); if(same) map[f.id]=same.id; else { const id='f'+Date.now().toString(36)+Math.random().toString(36).slice(2,4); FAV.folders.push({ id, name:f.name, emoji:f.emoji||'⭐' }); map[f.id]=id; } }
+  for(const rid in (d.items||{})){ if(!BYID[rid]) continue; const a = FAV.items[rid] || []; for(const fid of d.items[rid]){ const nf = map[fid]; if(nf && !a.includes(nf)) a.push(nf); } if(a.length) FAV.items[rid]=a; }
+  saveFav(); toast(`⭐ ${n}곳 가져왔어요`); document.getElementById('foldFav').open = true; document.getElementById('foldFav').scrollIntoView({behavior:'smooth'});
+}
+function importFavPrompt(){ const c = prompt('받은 6자리 코드를 입력하세요'); if(c) importFavCode(c); }
 /* ======================= 명예의 전당 ======================= */
 function renderHof(){
   const el = document.getElementById('hof'); if(!el) return;
@@ -1214,7 +1334,7 @@ function renderHof(){
 /* ======================= 리스트 ======================= */
 const KINDS = ['전체','밥집','샐러드','카페','패스트푸드','구내식당','회식'];
 const isSalad = r => r.c==='샐러드' || /샐러드|포케|poke|salad/i.test(r.n);
-let state = {kind:'전체', q:'', sort:'dist', cat:'', dist:520, price:25000, fresh:false, cheap:false, virgin:false, limit:30};
+let state = {kind:'전체', q:'', sort:'dist', cat:'', dist:520, price:25000, fresh:false, cheap:false, virgin:false, fav:false, limit:30};
 const CAT_GROUPS = [
   ['🍚 한식', ['한식','국밥','해장국','곰탕','칼국수','국수','냉면','순대','찌개,전골','감자탕','육류,고기','곱창,막창','족발,보쌈','해물,생선','회','참치회','닭요리','삼계탕','한정식','한식뷔페','샤브샤브']],
   ['🍣 일식', ['일식','초밥,롤','돈까스,우동','일본식라면']],
@@ -1237,7 +1357,7 @@ const CAT_GROUPS = [
   document.getElementById('cat').innerHTML = html;
 })();
 const newCnt = L.filter(r=>r.nw).length;
-document.getElementById('kinds').innerHTML = KINDS.map(k=>`<button class="chip${k==='전체'?' on':''}${k==='회식'?' hs':''}" data-k="${k}">${k==='회식'?'🍻 회식':k==='샐러드'?'🥗 샐러드':k}</button>`).join('') + (newCnt?`<button class="chip alt2" id="chipNew">🆕 신규 ${newCnt}</button>`:'') + `<button class="chip alt2" id="chipCheap">💸 1만원 이하</button><button class="chip alt2" id="chipVirgin">🧭 미개척</button>`;
+document.getElementById('kinds').innerHTML = KINDS.map(k=>`<button class="chip${k==='전체'?' on':''}${k==='회식'?' hs':''}" data-k="${k}">${k==='회식'?'🍻 회식':k==='샐러드'?'🥗 샐러드':k}</button>`).join('') + (newCnt?`<button class="chip alt2" id="chipNew">🆕 신규 ${newCnt}</button>`:'') + `<button class="chip alt2" id="chipFav">⭐ 저장한 곳</button><button class="chip alt2" id="chipCheap">💸 1만원 이하</button><button class="chip alt2" id="chipVirgin">🧭 미개척</button>`;
 function filtered(){
   let a = L.filter(r=>{
     if(state.kind==='회식'){ if(!(r.k==='회식' || r.hs)) return false; }
@@ -1248,6 +1368,7 @@ function filtered(){
     if(state.price<25000 && (!r.pr || r.pr>state.price)) return false;
     if(state.fresh && !r.nw) return false;
     if(state.cheap && !(r.pr && r.pr<=10000)) return false;
+    if(state.fav && !isFav(r.id)) return false;
     if(state.virgin && (VISITED_THIS_MONTH.has(r.id) || (r.k!=='밥집' && r.k!=='구내식당'))) return false;
     if(state.q){ const q = state.q.toLowerCase(); if(!((r.n+' '+r.c+' '+(r.a||'')+' '+(r.m||[]).map(m=>m.n).join(' ')).toLowerCase().includes(q))) return false; }
     return true;
@@ -1269,7 +1390,7 @@ function card(r){
   return `<div class="c" data-id="${r.id}">
     <div class="im">${imgTag(r,34)}
       <div class="badges"><span class="b walk">${r.d}m</span>${RK[r.id]&&RK[r.id]<=3?`<span class="b rank">🏆${RK[r.id]}</span>`:''}${r.nw?'<span class="b top">🆕</span>':''}${(r.hs||r.k==='회식')?'<span class="b hs">🍻</span>':''}</div>
-      <a class="nvbtn" href="${naverUrl(r)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="네이버지도">🟢</a>
+      <button class="favbtn ${isFav(r.id)?'on':''}" data-fav="${r.id}" title="즐겨찾기">${isFav(r.id)?favIcon(r.id):'☆'}</button><a class="nvbtn" href="${naverUrl(r)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="네이버지도">🟢</a>
     </div>
     <div class="bd">
       <div class="nm">${esc(r.n)}</div>
@@ -1293,6 +1414,7 @@ function render(){
   mb.style.display = a.length>state.limit ? 'block':'none';
   mb.textContent = `더 보기 (${a.length-state.limit}곳)`;
   document.querySelectorAll('.c').forEach(el=>el.onclick=()=>openModal(BYID[el.dataset.id]));
+  document.querySelectorAll('.c .favbtn').forEach(b=>b.onclick=e=>{ e.stopPropagation(); openFavPicker(BYID[b.dataset.fav]); });
   if(MAP && document.getElementById('mapSync')?.checked) renderMap();
 }
 
@@ -1326,6 +1448,7 @@ function openModal(r){
       <div class="mdact">
         <a class="btn n full" href="${naverUrl(r)}" target="_blank" rel="noopener">🟢 네이버지도</a>
         <a class="btn g" href="https://map.kakao.com/link/to/${encodeURIComponent(r.n)},${r.la},${r.lo}" target="_blank" rel="noopener">🚶 길찾기</a>
+        <button class="btn g" id="mFav" title="즐겨찾기">${isFav(r.id)?favIcon(r.id):'☆'}</button>
         <button class="btn g" id="mMap" title="지도에서 보기">📍</button>
         <button class="btn g" id="mShare" title="여기 가자고 공유">📤</button>
       </div>
@@ -1354,6 +1477,7 @@ function openModal(r){
   document.getElementById('vBtn').onclick = toggleVisit;
   document.getElementById('mShare').onclick = ()=>shareShop(r);
   document.getElementById('mMap').onclick = ()=>{ closeModal(); focusOnMap(r); };
+  document.getElementById('mFav').onclick = ()=>openFavPicker(r);
   SHOW_ALL_C = false;
   const mMoreBtn = document.getElementById('mMoreBtn');
   if(mMoreBtn) mMoreBtn.onclick = ()=>{ const x = document.getElementById('mMore'); const open = x.classList.toggle('open'); mMoreBtn.textContent = open ? '메뉴 접기 ▴' : `메뉴 ${menus.length-8}개 더 보기 ▾`; };
@@ -1536,6 +1660,7 @@ document.getElementById('more').onclick = ()=>{ state.limit+=30; render(); };
 document.getElementById('kinds').onclick = e=>{
   const b=e.target.closest('.chip'); if(!b) return;
   if(b.id==='chipNew'){ state.fresh=!state.fresh; b.classList.toggle('on',state.fresh); }
+  else if(b.id==='chipFav'){ state.fav=!state.fav; b.classList.toggle('on',state.fav); }
   else if(b.id==='chipCheap'){ state.cheap=!state.cheap; b.classList.toggle('on',state.cheap); }
   else if(b.id==='chipVirgin'){ state.virgin=!state.virgin; b.classList.toggle('on',state.virgin); if(state.virgin) toast('이번 달 아직 아무도 안 간 밥집만 보여요. 첫 개척자가 되어봐요 🧭'); }
   else { state.kind=b.dataset.k; document.querySelectorAll('.chip[data-k]').forEach(x=>x.classList.toggle('on',x===b)); }
@@ -1607,7 +1732,9 @@ document.getElementById('mCnt').textContent = D.meta.count;
 const up = new Date(D.meta.updated);
 document.getElementById('mUpd').textContent = `${String(up.getMonth()+1).padStart(2,'0')}.${String(up.getDate()).padStart(2,'0')} 갱신`;
 document.getElementById('fUpd').textContent = '마지막 데이터 갱신: ' + up.toLocaleString('ko-KR');
-renderToday(); render(); renderRanking(); renderHof();
+renderToday(); render(); renderRanking(); renderHof(); renderFavs();
+{ const fm = location.hash.match(/#fav=([A-Za-z0-9]{6,10})/); if(fm){ setTimeout(()=>{ importFavCode(fm[1]); history.replaceState(null,'',location.pathname); }, 1200); } }
+if(Object.keys(FAV.items).length) document.getElementById('foldFav').open = true;
 (function tickLunch(){ const el=document.getElementById('lunchCd'); if(!el) return; const n=new Date(); const t=new Date(n); t.setHours(12,0,0,0); const diff=t-n; const day=n.getDay(); let txt=''; if(day===0||day===6) txt=''; else if(diff>0 && diff<4*3600e3){ const h=Math.floor(diff/3600e3), m=Math.floor(diff%3600e3/60e3); txt=` · 🍽️ 점심까지 ${h?h+'시간 ':''}${m}분`; } else if(diff<=0 && diff>-90*60e3) txt=' · 🍽️ 점심시간!'; el.textContent = txt; setTimeout(tickLunch, 30000); })();
 loadWeather();
 loadAll().then(()=>renderToday());
