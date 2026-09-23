@@ -20,6 +20,8 @@ try{ if(localStorage.getItem('gl_theme')!=='light') document.documentElement.cla
 <link rel="dns-prefetch" href="https://postfiles.pstatic.net">
 <link rel="dns-prefetch" href="https://ldb-phinf.pstatic.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
 <style>
 /* ================= THEME ================= */
 :root{
@@ -268,6 +270,40 @@ html.dark .noimg.ph .lb{color:rgba(255,255,255,.55)}
 .dlrow button.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac);border-color:transparent}
 .sharebox{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-top:10px}
 .sharebox input{flex:1;min-width:0;background:none;border:none;outline:none;color:var(--tx2);font-size:13.5px}
+/* ================= MAP ================= */
+#map{height:440px;border-radius:16px;overflow:hidden;background:var(--card2);border:1px solid var(--line)}
+@media(max-width:620px){#map{height:360px}}
+.maptools{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.mlegend{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--tx3)}
+.mlegend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.mchk{font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.mhint{font-size:11px;color:var(--tx3);margin-top:8px}
+.leaflet-container{font-family:inherit;font-size:12px}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--bg2);color:var(--tx);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.leaflet-popup-content-wrapper{border-radius:14px;border:1px solid var(--line2)}
+.leaflet-popup-content{margin:10px 12px;line-height:1.4}
+.leaflet-container a.leaflet-popup-close-button{color:var(--tx3)}
+.leaflet-tooltip{background:var(--bg2);color:var(--tx);border:1px solid var(--line2);border-radius:10px;padding:6px 9px;font-weight:700;font-size:12px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.leaflet-tooltip small{display:block;font-weight:500;color:var(--tx3);font-size:11px;margin-top:1px}
+.leaflet-tooltip-top:before{border-top-color:var(--line2)}
+.mp{width:220px}
+.mp .im{width:100%;height:110px;border-radius:10px;overflow:hidden;background:var(--card2);margin-bottom:8px}
+.mp .im img{width:100%;height:100%;object-fit:cover}
+.mp .im .noimg{font-size:30px}
+.mp b{display:block;font-size:14.5px;font-weight:800;letter-spacing:-.2px}
+.mp small{display:block;color:var(--tx3);font-size:11.5px;margin-top:2px}
+.mp .row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.mp .row span{font-size:11px;padding:3px 7px;border-radius:7px;background:var(--soft);color:var(--tx2);font-weight:600}
+.mp .row span.nv{background:var(--t-nv-bg);color:var(--t-nv-tx)}
+.mp .act{display:flex;gap:6px;margin-top:9px}
+.mp .act button,.mp .act a{flex:1;text-align:center;padding:8px 6px;border-radius:9px;font-size:12px;font-weight:700}
+.mp .act .p{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac)}
+.mp .act .n{background:var(--nv);color:var(--on-nv)}
+.hq{width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid #7FBF31;box-shadow:0 0 0 6px rgba(127,191,49,.25),0 6px 16px rgba(0,0,0,.35);display:grid;place-items:center;overflow:hidden}
+.hq img{width:22px;height:22px;object-fit:contain}
+.hqlbl{background:var(--tx);color:var(--bg);font-size:11px;font-weight:800;padding:3px 8px;border-radius:8px;white-space:nowrap}
+.mk-top{width:26px;height:26px;border-radius:50%;background:#f2b500;border:2px solid #fff;display:grid;place-items:center;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.mk-pick{width:30px;height:30px;border-radius:50%;background:#ff3d7f;border:3px solid #fff;display:grid;place-items:center;font-size:14px;box-shadow:0 0 0 5px rgba(255,61,127,.3),0 6px 16px rgba(0,0,0,.4);animation:pl 1.8s infinite}
 /* ================= HALL OF FAME ================= */
 .hof{display:grid;grid-template-columns:1fr;gap:10px}
 @media(min-width:700px){.hof{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}
@@ -614,17 +650,17 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb"><div class="feedlist" id="feed"><div class="cempty">아직 후기가 없어요. 첫 후기를 남겨보세요 🙌</div></div></div>
   </details>
 
-  <details class="fold" id="foldRadar">
-    <summary><span>🗺️ 회사 기준 위치 지도</span></summary>
-    <div class="fb radarbox">
-      <svg id="radar" viewBox="0 0 900 430"></svg>
-      <div class="rlegend">
-        <span><i style="background:#7FBF31"></i>오늘 추천</span>
-        <span><i style="background:#f2b500"></i>이달 랭킹</span>
-        <span><i style="background:#f5a524"></i>신규</span>
-        <span><i style="background:var(--dot-bap)"></i>밥집</span>
-        <span>원=100m 간격</span>
+  <details class="fold" id="foldRadar" open>
+    <summary><span>🗺️ 인라이플 맛집 지도 <span id="mapCnt" style="color:var(--tx3);font-weight:600;font-size:12px"></span></span></summary>
+    <div class="fb">
+      <div class="maptools">
+        <div class="mlegend">
+          <span><i style="background:#8ccf3c"></i>밥집</span><span><i style="background:#f5a524"></i>회식</span><span><i style="background:#b08968"></i>카페</span><span><i style="background:#ff6a2b"></i>패스트푸드</span><span><i style="background:#4dd4ac"></i>구내식당</span><span><i style="background:#ff3d7f"></i>추천 점심</span><span><i style="background:#f2b500"></i>🏆 랭킹</span>
+        </div>
+        <label class="mchk"><input type="checkbox" id="mapSync" checked> 리스트 필터와 연동</label>
       </div>
+      <div id="map"></div>
+      <div class="mhint">점에 마우스를 올리면 이름·평점, 클릭하면 사진·가격·상세 · 가운데 초록 원이 회사(100m 간격)</div>
     </div>
   </details>
 </header>
@@ -691,11 +727,11 @@ const LS = { get(k){ try { return localStorage.getItem(k); } catch(e){ return nu
 const ymd = (d=new Date()) => `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
 
 /* ======================= 테마 ======================= */
-function applyTheme(t){
+var applyTheme = function(t){
   document.documentElement.classList.toggle('dark', t==='dark');
   document.getElementById('themeBtn').textContent = t==='dark' ? '☀️' : '🌙';
   document.getElementById('themeColor').setAttribute('content', t==='dark' ? '#0b0d12' : '#f7f4ee');
-}
+};
 applyTheme(LS.get('gl_theme')==='light' ? 'light' : 'dark');
 document.getElementById('themeBtn').onclick = ()=>{
   const t = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
@@ -855,36 +891,65 @@ function renderToday(){
   drawRadar();
 }
 
-/* ======================= 레이더 ======================= */
-function drawRadar(){
-  const svg = document.getElementById('radar');
-  const W=900,H=430,cx=W/2,cy=H/2,R=186,MAX=520, mLat=111320, mLon=111320*Math.cos(C.lat*Math.PI/180);
-  let o = `<defs><radialGradient id="rg"><stop offset="0%" stop-color="#7FBF31" stop-opacity=".16"/><stop offset="100%" stop-color="#7FBF31" stop-opacity="0"/></radialGradient></defs><circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#rg)"/>`;
-  for(let m=100;m<=500;m+=100){
-    const rr=R*m/MAX;
-    o += `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="none" style="stroke:var(--line2)" stroke-dasharray="3 5"/>`;
-    o += `<text x="${(cx-rr*0.72).toFixed(1)}" y="${(cy+rr*0.72).toFixed(1)}" style="fill:var(--tx3)" font-size="11" text-anchor="middle">${m}m</text>`;
-  }
-  const ids = TODAY ? [TODAY.main.id, ...TODAY.alts.map(a=>a.id)] : [];
-  const pos = r => [cx + ((r.lo-C.lon)*mLon)/MAX*R, cy - ((r.la-C.lat)*mLat)/MAX*R];
-  L.forEach(r=>{
-    const [x,y] = pos(r);
-    let col='var(--dot-etc)', rad=2.6, op=.6;
-    if(r.k==='밥집'||r.k==='구내식당'){ col='var(--dot-bap)'; op=.7; rad=3; }
-    if(r.nw){ col='#f5a524'; rad=4.2; op=1; }
-    if(RK[r.id]){ col='#f2b500'; rad=5; op=1; }
-    if(ids.includes(r.id)){ col='#7FBF31'; rad=7; op=1; }
-    o += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rad}" style="fill:${col}" opacity="${op}"><title>${esc(r.n)} · ${r.d}m</title></circle>`;
-  });
-  if(TODAY && TODAY.main){
-    const [x,y] = pos(TODAY.main);
-    o += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="13" fill="none" stroke="#7FBF31" stroke-width="1.5"/>`;
-    o += `<text x="${(x>cx?x+19:x-19).toFixed(1)}" y="${(y+4).toFixed(1)}" style="fill:var(--ac)" font-size="14" font-weight="700" text-anchor="${x>cx?'start':'end'}">${esc(TODAY.main.n)}</text>`;
-  }
-  o += `<rect x="${cx-8}" y="${cy-8}" width="16" height="16" rx="4" style="fill:var(--tx)"/>`;
-  o += `<text x="${cx}" y="${cy+30}" style="fill:var(--tx)" font-size="13" font-weight="700" text-anchor="middle">한신아이티타워</text>`;
-  svg.innerHTML = o;
+/* ======================= 인라이플 맛집 지도 (Leaflet + OSM) ======================= */
+let MAP = null, MAP_LAYER = null, MAP_TILES = null, MAP_MARKERS = {}, MAP_SPECIAL = null;
+const KIND_COLOR = { '밥집':'#8ccf3c', '회식':'#f5a524', '카페':'#b08968', '패스트푸드':'#ff6a2b', '구내식당':'#4dd4ac' };
+const tileUrl = () => document.documentElement.classList.contains('dark') ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.basemaps.cartocdn.com/rapid/{z}/{x}/{y}{r}.png';
+function popupHtml(r){
+  const rt = rating(r);
+  return `<div class="mp"><div class="im">${imgTag(r,30)}</div><b>${esc(r.n)}</b><small>${emo(r.c)} ${r.c} · ${distTxt(r.d)}${r.hs?' · 🍻 회식':''}</small><div class="row">${rt?`<span class="${rt.src==='naver'?'nv':''}">★ ${rt.v} ${rt.src==='naver'?'네이버':'카카오'}</span>`:''}${r.pr?`<span>💸 ${won(r.pr)}</span>`:''}${RK[r.id]?`<span>🏆 이달 ${RK[r.id]}위</span>`:''}${(CMTCNT[r.id]||0)?`<span>💬 ${CMTCNT[r.id]}</span>`:''}</div><div class="act"><button class="p" onclick="openModal(BYID['${r.id}'])">상세·후기</button><a class="n" href="${naverUrl(r)}" target="_blank" rel="noopener">네이버지도</a></div></div>`;
 }
+function initMap(){
+  if(MAP || typeof L==='undefined') return;
+  const el = document.getElementById('map'); if(!el || !el.offsetWidth) return;
+  MAP = L.map('map', { center:[C.lat, C.lon], zoom:16, zoomControl:true, attributionControl:true, preferCanvas:true, scrollWheelZoom:false });
+  MAP.on('focus', ()=>MAP.scrollWheelZoom.enable()); MAP.on('blur', ()=>MAP.scrollWheelZoom.disable());
+  MAP_TILES = L.tileLayer(tileUrl(), { maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>' }).addTo(MAP);
+  // 회사 + 100m 링
+  [100,200,300,400,500].forEach(m=>L.circle([C.lat,C.lon],{radius:m,color:'#7FBF31',weight:1,opacity:.35,fill:m===500,fillColor:'#7FBF31',fillOpacity:.04,dashArray:'4 6',interactive:false}).addTo(MAP));
+  const logo = document.querySelector('.logo img')?.src;
+  L.marker([C.lat,C.lon], { icon: L.divIcon({ className:'', html:`<div class="hq">${logo?`<img src="${logo}" alt="">`:'🏢'}</div>`, iconSize:[34,34], iconAnchor:[17,17] }), zIndexOffset:1000, interactive:false }).addTo(MAP);
+  L.marker([C.lat,C.lon], { icon: L.divIcon({ className:'', html:'<div class="hqlbl">한신아이티타워</div>', iconSize:[100,20], iconAnchor:[50,-22] }), interactive:false }).addTo(MAP);
+  MAP_LAYER = L.layerGroup().addTo(MAP);
+  MAP_SPECIAL = L.layerGroup().addTo(MAP);
+  renderMap();
+}
+function renderMap(){
+  if(!MAP) return;
+  MAP_LAYER.clearLayers(); MAP_SPECIAL.clearLayers(); MAP_MARKERS = {};
+  const sync = document.getElementById('mapSync')?.checked;
+  const shown = sync ? filtered() : L_ALL_FOR_MAP();
+  const pickIds = new Set(TODAY ? [TODAY.main?.id, ...(TODAY.alts||[]).map(a=>a.id)].filter(Boolean) : []);
+  let n = 0;
+  for(const r of shown){
+    if(!r.la || !r.lo) continue; n++;
+    const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
+    let m;
+    if(isPick){ m = L.marker([r.la,r.lo], { icon: L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
+    else if(isTop){ m = L.marker([r.la,r.lo], { icon: L.divIcon({ className:'', html:`<div class="mk-top">${RK[r.id]===1?'🥇':RK[r.id]===2?'🥈':'🥉'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:800 }); }
+    else { const col = KIND_COLOR[r.k] || '#8ccf3c'; const alt = pickIds.has(r.id); m = L.circleMarker([r.la,r.lo], { radius: alt?8:(r.k==='밥집'?6:5), color:'#fff', weight: alt?2:1, fillColor: alt?'#ff3d7f':col, fillOpacity:.92 }); }
+    const rt = rating(r);
+    m.bindTooltip(`${esc(r.n)}<small>${r.c} · ${distTxt(r.d)}${rt?' · ★'+rt.v:''}${r.pr?' · '+won(r.pr):''}</small>`, { direction:'top', offset:[0,-8], opacity:1 });
+    m.bindPopup(()=>popupHtml(r), { maxWidth:260, closeButton:true, autoPanPaddingTopLeft:[20,60] });
+    (isPick||isTop ? MAP_SPECIAL : MAP_LAYER).addLayer(m);
+    MAP_MARKERS[r.id] = m;
+  }
+  const mc = document.getElementById('mapCnt'); if(mc) mc.textContent = `(${n}곳)`;
+}
+const L_ALL_FOR_MAP = () => L;
+function drawRadar(){ renderMap(); } // 호환 (테마 전환·추천 갱신 시 호출됨)
+function focusOnMap(r){
+  const d = document.getElementById('foldRadar'); if(!d.open){ d.open = true; }
+  initMap(); if(!MAP) return;
+  document.getElementById('map').scrollIntoView({ behavior:'smooth', block:'center' });
+  setTimeout(()=>{ MAP.setView([r.la, r.lo], 17, { animate:true }); const m = MAP_MARKERS[r.id]; if(m) m.openPopup(); else L.popup({maxWidth:260}).setLatLng([r.la,r.lo]).setContent(popupHtml(r)).openOn(MAP); }, 350);
+}
+document.getElementById('foldRadar').addEventListener('toggle', e=>{ if(e.target.open) setTimeout(initMap, 50); });
+document.getElementById('mapSync').onchange = renderMap;
+window.addEventListener('load', ()=>{ setTimeout(initMap, 200); });
+// 테마 전환 시 타일 교체
+const _applyTheme = applyTheme;
+applyTheme = function(t){ _applyTheme(t); if(MAP_TILES) MAP_TILES.setUrl(tileUrl()); };
 
 /* ======================= Firebase ======================= */
 async function fbGet(p){ try{ const r = await fetch(FB+p+'.json'); if(!r.ok) return null; return await r.json(); }catch(e){ return null; } }
@@ -1195,6 +1260,7 @@ function render(){
   mb.style.display = a.length>state.limit ? 'block':'none';
   mb.textContent = `더 보기 (${a.length-state.limit}곳)`;
   document.querySelectorAll('.c').forEach(el=>el.onclick=()=>openModal(BYID[el.dataset.id]));
+  if(MAP && document.getElementById('mapSync')?.checked) renderMap();
 }
 
 /* ======================= 모달 ======================= */
@@ -1226,6 +1292,7 @@ function openModal(r){
       <div class="mdact">
         <a class="btn n full" href="${naverUrl(r)}" target="_blank" rel="noopener">🟢 네이버지도</a>
         <a class="btn g" href="https://map.kakao.com/link/to/${encodeURIComponent(r.n)},${r.la},${r.lo}" target="_blank" rel="noopener">🚶 길찾기</a>
+        <button class="btn g" id="mMap" title="지도에서 보기">📍</button>
         <button class="btn g" id="mShare" title="여기 가자고 공유">📤</button>
       </div>
       <div class="visitbox">
@@ -1252,6 +1319,7 @@ function openModal(r){
   document.getElementById('cSend').onclick = sendComment;
   document.getElementById('vBtn').onclick = toggleVisit;
   document.getElementById('mShare').onclick = ()=>shareShop(r);
+  document.getElementById('mMap').onclick = ()=>{ closeModal(); focusOnMap(r); };
   SHOW_ALL_C = false;
   const mMoreBtn = document.getElementById('mMoreBtn');
   if(mMoreBtn) mMoreBtn.onclick = ()=>{ const x = document.getElementById('mMore'); const open = x.classList.toggle('open'); mMoreBtn.textContent = open ? '메뉴 접기 ▴' : `메뉴 ${menus.length-8}개 더 보기 ▾`; };
