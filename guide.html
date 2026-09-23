@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0d12" id="themeColor">
+<title>이용 가이드 · 오늘 뭐 먹지?</title>
+<script>try{ if(localStorage.getItem('gl_theme')!=='light') document.documentElement.classList.add('dark'); }catch(e){ document.documentElement.classList.add('dark'); }</script>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#f7f4ee; --bg2:#fffdf9; --card:#ffffff; --card2:#f3efe8; --soft:rgba(60,40,10,.05);
+  --line:rgba(60,40,10,.09); --line2:rgba(60,40,10,.16);
+  --tx:#1f1c18; --tx2:#5e574d; --tx3:#978e82;
+  --ac:#7FBF31; --ac2:#A6D93F; --on-ac:#132805; --nv:#03c75a;
+  --blue:#3ea6ff; --gold:#f2b500; --pink:#ff3d7f; --purple:#b36bff; --red:#ff4d3d; --yellow:#ffd23f;
+}
+html.dark{
+  --bg:#0b0d12; --bg2:#11141c; --card:#161a24; --card2:#1c2130; --soft:rgba(255,255,255,.05);
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.15);
+  --tx:#eef1f7; --tx2:#b3bbcc; --tx3:#7a8296;
+  --ac:#8ccf3c; --ac2:#b9e35d; --on-ac:#0f2004;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7;padding-bottom:80px}
+a{color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px}
+
+/* 상단 */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:10px;height:58px}
+.logo{width:36px;height:36px;border-radius:11px;background:#fff;padding:6px;border:1px solid var(--line2)}
+.logo img{width:100%;height:100%;object-fit:contain;display:block}
+.top b{font-size:16px;font-weight:800}
+.back{margin-left:auto;text-decoration:none;font-size:14px;font-weight:800;padding:9px 14px;border-radius:11px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac)}
+
+/* 히어로 */
+.hero{margin-top:26px;padding:26px 22px;border-radius:24px;background:linear-gradient(160deg,rgba(127,191,49,.18),rgba(62,166,255,.08) 60%,transparent);border:1px solid var(--line2)}
+.hero h1{font-size:28px;font-weight:900;letter-spacing:-.8px;line-height:1.3}
+.hero p{font-size:16px;color:var(--tx2);margin-top:4px}
+.hero .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.hero .facts span{font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2)}
+
+/* 목차 */
+.toc{display:flex;gap:7px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none;position:sticky;top:58px;z-index:10;background:var(--bg)}
+.toc::-webkit-scrollbar{display:none}
+.toc a{flex:none;text-decoration:none;font-size:13.5px;font-weight:700;padding:8px 13px;border-radius:11px;background:var(--card);border:1px solid var(--line);color:var(--tx2);white-space:nowrap}
+.toc a:hover{border-color:var(--ac);color:var(--tx)}
+
+/* 섹션 */
+section{margin-top:34px;scroll-margin-top:120px}
+section h2{font-size:22px;font-weight:900;letter-spacing:-.5px;display:flex;align-items:center;gap:10px}
+section h2 .n{font-size:13px;font-weight:800;color:var(--on-ac);background:var(--ac);border-radius:8px;padding:2px 8px}
+section > .lead{font-size:15.5px;color:var(--tx2);margin-top:8px}
+.card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.card h3{font-size:16.5px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.card p{font-size:15px;color:var(--tx2)}
+.card p + p{margin-top:2px}
+.card p b,.lead b{color:var(--tx)}
+.grid2{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+@media(min-width:700px){.grid2{grid-template-columns:1fr 1fr}}
+.grid2 .card{margin-top:0}
+
+/* 단계 */
+.steps{counter-reset:s;margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.step{counter-increment:s;display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.step:before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--ac);color:var(--on-ac);font-weight:900;font-size:14px;display:grid;place-items:center;margin-top:1px}
+.step p{font-size:15px;color:var(--tx2)}
+.step p b{color:var(--tx)}
+
+/* UI 미리보기 조각 */
+.ui{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:800;padding:4px 10px;border-radius:9px;background:var(--card2);border:1px solid var(--line2);color:var(--tx);vertical-align:1px;white-space:nowrap}
+.ui.g{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac);border:none}
+.ui.nv{background:var(--nv);color:#fff;border:none}
+.ui.y{background:rgba(255,210,63,.16);border-color:rgba(255,210,63,.55);color:#e0a800}
+html.dark .ui.y{color:#ffd23f}
+.ui.b{background:rgba(62,166,255,.15);border-color:rgba(62,166,255,.5);color:#3ea6ff}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);vertical-align:-1px;margin-right:4px}
+
+/* 표 */
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14.5px;overflow:hidden;border-radius:14px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--card2);font-weight:800;font-size:13.5px;color:var(--tx2)}
+td{background:var(--card);color:var(--tx2)}
+td b{color:var(--tx)}
+td.c{text-align:center;white-space:nowrap}
+
+/* 팁·주의 */
+.tip,.warn{margin-top:14px;border-radius:14px;padding:13px 16px;font-size:14.5px;line-height:1.7}
+.tip{background:rgba(127,191,49,.10);border:1px solid rgba(127,191,49,.35)}
+.warn{background:rgba(255,77,61,.08);border:1px solid rgba(255,77,61,.3)}
+.tip b,.warn b{color:var(--tx)}
+
+/* FAQ */
+details.faq{margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 16px}
+details.faq summary{cursor:pointer;list-style:none;padding:14px 0;font-weight:800;font-size:15.5px;display:flex;justify-content:space-between;gap:10px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary:after{content:"＋";color:var(--tx3)}
+details.faq[open] summary:after{content:"－"}
+details.faq p{font-size:15px;color:var(--tx2);padding-bottom:4px}
+details.faq p:last-child{padding-bottom:14px}
+
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--tx3);text-align:center;line-height:1.8}
+.totop{position:fixed;right:16px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--line2);display:grid;place-items:center;font-size:18px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <span class="logo"><img src="data:image/png;base64,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" alt="ENLiPLE"></span>
+  <b>이용 가이드</b>
+  <a class="back" href="./">🍚 점심 고르러 가기</a>
+</div></div>
+
+<div class="wrap">
+
+<div class="hero">
+  <h1>오늘 뭐 먹지?<br>인라이플 점심지도 사용법</h1>
+  <p>한신아이티타워 반경 500m 식당을 한곳에 모았어요.</p>
+  <p>추천 받고, 고르고, 같이 먹고, 후기 남기는 곳이에요.</p>
+  <div class="facts">
+    <span>📍 한신아이티타워 기준 500m</span>
+    <span>🍽️ 약 580곳</span>
+    <span>⏰ 점심시간 13:00~14:00</span>
+    <span>🔄 매일 09:20 자동 갱신</span>
+    <span>🙈 가입 없음 · 익명</span>
+  </div>
+</div>
+
+<nav class="toc">
+  <a href="#start">처음 오셨다면</a>
+  <a href="#pick">추천 점심</a>
+  <a href="#find">식당 찾기</a>
+  <a href="#detail">가게 상세</a>
+  <a href="#map">맛집 지도</a>
+  <a href="#rank">랭킹</a>
+  <a href="#mission">미션·배지</a>
+  <a href="#fav">즐겨찾기</a>
+  <a href="#vote">팀 투표</a>
+  <a href="#chat">수다방</a>
+  <a href="#request">맛집 추가</a>
+  <a href="#profile">프로필·기기 연결</a>
+  <a href="#home">홈 화면 추가</a>
+  <a href="#faq">자주 묻는 질문</a>
+</nav>
+
+<!-- 1 -->
+<section id="start">
+  <h2><span class="n">01</span> 처음 오셨다면</h2>
+  <p class="lead">가입이나 로그인은 필요 없어요.</p>
+  <p class="lead">들어오는 순간 <b>익명 닉네임</b>(예: 배고픈 판다)이 자동으로 정해져요.</p>
+  <div class="steps">
+    <div class="step"><p><b>추천 점심</b>을 확인해요.<br>오늘 날씨에 맞춰 1곳과 대안 3곳을 골라줘요.</p></div>
+    <div class="step"><p>마음에 안 들면 <span class="ui">🎲 다시 뽑기</span>를 눌러요.<br>슬롯머신처럼 돌다가 새 가게가 나와요.</p></div>
+    <div class="step"><p>가게를 누르면 <b>메뉴·가격·후기</b>를 볼 수 있어요.<br><span class="ui nv">🟢 네이버지도</span>로 바로 길찾기도 돼요.</p></div>
+    <div class="step"><p>먹고 와서 <span class="ui y">🍽️ 오늘 여기서 먹었어요</span>를 눌러주세요.<br>랭킹과 미션에 반영돼요.</p></div>
+  </div>
+  <div class="tip">💡 <b>닉네임과 이모지</b>는 오른쪽 위 <span class="ui">👤 프로필</span>에서 언제든 바꿀 수 있어요.</div>
+</section>
+
+<!-- 2 -->
+<section id="pick">
+  <h2><span class="n">02</span> 날씨 · 추천 점심</h2>
+  <p class="lead">맨 위에서 오늘 날씨와 추천 가게를 보여줘요.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>🌤️ 날씨 카드</h3>
+      <p>지금 기온, 체감온도, 미세먼지를 보여줘요.</p>
+      <p>오른쪽에는 <b>12시~15시 시간별 예보</b>가 있어요.</p>
+      <p>강수확률이 40% 넘으면 숫자가 빨갛게 바뀌어요.</p>
+      <p>오후 4시가 지나면 다음 날 예보로 바뀌어요.</p>
+    </div>
+    <div class="card">
+      <h3>🍽️ 추천 점심</h3>
+      <p>날씨, 평점, 거리, 가격을 보고 골라요.</p>
+      <p>비 오거나 추우면 <b>국물 요리 + 가까운 곳</b>,</p>
+      <p>더우면 <b>냉면·회·샐러드</b> 쪽으로 추천해요.</p>
+      <p>처음 보이는 추천은 하루 동안 그대로예요.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>☔ 비 오는 날 모드</h3>
+    <p>비·눈이 오거나 13시 강수확률이 60% 이상이면 날씨 카드에 버튼이 생겨요.</p>
+    <p><span class="ui b">☔ 우리 건물 + 200m 이내만 보기</span>를 누르면 우산 없이 갈 만한 곳만 남아요.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="find">
+  <h2><span class="n">03</span> 식당 찾기</h2>
+  <p class="lead">아래쪽 <b>식당 리스트</b>에서 원하는 조건으로 좁혀보세요.</p>
+  <div class="card">
+    <h3>🔍 검색</h3>
+    <p>가게 이름뿐 아니라 <b>메뉴 이름</b>으로도 찾아져요.</p>
+    <p>예: "순대국", "포케", "가라아게"</p>
+    <p>원하는 가게가 없으면 바로 <b>추가 요청</b> 버튼이 떠요.</p>
+  </div>
+  <div class="card">
+    <h3>🏷️ 빠른 선택 칩</h3>
+    <table>
+      <tr><th>칩</th><th>이렇게 쓰세요</th></tr>
+      <tr><td class="c"><span class="ui">밥집</span></td><td>일반 식당만 볼 때</td></tr>
+      <tr><td class="c"><span class="ui">🥗 샐러드</span></td><td>샐러드·포케 가게</td></tr>
+      <tr><td class="c"><span class="ui">🍻 회식</span></td><td>고깃집·횟집·술집 등 회식 갈 만한 곳</td></tr>
+      <tr><td class="c"><span class="ui">🆕 신규</span></td><td>최근 14일 안에 새로 생긴 곳</td></tr>
+      <tr><td class="c"><span class="ui y">⭐ 저장한 곳</span></td><td>내 즐겨찾기만</td></tr>
+      <tr><td class="c"><span class="ui">🏢 우리 건물</span></td><td>한신아이티타워 안에 있는 가게</td></tr>
+      <tr><td class="c"><span class="ui">💸 1만원 이하</span></td><td>대표 메뉴 가격이 1만원 이하</td></tr>
+      <tr><td class="c"><span class="ui">🧭 미개척</span></td><td>이번 달 아직 아무도 안 간 밥집</td></tr>
+    </table>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>📂 카테고리</h3>
+      <p>한식, 일식, 중식, 패스트푸드처럼 묶여 있어요.</p>
+      <p>괄호 안 숫자는 가게 수예요.</p>
+    </div>
+    <div class="card">
+      <h3>↕️ 정렬 · 슬라이더</h3>
+      <p>가까운 순, 이달 랭킹 순, 평점 순 등으로 바꿀 수 있어요.</p>
+      <p>슬라이더로 <b>걸어서 거리</b>와 <b>1인 예산</b>을 정해요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="detail">
+  <h2><span class="n">04</span> 가게 상세 화면</h2>
+  <p class="lead">가게 카드를 누르면 열려요.</p>
+  <div class="card">
+    <h3>상단 버튼</h3>
+    <table>
+      <tr><th>버튼</th><th>하는 일</th></tr>
+      <tr><td class="c"><span class="ui nv">🟢 네이버지도</span></td><td>네이버지도 가게 페이지로 이동해요.<br>길찾기도 여기서 하면 돼요.</td></tr>
+      <tr><td class="c"><span class="ui y">☆ 저장</span></td><td>즐겨찾기 폴더에 담아요.</td></tr>
+      <tr><td class="c"><span class="ui">📍</span></td><td>우리 사이트 지도에서 위치를 보여줘요.</td></tr>
+      <tr><td class="c"><span class="ui">📤</span></td><td>"오늘 여기 어때?"를 단톡에 공유해요.</td></tr>
+    </table>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>🍽️ 오늘 여기서 먹었어요</h3>
+      <p>하루에 한 번 누를 수 있어요.</p>
+      <p>랭킹 점수가 가장 큰 항목이에요 (×3점).</p>
+      <p>잘못 눌렀으면 다시 눌러서 취소해요.</p>
+    </div>
+    <div class="card">
+      <h3>📸 사진 올리기</h3>
+      <p>사진이 없거나 마음에 안 들면 직접 올릴 수 있어요.</p>
+      <p>폰으로 찍어서 올리면 자동으로 작게 줄여서 저장돼요.</p>
+      <p>올린 사진은 모두에게 대표 사진으로 보여요.</p>
+    </div>
+    <div class="card">
+      <h3>👍 한 방 평가</h3>
+      <p>👍 🔥 😋 🍽️ 💸 🫶 😐 👎 중에 골라 눌러요.</p>
+      <p>좋은 반응은 랭킹에 +1점, 👎은 -1점이에요.</p>
+    </div>
+    <div class="card">
+      <h3>💬 직원 후기</h3>
+      <p>맛, 대기 시간, 꿀조합 등을 남겨주세요.</p>
+      <p>다른 사람 후기에 <b>👍 공감</b>을 누를 수 있어요.</p>
+      <p>공감 많은 후기는 <b>베스트 한 줄</b>에 올라가요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="map">
+  <h2><span class="n">05</span> 인라이플 맛집 지도</h2>
+  <p class="lead">가운데 인라이플 로고가 회사예요.</p>
+  <p class="lead">점선 원은 100m 간격이에요.</p>
+  <div class="card">
+    <h3>🎨 점 색깔</h3>
+    <p><span class="dot" style="background:#7FBF31"></span>밥집 &nbsp; <span class="dot" style="background:#b36bff"></span>회식 &nbsp; <span class="dot" style="background:#3ea6ff"></span>카페 &nbsp; <span class="dot" style="background:#ff4d3d"></span>패스트푸드 &nbsp; <span class="dot" style="background:#ffd23f"></span>구내식당</p>
+    <p>핑크 🍽️ 마커는 <b>오늘 추천</b>, 🥇🥈🥉는 <b>이달 랭킹</b>이에요.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><p>점에 <b>마우스를 올리면</b> 이름, 거리, 평점이 보여요.</p></div>
+    <div class="step"><p>점을 <b>누르면</b> 사진, 가격, 버튼이 있는 말풍선이 떠요.</p></div>
+    <div class="step"><p>위쪽 <b>범례를 누르면</b> 그 종류만 남아요.<br>누른 버튼은 색이 채워지고, 여러 개 고를 수 있어요.</p></div>
+    <div class="step"><p><b>리스트 필터와 연동</b>이 켜져 있으면 리스트에서 고른 조건이 지도에도 그대로 적용돼요.</p></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="rank">
+  <h2><span class="n">06</span> 랭킹 · 명예의 전당</h2>
+  <p class="lead">우리 회사 사람들이 실제로 먹은 기록으로 순위를 매겨요.</p>
+  <div class="card">
+    <h3>🧮 점수 계산</h3>
+    <table>
+      <tr><th>행동</th><th>점수</th></tr>
+      <tr><td>🍽️ 오늘 여기서 먹었어요</td><td class="c"><b>+3</b></td></tr>
+      <tr><td>💬 후기 작성</td><td class="c"><b>+2</b></td></tr>
+      <tr><td>👍🔥😋 좋은 반응</td><td class="c"><b>+1</b></td></tr>
+      <tr><td>👎 별로예요</td><td class="c"><b>-1</b></td></tr>
+    </table>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>🏆 랭킹 보드</h3>
+      <p>맛집 TOP 10, 이번 주 핫플, 베스트 한 줄, 우리 회사 취향, 새로 생긴 곳이 있어요.</p>
+      <p>기간은 오늘 / 이번 달 / 지난 달 / 3개월 / 올해 / 전체 중에 골라요.</p>
+    </div>
+    <div class="card">
+      <h3>👑 명예의 전당</h3>
+      <p>매달 1일, 지난달 <b>1~5위</b>가 자동으로 기록돼요.</p>
+      <p>랭킹 위 금색 띠에 지난달 챔피언이 떠요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="mission">
+  <h2><span class="n">07</span> 이달의 미션 · 배지</h2>
+  <p class="lead">미션을 달성하면 닉네임 옆에 배지가 붙어요.</p>
+  <p class="lead">배지는 후기, 수다방에서 다른 사람에게도 보여요.</p>
+  <div class="card">
+    <table>
+      <tr><th>배지</th><th>미션</th></tr>
+      <tr><td class="c">🔥 개근왕</td><td>이번 달 "먹었어요" 10번</td></tr>
+      <tr><td class="c">🧭 탐험가</td><td>서로 다른 가게 5곳 방문</td></tr>
+      <tr><td class="c">🌏 미식가</td><td>서로 다른 카테고리 5종</td></tr>
+      <tr><td class="c">✍️ 리뷰어</td><td>후기 3개 남기기</td></tr>
+      <tr><td class="c">👑 개척자</td><td>그달 그 가게 첫 방문자 되기 3번</td></tr>
+      <tr><td class="c">🍻 회식러</td><td>회식 가능한 가게 2곳 방문</td></tr>
+      <tr><td class="c">🆕 얼리어답터</td><td>새로 생긴 가게 1곳 방문</td></tr>
+      <tr><td class="c">🏢 방콕러</td><td>우리 건물 가게 3번 방문</td></tr>
+    </table>
+  </div>
+  <div class="tip">💡 미션은 <b>매달 1일에 새로 시작</b>해요.<br>이달의 배지 보드에서 누가 많이 모았는지 볼 수 있어요.</div>
+</section>
+
+<!-- 8 -->
+<section id="fav">
+  <h2><span class="n">08</span> 즐겨찾기 · 내 맛지도</h2>
+  <p class="lead">네이버지도처럼 폴더를 만들어 가게를 저장해요.</p>
+  <div class="steps">
+    <div class="step"><p>가게 카드나 상세 화면의 <span class="ui y">☆</span>를 눌러요.</p></div>
+    <div class="step"><p>폴더를 고르거나 새로 만들어요.<br>예: 🍻 회식 후보, 🥗 혼밥, 🌧️ 비 오는 날</p></div>
+    <div class="step"><p><b>⭐ 내 즐겨찾기</b> 섹션에서 폴더별로 모아 봐요.<br><b>🎲 이 폴더에서 뽑기</b>도 돼요.</p></div>
+  </div>
+  <div class="card">
+    <h3>🗺️ 내 맛지도 공유</h3>
+    <p><b>🗺️ 내 맛지도 공유</b>를 누르면 링크가 생겨요.</p>
+    <p>받은 사람은 내 폴더와 지도를 그대로 볼 수 있어요.</p>
+    <p>링크는 <b>한 번만 보내면</b> 내가 저장하는 대로 자동으로 업데이트돼요.</p>
+    <p>받은 사람은 <b>⭐ 내 즐겨찾기에 담기</b>로 가져갈 수도 있어요.</p>
+  </div>
+  <div class="warn">⚠️ 즐겨찾기는 <b>지금 쓰는 기기에만</b> 저장돼요.<br>폰과 PC를 같이 쓰려면 <a href="#profile">기기 연결</a>이나 코드 가져오기를 써주세요.</div>
+</section>
+
+<!-- 9 -->
+<section id="vote">
+  <h2><span class="n">09</span> 우리 팀 투표</h2>
+  <p class="lead">"오늘 어디 갈까?"를 팀끼리 투표로 정해요.</p>
+  <p class="lead">투표는 <b>링크를 받은 사람만</b> 볼 수 있어요.</p>
+  <div class="steps">
+    <div class="step"><p>추천 점심 아래 <span class="ui">🗳️ 우리 팀 투표 만들기</span>를 눌러요.</p></div>
+    <div class="step"><p>후보를 2~4곳 고르고 마감 시간을 정해요.<br>(12:30 · 12:45 · 13:00 · 30분 뒤 · 1시간 뒤)</p></div>
+    <div class="step"><p>생긴 링크를 <b>팀 단톡</b>에 붙여넣어요.</p></div>
+    <div class="step"><p>팀원은 링크를 눌러 후보를 한 번 탭하면 투표 끝이에요.<br>마감 전까지는 바꿀 수 있어요.</p></div>
+    <div class="step"><p>마감되면 1등에 🏆가 붙어요.<br><span class="ui">📤 결과 공유</span>로 "오늘은 ○○!"을 알려요.</p></div>
+  </div>
+  <div class="tip">💡 동률이면 <span class="ui">🎲 대신 뽑아줘</span>를 눌러보세요.<br>누가 눌러도 같은 결과가 나와요.</div>
+</section>
+
+<!-- 10 -->
+<section id="chat">
+  <h2><span class="n">10</span> 점심 수다방</h2>
+  <p class="lead">점심 얘기 말고도 아무 얘기나 나누는 단체 대화방이에요.</p>
+  <div class="card">
+    <p>내 말은 오른쪽 초록 말풍선으로 보여요.</p>
+    <p>말풍선 옆 <b>♡</b>를 눌러 공감할 수 있어요.</p>
+    <p>빠른 문구 버튼(☕ 커피 한 잔 할 사람? 등)으로 바로 보낼 수 있어요.</p>
+    <p>접혀 있어도 새 메시지가 오면 <b>"새 N"</b> 표시가 떠요.</p>
+  </div>
+  <div class="warn">⚠️ 익명이지만 <b>회사 사람들이 보는 공간</b>이에요.<br>개인정보, 업무 기밀, 특정인 험담은 올리지 말아주세요.</div>
+</section>
+
+<!-- 11 -->
+<section id="request">
+  <h2><span class="n">11</span> 맛집 추가 요청</h2>
+  <p class="lead">리스트에 없는 가게는 요청하면 자동으로 추가돼요.</p>
+  <div class="steps">
+    <div class="step"><p>식당 리스트 오른쪽 위 <span class="ui">+ 맛집 추가 요청</span>을 눌러요.</p></div>
+    <div class="step"><p>가게 이름을 적어요.<br>띄어쓰기나 지점명은 달라도 괜찮아요.</p></div>
+    <div class="step"><p>이름이 흔한 가게는 <b>위치 힌트</b>도 적어주세요.<br>예: 지타워몰 지하, 디지털로26길</p></div>
+    <div class="step"><p>다음 날 아침 9시 20분에 카카오맵에서 찾아서 추가돼요.<br>"최근 요청"에서 어떤 가게로 매칭됐는지 확인할 수 있어요.</p></div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section id="profile">
+  <h2><span class="n">12</span> 프로필 · 기기 연결</h2>
+  <p class="lead">오른쪽 위 <span class="ui">👤 내 닉네임</span> 버튼을 누르면 열려요.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>✏️ 닉네임 · 이모지</h3>
+      <p>닉네임을 직접 쓰거나 🎲로 새로 뽑아요.</p>
+      <p>이모지는 160개 중에 골라요.</p>
+    </div>
+    <div class="card">
+      <h3>📱 폰 · PC 같은 나로 쓰기</h3>
+      <p>가입 없이 <b>연결 코드</b>로 두 기기를 하나로 합쳐요.</p>
+      <p>닉네임, 미션, 배지, 투표가 이어져요.</p>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step"><p>지금 쓰는 기기에서 👤 프로필 → <span class="ui g">🔑 코드 만들기</span></p></div>
+    <div class="step"><p>카드 맨 위에 8자리 코드가 떠요 (자동 복사돼요).</p></div>
+    <div class="step"><p>다른 기기에서 👤 프로필 → <span class="ui">📥 코드로 연결</span> → 코드 입력</p></div>
+  </div>
+  <div class="warn">⚠️ 연결 코드는 <b>열쇠</b>예요.<br>다른 사람에게 알려주면 내 닉네임으로 활동할 수 있으니 공유하지 마세요.</div>
+</section>
+
+<!-- 13 -->
+<section id="home">
+  <h2><span class="n">13</span> 폰 홈 화면에 추가하기</h2>
+  <p class="lead">앱처럼 아이콘 하나로 바로 열 수 있어요.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>🍎 아이폰 (사파리)</h3>
+      <p>① 사이트를 열고 아래 <b>공유 버튼</b>(□↑)을 눌러요.</p>
+      <p>② <b>홈 화면에 추가</b>를 눌러요.</p>
+      <p>③ 인라이플 아이콘이 홈 화면에 생겨요.</p>
+    </div>
+    <div class="card">
+      <h3>🤖 안드로이드 (크롬)</h3>
+      <p>① 사이트를 열고 오른쪽 위 <b>⋮</b>를 눌러요.</p>
+      <p>② <b>홈 화면에 추가</b>를 눌러요.</p>
+      <p>③ 인라이플 아이콘이 홈 화면에 생겨요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section id="faq">
+  <h2><span class="n">14</span> 자주 묻는 질문</h2>
+  <details class="faq"><summary>새로 바뀐 화면이 안 보여요</summary>
+    <p>빠르게 열리도록 페이지를 기기에 저장해두기 때문이에요.</p>
+    <p>화면 아래 <b>"새 버전이 있어요"</b> 알림을 누르거나, 탭을 닫고 다시 열어주세요.</p>
+    <p>PC는 <b>Ctrl + Shift + R</b>로 새로고침하면 바로 반영돼요.</p>
+  </details>
+  <details class="faq"><summary>진짜 익명인가요?</summary>
+    <p>네, 이름·사번·이메일은 전혀 받지 않아요.</p>
+    <p>자동으로 정해진 닉네임과 이모지로만 표시돼요.</p>
+    <p>다만 후기와 수다방 글은 모두가 볼 수 있어요.</p>
+  </details>
+  <details class="faq"><summary>즐겨찾기가 사라졌어요</summary>
+    <p>즐겨찾기는 기기(브라우저)에 저장돼요.</p>
+    <p>브라우저 기록을 지우거나 다른 기기에서 열면 안 보일 수 있어요.</p>
+    <p>미리 <b>🗺️ 내 맛지도 공유</b>로 코드를 만들어두면 언제든 다시 가져올 수 있어요.</p>
+  </details>
+  <details class="faq"><summary>가격이 실제랑 달라요</summary>
+    <p>가격은 카카오맵에 등록된 메뉴 가격 기준이에요.</p>
+    <p>대표 가격은 4천~2만 원 메뉴의 중간값이라 실제와 조금 다를 수 있어요.</p>
+  </details>
+  <details class="faq"><summary>식당 정보는 언제 갱신되나요?</summary>
+    <p>매일 아침 <b>9시 20분</b>에 자동으로 갱신돼요.</p>
+    <p>새로 생긴 가게는 🆕 표시가 14일 동안 붙어요.</p>
+    <p>추가 요청한 가게도 이때 반영돼요.</p>
+  </details>
+  <details class="faq"><summary>후기나 사진을 지우고 싶어요</summary>
+    <p>내가 쓴 후기와 수다방 메시지는 옆의 <b>삭제</b>로 지울 수 있어요.</p>
+    <p>같은 기기(또는 연결 코드로 연결된 기기)에서만 삭제 버튼이 보여요.</p>
+  </details>
+</section>
+
+<footer>
+  문의 · 개선 제안은 수다방이나 인사관리실로 알려주세요 🙌<br>
+  데이터: 카카오맵 · 네이버 플레이스 · Open-Meteo · OpenStreetMap
+</footer>
+
+</div>
+<a class="totop" href="#" title="맨 위로">↑</a>
+</body>
+</html>
