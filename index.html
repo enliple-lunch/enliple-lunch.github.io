@@ -285,7 +285,10 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 @media(max-width:620px){#map{height:360px}}
 .maptools{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .mlegend{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--tx3)}
-.mlegend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.mlegend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.mlegend button,.mlegend .ml-sp{display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:var(--tx2);padding:5px 9px;border-radius:9px;background:var(--soft);border:1px solid var(--line)}
+.mlegend button.off{opacity:.35;text-decoration:line-through}
+.mlegend button:active{transform:scale(.95)}
 .mchk{font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:6px;white-space:nowrap}
 .mhint{font-size:11px;color:var(--tx3);margin-top:8px}
 .leaflet-container{font-family:inherit;font-size:12px}
@@ -665,13 +668,13 @@ html.dark .fbrand .fl.dark{display:inline}
     <summary><span>🗺️ 인라이플 맛집 지도 <span id="mapCnt" style="color:var(--tx3);font-weight:600;font-size:12px"></span></span></summary>
     <div class="fb">
       <div class="maptools">
-        <div class="mlegend">
-          <span><i style="background:#8ccf3c"></i>밥집</span><span><i style="background:#f5a524"></i>회식</span><span><i style="background:#b08968"></i>카페</span><span><i style="background:#ff6a2b"></i>패스트푸드</span><span><i style="background:#4dd4ac"></i>구내식당</span><span><i style="background:#ff3d7f"></i>추천 점심</span><span><i style="background:#f2b500"></i>🏆 랭킹</span>
+        <div class="mlegend" id="mLegend">
+          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><span class="ml-sp"><i style="background:#ff3d7f"></i>추천</span><span class="ml-sp">🥇 랭킹</span>
         </div>
         <label class="mchk"><input type="checkbox" id="mapSync" checked> 리스트 필터와 연동</label>
       </div>
       <div id="map"></div>
-      <div class="mhint">점에 마우스를 올리면 이름·평점, 클릭하면 사진·가격·상세 · 가운데 초록 원이 회사(100m 간격)</div>
+      <div class="mhint">범례를 누르면 그 종류만 켜고 끌 수 있어요 · 점에 마우스를 올리면 이름·평점, 클릭하면 사진·가격·상세 · 가운데가 회사(100m 간격)</div>
     </div>
   </details>
 </header>
@@ -904,7 +907,8 @@ function renderToday(){
 
 /* ======================= 인라이플 맛집 지도 (Leaflet + OSM) ======================= */
 let MAP = null, MAP_LAYER = null, MAP_TILES = null, MAP_MARKERS = {}, MAP_SPECIAL = null;
-const KIND_COLOR = { '밥집':'#8ccf3c', '회식':'#f5a524', '카페':'#b08968', '패스트푸드':'#ff6a2b', '구내식당':'#4dd4ac' };
+const KIND_COLOR = { '밥집':'#7FBF31', '회식':'#b36bff', '카페':'#3ea6ff', '패스트푸드':'#ff4d3d', '구내식당':'#ffd23f' };
+const MAP_HIDE = new Set();
 const tileUrl = () => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 function popupHtml(r){
   const rt = rating(r);
@@ -933,12 +937,13 @@ function renderMap(){
   const pickIds = new Set(TODAY ? [TODAY.main?.id, ...(TODAY.alts||[]).map(a=>a.id)].filter(Boolean) : []);
   let n = 0;
   for(const r of shown){
-    if(!r.la || !r.lo) continue; n++;
+    if(!r.la || !r.lo) continue;
+    if(MAP_HIDE.has(r.k)) continue; n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
     if(isPick){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
     else if(isTop){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-top">${RK[r.id]===1?'🥇':RK[r.id]===2?'🥈':'🥉'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:800 }); }
-    else { const col = KIND_COLOR[r.k] || '#8ccf3c'; const alt = pickIds.has(r.id); m = window.L.circleMarker([r.la,r.lo], { radius: alt?8:(r.k==='밥집'?6:5), color:'#fff', weight: alt?2:1, fillColor: alt?'#ff3d7f':col, fillOpacity:.92 }); }
+    else { const col = KIND_COLOR[r.k] || '#8ccf3c'; const alt = pickIds.has(r.id); m = window.L.circleMarker([r.la,r.lo], { radius: alt?9:7, color: document.documentElement.classList.contains('dark')?'#0b0d12':'#ffffff', weight: 2, fillColor: alt?'#ff3d7f':col, fillOpacity:1 }); }
     const rt = rating(r);
     m.bindTooltip(`${esc(r.n)}<small>${r.c} · ${distTxt(r.d)}${rt?' · ★'+rt.v:''}${r.pr?' · '+won(r.pr):''}</small>`, { direction:'top', offset:[0,-8], opacity:1 });
     m.bindPopup(()=>popupHtml(r), { maxWidth:260, closeButton:true, autoPanPaddingTopLeft:[20,60] });
@@ -957,10 +962,11 @@ function focusOnMap(r){
 }
 document.getElementById('foldRadar').addEventListener('toggle', e=>{ if(e.target.open) setTimeout(initMap, 50); });
 document.getElementById('mapSync').onchange = renderMap;
+document.getElementById('mLegend').onclick = e=>{ const b=e.target.closest('button[data-mk]'); if(!b) return; const k=b.dataset.mk; if(MAP_HIDE.has(k)) MAP_HIDE.delete(k); else MAP_HIDE.add(k); b.classList.toggle('off', MAP_HIDE.has(k)); renderMap(); };
 window.addEventListener('load', ()=>{ setTimeout(initMap, 200); });
 // 테마 전환 시 타일 교체
 const _applyTheme = applyTheme;
-applyTheme = function(t){ _applyTheme(t); };
+applyTheme = function(t){ _applyTheme(t); if(MAP) renderMap(); };
 
 /* ======================= Firebase ======================= */
 async function fbGet(p){ try{ const r = await fetch(FB+p+'.json'); if(!r.ok) return null; return await r.json(); }catch(e){ return null; } }
