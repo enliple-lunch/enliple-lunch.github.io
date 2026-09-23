@@ -209,6 +209,9 @@ html.dark .noimg.ph .lb{color:rgba(255,255,255,.55)}
 .btn.v{background:var(--t-hot-bg);border:1px solid var(--t-hot-bd);color:var(--t-hot-tx)}
 .btn.v.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac);border-color:transparent}
 .btn.full{flex:1}
+.btn.fv{background:rgba(255,210,63,.14);border:1.5px solid rgba(255,210,63,.55);color:#ffd23f;white-space:nowrap}
+html:not(.dark) .btn.fv{color:#9a6b00}
+.btn.fv.on{background:#ffd23f;color:#3a2600;border-color:transparent}
 .alts{display:grid;grid-template-columns:1fr;gap:9px;margin-top:14px}
 @media(min-width:620px){.alts{grid-template-columns:repeat(3,1fr)}}
 .alt{display:flex;gap:11px;align-items:center;background:var(--inset);border:1px solid var(--line);border-radius:14px;padding:10px;cursor:pointer}
@@ -1321,7 +1324,7 @@ const isFav = id => (FAV.items[id]||[]).length > 0;
 const favIcon = id => { const f = FAV.folders.find(x=>x.id===(FAV.items[id]||[])[0]); return f ? f.emoji : '⭐'; };
 let FAV_SYNC_T = null;
 const favPayload = () => ({ folders: FAV.folders, items: FAV.items, ts: Date.now(), uid: ME.uid, nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8) });
-function saveFav(){ FAV.ts = Date.now(); LS.set('gl_favs', JSON.stringify(FAV)); if(FAV.code){ clearTimeout(FAV_SYNC_T); FAV_SYNC_T = setTimeout(()=>fbPut('/favs/'+FAV.code, favPayload()), 1200); } renderFavs(); render(); if(typeof MAP!=='undefined' && MAP) renderMap(); if(CUR){ const b=document.getElementById('mFav'); if(b) b.textContent = isFav(CUR.id)?favIcon(CUR.id):'☆'; } }
+function saveFav(){ FAV.ts = Date.now(); LS.set('gl_favs', JSON.stringify(FAV)); if(FAV.code){ clearTimeout(FAV_SYNC_T); FAV_SYNC_T = setTimeout(()=>fbPut('/favs/'+FAV.code, favPayload()), 1200); } renderFavs(); render(); if(typeof MAP!=='undefined' && MAP) renderMap(); if(CUR){ const b=document.getElementById('mFav'); if(b){ b.textContent = isFav(CUR.id)?favIcon(CUR.id)+' 저장됨':'☆ 저장'; b.classList.toggle('on', isFav(CUR.id)); } } }
 function toggleFavIn(rid, fid){ const a = FAV.items[rid] || []; const i = a.indexOf(fid); if(i>=0) a.splice(i,1); else a.push(fid); if(a.length) FAV.items[rid]=a; else delete FAV.items[rid]; saveFav(); }
 function openFavPicker(r){
   if(!r) return;
@@ -1605,7 +1608,7 @@ function openModal(r){
       <div class="mdact">
         <a class="btn n full" href="${naverUrl(r)}" target="_blank" rel="noopener">🟢 네이버지도</a>
         <a class="btn g" href="https://map.kakao.com/link/to/${encodeURIComponent(r.n)},${r.la},${r.lo}" target="_blank" rel="noopener">🚶 길찾기</a>
-        <button class="btn g" id="mFav" title="즐겨찾기">${isFav(r.id)?favIcon(r.id):'☆'}</button>
+        <button class="btn fv ${isFav(r.id)?'on':''}" id="mFav" title="즐겨찾기">${isFav(r.id)?favIcon(r.id)+' 저장됨':'☆ 저장'}</button>
         <button class="btn g" id="mMap" title="지도에서 보기">📍</button>
         <button class="btn g" id="mShare" title="여기 가자고 공유">📤</button>
       </div>
@@ -1904,6 +1907,7 @@ setInterval(loadAll, 60000);
 if('serviceWorker' in navigator && location.protocol==='https:'){
   const showNew = ()=>{ const t=document.getElementById('toast'); t.innerHTML='새 버전이 있어요 · <b style="text-decoration:underline">지금 새로고침</b>'; t.style.pointerEvents='auto'; t.classList.add('on'); t.onclick=()=>location.reload(); clearTimeout(t._t); t._t=setTimeout(()=>{ t.classList.remove('on'); t.style.pointerEvents=''; t.onclick=null; }, 10000); };
   navigator.serviceWorker.addEventListener('message', e=>{ if(e.data && e.data.type==='new-version') showNew(); });
+  let __reloaded = false; navigator.serviceWorker.addEventListener('controllerchange', ()=>{ if(__reloaded) return; __reloaded = true; if(!document.getElementById('ov').classList.contains('on')) location.reload(); });
   navigator.serviceWorker.register('sw.js').then(reg=>{
     reg.addEventListener('updatefound', ()=>{ const nw = reg.installing; nw && nw.addEventListener('statechange', ()=>{ if(nw.state==='installed' && navigator.serviceWorker.controller) showNew(); }); });
   }).catch(()=>{});
