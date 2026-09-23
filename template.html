@@ -1078,7 +1078,7 @@ function renderMap(){
   let n = 0;
   for(const r of shown){
     if(!r.la || !r.lo) continue;
-    if(!MAP_SHARED && MAP_ONLY.size && !MAP_ONLY.has(r.k)) continue;
+    if(!MAP_SHARED && MAP_ONLY.size && !(MAP_ONLY.has(r.k) || (MAP_ONLY.has('회식') && r.hs))) continue;
     if(!MAP_SHARED && MAP_FAVONLY && !isFav(r.id)) continue; n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
