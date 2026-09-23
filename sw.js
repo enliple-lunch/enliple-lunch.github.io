@@ -1,5 +1,5 @@
 // 구로 점심지도 서비스워커 v4: 페이지는 항상 최신 우선, 느리거나 오프라인이면 저장본
-const VER = 'v4';
+const VER = 'v5';
 const SHELL = 'gl-shell-' + VER, IMG = 'gl-img-' + VER;
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => !k.endsWith(VER)).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -20,7 +20,7 @@ self.addEventListener('fetch', e => {
   if (/t1\.daumcdn\.net|kakaocdn\.net|pstatic\.net|cdn\.jsdelivr\.net|unpkg\.com|tile\.openstreetmap\.org/.test(url.host)) {
     e.respondWith(caches.open(IMG).then(async cache => {
       const hit = await cache.match(req); if (hit) return hit;
-      try { const res = await fetch(req); if (res && (res.ok || res.type === 'opaque')) { cache.put(req, res.clone()); cache.keys().then(ks => { if (ks.length > 600) ks.slice(0, ks.length - 600).forEach(k => cache.delete(k)); }); } return res; } catch (err) { return hit || Response.error(); }
+      try { const res = await fetch(req); if (res && res.ok) { cache.put(req, res.clone()); cache.keys().then(ks => { if (ks.length > 600) ks.slice(0, ks.length - 600).forEach(k => cache.delete(k)); }); } return res; } catch (err) { return hit || Response.error(); }
     }));
   }
 });

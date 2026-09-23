@@ -408,7 +408,8 @@ html:not(.dark) .rainbtn{color:#1f6fb8}
 .cm.me .bub{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac);border:none;border-radius:14px 14px 4px 14px}
 .cm .meta{display:flex;flex-direction:column;align-items:flex-start;gap:1px;font-size:10.5px;color:var(--tx3);white-space:nowrap}
 .cm.me .meta{align-items:flex-end}
-.cm .lk{font-size:11px;padding:1px 6px;border-radius:8px;background:var(--soft);cursor:pointer;border:1px solid transparent}
+.cm .lk{font-size:12px;padding:1px 6px;border-radius:8px;cursor:pointer;border:1px solid transparent;color:var(--tx3);opacity:.6}
+.cm .lk.has,.cm .lk.on{opacity:1;background:var(--soft);color:var(--tx)}
 .cm .lk.on{background:rgba(255,77,109,.18);border-color:rgba(255,77,109,.45)}
 .cm .dl{font-size:10.5px;color:var(--tx3);cursor:pointer}
 .chatin{display:flex;gap:8px;margin-top:10px;align-items:center}
@@ -1020,7 +1021,7 @@ function floorOf(r){
 }
 const floorShort = r => { const f = floorOf(r); if(!f || !f.fl) return ''; const fl = f.fl.replace('지하','B').replace('층','F'); return (r.d<=30 || /한신아이티타워|한신IT타워/i.test(r.a||'')) ? `우리 건물 ${fl}` : `${f.bld?f.bld.slice(0,8)+' ':''}${fl}`; };
 function imgTag(r, size){
-  return r.ph ? `<img loading="lazy" src="${r.ph}" alt="" data-c="${esc(r.c)}" onerror="this.outerHTML=phTag(BYID['${r.id}'],${size},${size>=34})">`
+  return r.ph ? `<img referrerpolicy="no-referrer" loading="lazy" src="${r.ph}" alt="" data-c="${esc(r.c)}" onerror="this.outerHTML=phTag(BYID['${r.id}'],${size},${size>=34})">`
               : phTag(r, size, size>=34);
 }
 function renderToday(){
@@ -1073,7 +1074,7 @@ function initMap(){
   // 회사 + 100m 링
   [100,200,300,400,500].forEach(m=>window.L.circle([C.lat,C.lon],{radius:m,color:'#7FBF31',weight:1,opacity:.35,fill:m===500,fillColor:'#7FBF31',fillOpacity:.04,dashArray:'4 6',interactive:false}).addTo(MAP));
   const logo = document.querySelector('.logo img')?.src;
-  window.L.marker([C.lat,C.lon], { icon: window.L.divIcon({ className:'', html:`<div class="hq">${logo?`<img src="${logo}" alt="">`:'🏢'}</div>`, iconSize:[34,34], iconAnchor:[17,17] }), zIndexOffset:1000, interactive:false }).addTo(MAP);
+  window.L.marker([C.lat,C.lon], { icon: window.L.divIcon({ className:'', html:`<div class="hq">${logo?`<img referrerpolicy="no-referrer" src="${logo}" alt="">`:'🏢'}</div>`, iconSize:[34,34], iconAnchor:[17,17] }), zIndexOffset:1000, interactive:false }).addTo(MAP);
   window.L.marker([C.lat,C.lon], { icon: window.L.divIcon({ className:'', html:'<div class="hqlbl">한신아이티타워</div>', iconSize:[100,20], iconAnchor:[50,-22] }), interactive:false }).addTo(MAP);
   MAP_LAYER = window.L.layerGroup().addTo(MAP);
   MAP_SPECIAL = window.L.layerGroup().addTo(MAP);
@@ -1206,7 +1207,7 @@ function calcRanking(p){
   return { shops: shops.slice(0,10), shopRank, best: best.slice(0,5), cats, tot, range:{s,e} };
 }
 const medal = i => i===0?'🥇':i===1?'🥈':i===2?'🥉':String(i+1);
-const rimg = r => r.ph ? `<img src="${r.ph}" alt="" loading="lazy" onerror="this.outerHTML='${emo(r.c)}'">` : emo(r.c);
+const rimg = r => r.ph ? `<img referrerpolicy="no-referrer" src="${r.ph}" alt="" loading="lazy" onerror="this.outerHTML='${emo(r.c)}'">` : emo(r.c);
 function renderRanking(){
   const p = RK_PERIOD, R = calcRanking(p), pr = periodRange(p);
   document.getElementById('rkMonth').textContent = pr.label;
@@ -1573,7 +1574,7 @@ function renderChat(){
     if(day!==prevDay){ html += `<div class="cday">${day}</div>`; prevDay = day; prevUid = ''; }
     const cont = m.uid===prevUid && m.ts-prevTs < 5*60e3; prevUid = m.uid; prevTs = m.ts;
     const mine = m.uid===ME.uid, lk = CHATLK[m.id]||{}, ln = Object.keys(lk).length, lon = !!lk[ME.uid];
-    html += `<div class="cm ${mine?'me':''} ${cont?'cont':''}"><span class="av">${esc(m.emoji||'🙂')}</span><div class="bx"><span class="nm">${esc(m.nick)}${badgeOf(m.uid)}</span><div class="row"><div class="bub">${esc(m.text)}</div><div class="meta"><span class="lk ${lon?'on':''}" data-lk="${m.id}">❤️${ln?' '+ln:''}</span><span>${fmtHM(m.ts)}</span>${mine?`<span class="dl" data-dl="${m.id}">삭제</span>`:''}</div></div></div></div>`;
+    html += `<div class="cm ${mine?'me':''} ${cont?'cont':''}"><span class="av">${esc(m.emoji||'🙂')}</span><div class="bx"><span class="nm">${esc(m.nick)}${badgeOf(m.uid)}</span><div class="row"><div class="bub">${esc(m.text)}</div><div class="meta"><span class="lk ${lon?'on':''} ${ln?'has':''}" data-lk="${m.id}">${ln?'❤️ '+ln:'♡'}</span><span>${(d=>(d.getHours()<12?'오전 ':'오후 ')+((d.getHours()%12)||12)+':'+String(d.getMinutes()).padStart(2,'0'))(new Date(m.ts))}</span>${mine?`<span class="dl" data-dl="${m.id}">삭제</span>`:''}</div></div></div></div>`;
   }
   box.innerHTML = html;
   box.querySelectorAll('[data-lk]').forEach(b=>b.onclick=async()=>{ const id=b.dataset.lk, on=b.classList.contains('on'), p='/chatlikes/'+id+'/'+ME.uid; (CHATLK[id] ||= {}); if(on) delete CHATLK[id][ME.uid]; else CHATLK[id][ME.uid]=Date.now(); renderChat(); const ok = on ? await fbDel(p) : await fbPut(p, Date.now()); if(!ok) loadChat(); });
