@@ -98,6 +98,8 @@ h1{font-size:21px;font-weight:800;letter-spacing:-.5px}
 .subline{color:var(--tx3);font-size:13px;margin-top:2px}
 .themeBtn{margin-left:auto;width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line2);display:grid;place-items:center;font-size:19px;box-shadow:var(--shadow);flex:none}
 .themeBtn:active{transform:scale(.92)}
+#meBtn{margin-left:auto}
+#themeBtn{margin-left:8px}
 
 /* ================= WEATHER ================= */
 .wx{margin-top:14px;border-radius:20px;border:1px solid var(--line2);padding:15px 16px;background:var(--wx);box-shadow:var(--shadow)}
@@ -290,7 +292,9 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .mlegend{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--tx3)}
 .mlegend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
 .mlegend button,.mlegend .ml-sp{display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:var(--tx2);padding:5px 9px;border-radius:9px;background:var(--soft);border:1px solid var(--line)}
-.mlegend button.off{opacity:.35;text-decoration:line-through}
+.mlegend button.on{background:var(--mc,#ffd23f);color:#fff;border-color:transparent;box-shadow:0 0 0 2px rgba(255,255,255,.25) inset}
+.mlegend button.on i{border-color:#fff}
+.mlegend button[data-mk="구내식당"].on,.mlegend button[data-mk="__fav"].on{color:#3a2600}
 .mlegend button:active{transform:scale(.95)}
 .mchk{font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:6px;white-space:nowrap}
 .mhint{font-size:11px;color:var(--tx3);margin-top:8px}
@@ -382,7 +386,43 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 html:not(.dark) .rainbtn{color:#1f6fb8}
 .flr{display:inline-block;font-size:11.5px;font-weight:700;color:var(--t-near-tx);background:var(--t-near-bg);border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:1px}
 .uphoto{position:absolute;left:12px;bottom:12px;z-index:3;font-size:12px;font-weight:700;background:rgba(0,0,0,.6);color:#fff;padding:4px 9px;border-radius:8px}
+.phup{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:3;font-size:12px;font-weight:800;padding:6px 10px;border-radius:9px;background:rgba(0,0,0,.62);color:#fff;border:1px dashed rgba(255,255,255,.6);white-space:nowrap}
+.phup:active{transform:translateX(-50%) scale(.95)}
+.hdph{position:absolute;left:50%;top:50%;transform:translate(-50%,-10%);z-index:3;font-size:14px;font-weight:800;padding:10px 16px;border-radius:12px;background:rgba(0,0,0,.65);color:#fff;border:1.5px dashed rgba(255,255,255,.7);white-space:nowrap}
 .phbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:12px;padding:11px;border-radius:12px;background:var(--soft);border:1.5px dashed var(--line2);color:var(--tx2);font-size:14px;font-weight:700}
+/* ================= CHAT ================= */
+.chatbox{height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:3px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:12px;scrollbar-width:thin}
+@media(max-width:620px){.chatbox{height:340px}}
+.cday{align-self:center;font-size:11.5px;color:var(--tx3);background:var(--soft);border-radius:999px;padding:3px 10px;margin:8px 0 4px}
+.cm{display:flex;gap:8px;align-items:flex-end;max-width:86%}
+.cm.me{align-self:flex-end;flex-direction:row-reverse}
+.cm .av{width:32px;height:32px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-size:17px;flex:none}
+.cm.cont .av{visibility:hidden;height:0}
+.cm .bx{display:flex;flex-direction:column;min-width:0}
+.cm.me .bx{align-items:flex-end}
+.cm .nm{font-size:12px;color:var(--tx3);font-weight:700;margin:6px 4px 3px}
+.cm.cont .nm,.cm.me .nm{display:none}
+.cm .row{display:flex;gap:5px;align-items:flex-end}
+.cm.me .row{flex-direction:row-reverse}
+.cm .bub{background:var(--card);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 11px;font-size:14.5px;line-height:1.45;word-break:break-word;white-space:pre-wrap}
+.cm.me .bub{background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac);border:none;border-radius:14px 14px 4px 14px}
+.cm .meta{display:flex;flex-direction:column;align-items:flex-start;gap:1px;font-size:10.5px;color:var(--tx3);white-space:nowrap}
+.cm.me .meta{align-items:flex-end}
+.cm .lk{font-size:11px;padding:1px 6px;border-radius:8px;background:var(--soft);cursor:pointer;border:1px solid transparent}
+.cm .lk.on{background:rgba(255,77,109,.18);border-color:rgba(255,77,109,.45)}
+.cm .dl{font-size:10.5px;color:var(--tx3);cursor:pointer}
+.chatin{display:flex;gap:8px;margin-top:10px;align-items:center}
+.chatin input{flex:1;min-width:0;background:var(--card);border:1px solid var(--line2);border-radius:12px;color:var(--tx);padding:12px;font-size:15px;outline:none}
+.chatav{width:42px;height:42px;border-radius:50%;background:var(--card2);font-size:20px;flex:none;border:1px solid var(--line2)}
+.chatq{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-top:10px}
+.chatq::-webkit-scrollbar{display:none}
+.chatq button{flex:none;font-size:12.5px;font-weight:700;padding:7px 11px;border-radius:999px;background:var(--soft);border:1px solid var(--line);color:var(--tx2);white-space:nowrap}
+.newdot{display:inline-block;background:#ff4d6d;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:4px}
+.bboard{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
+.bboard .bu{display:flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:6px 10px;font-size:13px}
+.bboard .bu b{font-weight:800}
+.bboard .bu.me{border-color:var(--ac)}
+.linkbox{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
 /* ================= HALL OF FAME ================= */
 .hof{display:grid;grid-template-columns:1fr;gap:10px}
 @media(min-width:700px){.hof{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}
@@ -658,7 +698,7 @@ html.dark .fbrand .fl.dark{display:inline}
       <h1>오늘 뭐 먹지<span class="q">?</span></h1>
       <div class="subline">한신아이티타워 · 반경 500m · <span id="mCnt">0</span>곳 · <span id="mUpd">–</span><span id="lunchCd"></span></div>
     </div>
-    <button class="themeBtn" id="themeBtn" title="밝게/어둡게">🌙</button>
+    <button class="themeBtn" id="meBtn" title="내 프로필">🙂</button><button class="themeBtn" id="themeBtn" title="밝게/어둡게">🌙</button>
   </div>
 
   <div class="wx" id="wx">
@@ -742,6 +782,16 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb"><div class="feedlist" id="feed"><div class="cempty">아직 후기가 없어요. 첫 후기를 남겨보세요 🙌</div></div></div>
   </details>
 
+  <details class="fold" id="foldChat">
+    <summary><span>🗨️ 점심 수다방 <span id="chatCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
+    <div class="fb">
+      <div class="chatbox" id="chatList"><div class="cempty">불러오는 중…</div></div>
+      <div class="chatq" id="chatQ"></div>
+      <div class="chatin"><button class="chatav" id="chatMe" title="프로필 변경"></button><input id="chatText" maxlength="300" placeholder="아무 얘기나 (점심 아니어도 OK) · Enter로 전송" autocomplete="off"><button class="btn p" id="chatSend">전송</button></div>
+      <div class="mhint">익명 닉네임으로 대화해요. 개인정보·업무 기밀은 쓰지 마세요 🙏 · 최근 150개까지 보여요</div>
+    </div>
+  </details>
+
   <details class="fold" id="foldRadar" open>
     <summary><span>🗺️ 인라이플 맛집 지도 <span id="mapCnt" style="color:var(--tx3);font-weight:600;font-size:12px"></span></span></summary>
     <div class="fb">
@@ -752,7 +802,7 @@ html.dark .fbrand .fl.dark{display:inline}
         <label class="mchk"><input type="checkbox" id="mapSync" checked> 리스트 필터와 연동</label>
       </div>
       <div id="map"></div>
-      <div class="mhint">범례를 누르면 그 종류만 켜고 끌 수 있어요 · 점에 마우스를 올리면 이름·평점, 클릭하면 사진·가격·상세 · 가운데가 회사(100m 간격)</div>
+      <div class="mhint">범례를 누르면 그 종류<b>만</b> 보여요 (여러 개 선택 가능, 다시 누르면 해제) · 점에 마우스를 올리면 이름·평점, 클릭하면 사진·가격·상세 · 가운데가 회사(100m 간격)</div>
     </div>
   </details>
 </header>
@@ -998,7 +1048,7 @@ function renderToday(){
 /* ======================= 인라이플 맛집 지도 (Leaflet + OSM) ======================= */
 let MAP = null, MAP_LAYER = null, MAP_TILES = null, MAP_MARKERS = {}, MAP_SPECIAL = null;
 const KIND_COLOR = { '밥집':'#7FBF31', '회식':'#b36bff', '카페':'#3ea6ff', '패스트푸드':'#ff4d3d', '구내식당':'#ffd23f' };
-const MAP_HIDE = new Set(); let MAP_FAVONLY = false;
+const MAP_HIDE = new Set(); const MAP_ONLY = new Set(); let MAP_FAVONLY = false;
 const tileUrl = () => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 function popupHtml(r){
   const rt = rating(r);
@@ -1028,7 +1078,7 @@ function renderMap(){
   let n = 0;
   for(const r of shown){
     if(!r.la || !r.lo) continue;
-    if(!MAP_SHARED && MAP_HIDE.has(r.k)) continue;
+    if(!MAP_SHARED && MAP_ONLY.size && !MAP_ONLY.has(r.k)) continue;
     if(!MAP_SHARED && MAP_FAVONLY && !isFav(r.id)) continue; n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
@@ -1056,7 +1106,14 @@ function focusOnMap(r){
 }
 document.getElementById('foldRadar').addEventListener('toggle', e=>{ if(e.target.open) setTimeout(initMap, 50); });
 document.getElementById('mapSync').onchange = renderMap;
-document.getElementById('mLegend').onclick = e=>{ const b=e.target.closest('button[data-mk]'); if(!b) return; const k=b.dataset.mk; if(k==='__fav'){ MAP_FAVONLY=!MAP_FAVONLY; b.classList.toggle('on2',MAP_FAVONLY); b.style.background=MAP_FAVONLY?'#ffd23f':''; b.style.color=MAP_FAVONLY?'#3a2600':''; renderMap(); if(MAP_FAVONLY && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요. ☆를 눌러 저장해보세요'); return; } if(MAP_HIDE.has(k)) MAP_HIDE.delete(k); else MAP_HIDE.add(k); b.classList.toggle('off', MAP_HIDE.has(k)); renderMap(); };
+document.getElementById('mLegend').onclick = e=>{
+  const b = e.target.closest('button[data-mk]'); if(!b) return; const k = b.dataset.mk;
+  if(k==='__fav'){ MAP_FAVONLY = !MAP_FAVONLY; b.classList.toggle('on', MAP_FAVONLY); b.style.setProperty('--mc','#ffd23f'); renderMap(); if(MAP_FAVONLY && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요. ☆를 눌러 저장해보세요'); return; }
+  if(MAP_ONLY.has(k)) MAP_ONLY.delete(k); else MAP_ONLY.add(k);
+  document.querySelectorAll('#mLegend button[data-mk]').forEach(x=>{ if(x.dataset.mk==='__fav') return; const on = MAP_ONLY.has(x.dataset.mk); x.classList.toggle('on', on); x.style.setProperty('--mc', KIND_COLOR[x.dataset.mk]); });
+  renderMap();
+  toast(MAP_ONLY.size ? '지도: ' + [...MAP_ONLY].join(' · ') + '만 보기' : '지도: 전체 보기');
+};
 window.addEventListener('load', ()=>{ setTimeout(initMap, 200); });
 // 테마 전환 시 타일 교체
 const _applyTheme = applyTheme;
@@ -1083,7 +1140,6 @@ async function loadAll(){
   if(document.getElementById('reqList')) renderReqList();
   CMTCNT = {}; const flat = [];
   for(const rid in STORE.comments){ const o = STORE.comments[rid]||{}; CMTCNT[rid] = Object.keys(o).length; for(const k in o) flat.push({rid, cid:k, ...o[k]}); }
-  for(const rid in STORE.visits){ const o = STORE.visits[rid]||{}; for(const k in o){ const v = o[k]; if(v && v.ts && Date.now()-v.ts < 3*86400e3) flat.push({rid, visit:true, ts:v.ts, uid:v.uid, nick:v.nick||'익명', emoji:v.emoji||'🙂'}); } }
   flat.sort((a,b)=>b.ts-a.ts);
   renderFeed(flat.slice(0,40));
   RK = calcRanking('m0').shopRank;
@@ -1360,7 +1416,7 @@ function renderFavs(){ if(typeof renderShared==='function' && SHARED) renderShar
   box.querySelectorAll('.frow').forEach(e=>e.onclick=ev=>{ if(ev.target.closest('.fx')) return; openModal(BYID[e.dataset.id]); });
   box.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openFavPicker(BYID[b.dataset.edit]));
   document.getElementById('fPick').onclick = ()=>{ if(!shown.length) return; const r = shown[Math.floor(Math.random()*shown.length)]; toast(`🎲 오늘은 ${r.n}!`); openModal(r); confetti(); };
-  document.getElementById('fMap').onclick = ()=>{ MAP_FAVONLY = true; const lb=document.querySelector('#mLegend [data-mk="__fav"]'); if(lb){ lb.style.background='#ffd23f'; lb.style.color='#3a2600'; } const d=document.getElementById('foldRadar'); d.open=true; initMap(); renderMap(); document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'}); };
+  document.getElementById('fMap').onclick = ()=>{ MAP_FAVONLY = true; const lb=document.querySelector('#mLegend [data-mk="__fav"]'); if(lb){ lb.classList.add('on'); lb.style.setProperty('--mc','#ffd23f'); } const d=document.getElementById('foldRadar'); d.open=true; initMap(); renderMap(); document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'}); };
   document.getElementById('fManage').onclick = openFavManage;
   document.getElementById('fShare').onclick = shareFavs;
   document.getElementById('fImport').onclick = importFavPrompt;
@@ -1468,11 +1524,68 @@ function renderMissions(){
   document.getElementById('misCnt').textContent = `(${done.length}/${MISSIONS.length})`;
   const box = document.getElementById('misBox'); if(!box) return;
   const now = new Date(); const left = new Date(now.getFullYear(), now.getMonth()+1, 1) - now; const dleft = Math.ceil(left/86400e3);
-  box.innerHTML = `<div class="rempty" style="padding:0 2px 10px">${now.getMonth()+1}월 미션 · ${dleft}일 남음 · 달성하면 닉네임 옆에 배지가 붙어요 ${(b[ME.uid]||[]).length?'· 내 배지 '+b[ME.uid].join(''):''}</div><div class="mis">` + MISSIONS.map(m=>{ const v = Math.min(m.goal, m.f(mine)); const ok = v>=m.goal; return `<div class="mi2 ${ok?'done':''}"><span class="bd">${m.badge}</span><div class="tx"><b>${m.name}</b><small>${m.desc}</small><div class="pb"><i style="width:${Math.round(v/m.goal*100)}%"></i></div></div><span class="pc">${ok?'달성!':v+'/'+m.goal}</span></div>`; }).join('') + '</div>';
+  const nickOf = {}; for(const rid in STORE.comments) for(const k in STORE.comments[rid]){ const c=STORE.comments[rid][k]; if(c&&c.uid) nickOf[c.uid]={n:c.nick,e:c.emoji,ts:c.ts}; } for(const rid in STORE.visits) for(const k in STORE.visits[rid]){ const v=STORE.visits[rid][k]; if(v&&v.uid&&(!nickOf[v.uid]||v.ts>nickOf[v.uid].ts)) nickOf[v.uid]={n:v.nick||'익명',e:v.emoji||'🙂',ts:v.ts}; }
+  const board = Object.entries(b).filter(([,a])=>a.length).sort((x,y)=>y[1].length-x[1].length).slice(0,8);
+  const boardHtml = board.length ? `<div class="egrp" style="margin-top:0">🏅 이달의 배지 보드</div><div class="bboard">${board.map(([uid,a])=>`<span class="bu ${uid===ME.uid?'me':''}">${esc(nickOf[uid]?.e||'🙂')} <b>${esc(nickOf[uid]?.n||'익명')}</b> ${a.join('')}</span>`).join('')}</div>` : `<div class="egrp" style="margin-top:0">🏅 이달의 배지 보드</div><div class="rempty" style="padding:0 2px 10px">아직 배지 받은 사람이 없어요. 첫 배지의 주인공이 되어봐요!</div>`;
+  box.innerHTML = boardHtml + `<div class="rempty" style="padding:0 2px 10px">${now.getMonth()+1}월 미션 · ${dleft}일 남음 · 달성하면 닉네임 옆에 배지가 붙어요 ${(b[ME.uid]||[]).length?'· 내 배지 '+b[ME.uid].join(''):''}</div><div class="mis">` + MISSIONS.map(m=>{ const v = Math.min(m.goal, m.f(mine)); const ok = v>=m.goal; return `<div class="mi2 ${ok?'done':''}"><span class="bd">${m.badge}</span><div class="tx"><b>${m.name}</b><small>${m.desc}</small><div class="pb"><i style="width:${Math.round(v/m.goal*100)}%"></i></div></div><span class="pc">${ok?'달성!':v+'/'+m.goal}</span></div>`; }).join('') + '</div>';
   const now2 = (b[ME.uid]||[]).join('');
   if(MY_BADGE_PREV!==null && now2.length > MY_BADGE_PREV.length){ const got = MISSIONS.find(m=>now2.includes(m.badge) && !MY_BADGE_PREV.includes(m.badge)); if(got){ toast(`🎉 미션 달성! ${got.badge} ${got.name}`); confetti(); } }
   MY_BADGE_PREV = now2;
 }
+function refreshMe(){ const a=document.getElementById('meBtn'); if(a) a.textContent = ME.emoji; const c=document.getElementById('chatMe'); if(c) c.textContent = ME.emoji; }
+/* ======================= 점심 수다방 ======================= */
+let CHAT = [], CHATLK = {}, CHAT_LAST_SEND = 0, CHAT_OPEN = false;
+const CHAT_SEEN = { get(){ return +(LS.get('gl_chat_seen')||0); }, set(t){ LS.set('gl_chat_seen', String(t)); } };
+const CHAT_Q = ['🍚 오늘 뭐 먹어요?','☕ 커피 한 잔 할 사람?','😴 식곤증 온다…','🍻 오늘 회식 어디?','🌧️ 비 오는데 어디 가지','🎉 불금!','🤔 여기 맛있어요?','👍 추천 감사!'];
+async function loadChat(){
+  try{
+    const [c, l] = await Promise.all([ fetch(FB+'/chat.json?orderBy=%22%24key%22&limitToLast=150').then(r=>r.ok?r.json():null), fbGet('/chatlikes') ]);
+    CHAT = Object.entries(c||{}).map(([id,m])=>({id,...m})).filter(m=>m && m.ts).sort((a,b)=>a.ts-b.ts);
+    CHATLK = l || {};
+  }catch(e){}
+  renderChat();
+}
+function renderChat(){
+  const box = document.getElementById('chatList'); if(!box) return;
+  const seen = CHAT_SEEN.get();
+  const unread = CHAT.filter(m=>m.ts>seen && m.uid!==ME.uid).length;
+  document.getElementById('chatCnt').innerHTML = CHAT_OPEN ? (CHAT.length?`(${CHAT.length})`:'') : (unread ? `<span class="newdot">새 ${unread}</span>` : (CHAT.length?`(${CHAT.length})`:''));
+  if(!CHAT_OPEN) return;
+  const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
+  if(!CHAT.length){ box.innerHTML = '<div class="cempty" style="margin:auto">아직 조용해요. 첫 마디를 던져보세요 👋</div>'; return; }
+  let html = '', prevDay = '', prevUid = '', prevTs = 0;
+  for(const m of CHAT){
+    const d = new Date(m.ts), day = `${d.getMonth()+1}월 ${d.getDate()}일 (${['일','월','화','수','목','금','토'][d.getDay()]})`;
+    if(day!==prevDay){ html += `<div class="cday">${day}</div>`; prevDay = day; prevUid = ''; }
+    const cont = m.uid===prevUid && m.ts-prevTs < 5*60e3; prevUid = m.uid; prevTs = m.ts;
+    const mine = m.uid===ME.uid, lk = CHATLK[m.id]||{}, ln = Object.keys(lk).length, lon = !!lk[ME.uid];
+    html += `<div class="cm ${mine?'me':''} ${cont?'cont':''}"><span class="av">${esc(m.emoji||'🙂')}</span><div class="bx"><span class="nm">${esc(m.nick)}${badgeOf(m.uid)}</span><div class="row"><div class="bub">${esc(m.text)}</div><div class="meta"><span class="lk ${lon?'on':''}" data-lk="${m.id}">❤️${ln?' '+ln:''}</span><span>${fmtHM(m.ts)}</span>${mine?`<span class="dl" data-dl="${m.id}">삭제</span>`:''}</div></div></div></div>`;
+  }
+  box.innerHTML = html;
+  box.querySelectorAll('[data-lk]').forEach(b=>b.onclick=async()=>{ const id=b.dataset.lk, on=b.classList.contains('on'), p='/chatlikes/'+id+'/'+ME.uid; (CHATLK[id] ||= {}); if(on) delete CHATLK[id][ME.uid]; else CHATLK[id][ME.uid]=Date.now(); renderChat(); const ok = on ? await fbDel(p) : await fbPut(p, Date.now()); if(!ok) loadChat(); });
+  box.querySelectorAll('[data-dl]').forEach(b=>b.onclick=async()=>{ if(!confirm('메시지를 삭제할까요?')) return; await fbDel('/chat/'+b.dataset.dl); CHAT = CHAT.filter(m=>m.id!==b.dataset.dl); renderChat(); });
+  if(atBottom || box.dataset.first!=='1'){ box.scrollTop = box.scrollHeight; box.dataset.first='1'; }
+  CHAT_SEEN.set(Date.now());
+}
+async function sendChat(){
+  const inp = document.getElementById('chatText'); const text = inp.value.trim(); if(!text) return;
+  if(Date.now()-CHAT_LAST_SEND < 1500){ toast('조금만 천천히 😅'); return; }
+  CHAT_LAST_SEND = Date.now();
+  const msg = { nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8), text: text.slice(0,300), ts: Date.now(), uid: ME.uid };
+  inp.value = '';
+  CHAT.push({ id:'tmp'+Date.now(), ...msg }); renderChat(); const box=document.getElementById('chatList'); box.scrollTop = box.scrollHeight;
+  const ok = await fbPost('/chat', msg);
+  if(!ok){ toast('전송 실패 😢'); inp.value = text; }
+  loadChat();
+}
+document.getElementById('chatQ').innerHTML = CHAT_Q.map(q=>`<button>${q}</button>`).join('');
+document.getElementById('chatQ').onclick = e=>{ const b=e.target.closest('button'); if(!b) return; const inp=document.getElementById('chatText'); inp.value = b.textContent; inp.focus(); };
+document.getElementById('chatSend').onclick = sendChat;
+document.getElementById('chatText').addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.isComposing){ e.preventDefault(); sendChat(); } });
+document.getElementById('chatMe').onclick = ()=>openEmoji();
+document.getElementById('foldChat').addEventListener('toggle', e=>{ CHAT_OPEN = e.target.open; if(CHAT_OPEN){ document.getElementById('chatList').dataset.first=''; loadChat(); } else renderChat(); });
+setInterval(()=>{ if(document.visibilityState==='visible') loadChat(); }, CHAT_OPEN ? 10000 : 20000);
+setInterval(()=>{ if(CHAT_OPEN && document.visibilityState==='visible') loadChat(); }, 8000);
 /* ======================= 명예의 전당 ======================= */
 function renderHof(){
   const el = document.getElementById('hof'); if(!el) return;
@@ -1548,7 +1661,7 @@ function card(r){
   const rep = (r.m||[]).filter(m=>m.p>=4000&&m.p<=20000)[0] || (r.m||[])[0];
   const rt = rating(r), cc = CMTCNT[r.id]||0;
   return `<div class="c" data-id="${r.id}">
-    <div class="im">${imgTag(r,34)}
+    <div class="im">${imgTag(r,34)}${(!r.ph0 && !PMETA[r.id])?`<button class="phup" data-ph="${r.id}">📸 사진 올리기</button>`:''}
       <div class="badges"><span class="b walk">${r.d}m</span>${RK[r.id]&&RK[r.id]<=3?`<span class="b rank">🏆${RK[r.id]}</span>`:''}${r.nw?'<span class="b top">🆕</span>':''}${(r.hs||r.k==='회식')?'<span class="b hs">🍻</span>':''}</div>
       <button class="favbtn ${isFav(r.id)?'on':''}" data-fav="${r.id}" title="즐겨찾기">${isFav(r.id)?favIcon(r.id):'☆'}</button><a class="nvbtn" href="${naverUrl(r)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="네이버지도">🟢</a>
     </div>
@@ -1575,6 +1688,7 @@ function render(){
   mb.textContent = `더 보기 (${a.length-state.limit}곳)`;
   document.querySelectorAll('.c').forEach(el=>el.onclick=()=>openModal(BYID[el.dataset.id]));
   document.querySelectorAll('.c .favbtn').forEach(b=>b.onclick=e=>{ e.stopPropagation(); openFavPicker(BYID[b.dataset.fav]); });
+  document.querySelectorAll('.c .phup').forEach(b=>b.onclick=e=>{ e.stopPropagation(); uploadPhoto(BYID[b.dataset.ph]); });
   if(MAP && document.getElementById('mapSync')?.checked) renderMap();
 }
 
@@ -1589,7 +1703,7 @@ function openModal(r){
   const menus = (r.m||[]).slice().sort((a,b)=>a.p-b.p), rt = rating(r);
   document.getElementById('md').innerHTML = `
     <button class="xx" onclick="closeModal()">✕</button>
-    <div class="hd">${imgTag(r,56)}${(!r.ph0 && PMETA[r.id])?`<span class="uphoto">📸 ${esc(PMETA[r.id].nick||'익명')}님 사진</span>`:''}</div>
+    <div class="hd">${imgTag(r,56)}${(!r.ph0 && !PMETA[r.id])?`<button class="hdph" id="hdPh">📸 이 가게 첫 사진 올려주세요</button>`:''}${(!r.ph0 && PMETA[r.id])?`<span class="uphoto">📸 ${esc(PMETA[r.id].nick||'익명')}님 사진</span>`:''}</div>
     <div class="ct2">
       <h3>${esc(r.n)}</h3>
       <div class="mm">
@@ -1640,6 +1754,7 @@ function openModal(r){
   document.getElementById('mMap').onclick = ()=>{ closeModal(); focusOnMap(r); };
   document.getElementById('mFav').onclick = ()=>openFavPicker(r);
   const phb = document.getElementById('phBtn'); if(phb) phb.onclick = ()=>uploadPhoto(r);
+  const hph = document.getElementById('hdPh'); if(hph) hph.onclick = ()=>uploadPhoto(r);
   SHOW_ALL_C = false;
   const mMoreBtn = document.getElementById('mMoreBtn');
   if(mMoreBtn) mMoreBtn.onclick = ()=>{ const x = document.getElementById('mMore'); const open = x.classList.toggle('open'); mMoreBtn.textContent = open ? '메뉴 접기 ▴' : `메뉴 ${menus.length-8}개 더 보기 ▾`; };
@@ -1797,16 +1912,30 @@ function openEmoji(){
     <h4>내 프로필</h4>
     <div class="nkrow"><input id="nkIn" maxlength="24" value="${esc(ME.nick)}" placeholder="닉네임"><button class="btn g" id="nkRand">🎲</button></div>
     ${Object.entries(EMOJI_SET).map(([g,list])=>`<div class="egrp">${g}</div><div class="egrid">${list.map(e=>`<button class="ee${e===ME.emoji?' on':''}" data-e="${e}">${e}</button>`).join('')}</div>`).join('')}
+    <div class="linkbox"><div class="egrp" style="margin-top:0">📱 다른 기기에서도 같은 나로 (가입 없이)</div><div class="reqnote">폰과 PC에서 같은 닉네임·미션·배지·투표를 쓰려면, 한쪽에서 <b>연결 코드</b>를 만들고 다른 쪽에서 입력하면 돼요. 코드는 열쇠라 남에게 주지 마세요.</div><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><button class="btn g" id="lkMake">🔑 연결 코드 만들기</button><button class="btn g" id="lkUse">📥 코드로 연결</button></div><div id="lkOut"></div></div>
     <div style="display:flex;gap:8px;margin-top:18px"><button class="btn g full" onclick="closeEmoji()">취소</button><button class="btn p full" id="nkSave">저장</button></div>`;
   document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
   let sel = ME.emoji;
   document.querySelectorAll('#epkb .ee').forEach(b=>b.onclick=()=>{ sel=b.dataset.e; document.querySelectorAll('#epkb .ee').forEach(x=>x.classList.toggle('on',x===b)); });
+  document.getElementById('lkMake').onclick = async ()=>{
+    let code = LS.get('gl_pcode'); if(!code){ const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; code=''; for(let i=0;i<8;i++) code += ch[Math.floor(Math.random()*ch.length)]; }
+    const ok = await fbPut('/profiles/'+code, { uid: ME.uid, nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8), ts: Date.now() });
+    if(!ok){ toast('실패 😢'); return; } LS.set('gl_pcode', code);
+    document.getElementById('lkOut').innerHTML = `<div style="text-align:center;font-size:28px;font-weight:900;letter-spacing:5px;margin:12px 0;color:var(--ac)">${code}</div><div class="reqnote">다른 기기에서 🙂 프로필 → <b>📥 코드로 연결</b>에 입력하세요.</div>`;
+  };
+  document.getElementById('lkUse').onclick = async ()=>{
+    const code = (prompt('다른 기기에서 만든 연결 코드 8자리')||'').trim().toUpperCase(); if(code.length<6) return;
+    const p = await fbGet('/profiles/'+code); if(!p || !p.uid){ toast('코드를 찾을 수 없어요'); return; }
+    if(!confirm(`"${p.nick}" 프로필로 연결할까요?\n이 기기의 닉네임·미션·배지가 그 프로필로 바뀌어요.`)) return;
+    ME = { uid: p.uid, nick: p.nick, emoji: p.emoji || ME.emoji }; saveMe(); LS.set('gl_pcode', code);
+    closeEmoji(); toast(`✅ ${p.nick}(으)로 연결됐어요`); refreshMe(); loadAll(); loadChat();
+  };
   document.getElementById('nkRand').onclick = ()=>{ const rnd=a=>a[Math.floor(Math.random()*a.length)]; document.getElementById('nkIn').value = rnd(ADJ)+' '+rnd(ANI); };
   document.getElementById('nkSave').onclick = ()=>{
     const v = document.getElementById('nkIn').value.trim();
     ME.nick = (v||ME.nick).slice(0,24); ME.emoji = sel; saveMe();
     const av=document.getElementById('meAv'), nk=document.getElementById('meNick'); if(av) av.textContent=ME.emoji; if(nk) nk.textContent=ME.nick;
-    closeEmoji(); toast('프로필 변경 완료 ✨');
+    closeEmoji(); toast('프로필 변경 완료 ✨'); refreshMe(); const pc = LS.get('gl_pcode'); if(pc) fbPut('/profiles/'+pc, { uid: ME.uid, nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8), ts: Date.now() });
   };
 }
 function closeEmoji(){ document.getElementById('epk').classList.remove('on'); if(!document.getElementById('ov').classList.contains('on')) document.body.style.overflow=''; }
@@ -1896,6 +2025,7 @@ const up = new Date(D.meta.updated);
 document.getElementById('mUpd').textContent = `${String(up.getMonth()+1).padStart(2,'0')}.${String(up.getDate()).padStart(2,'0')} 갱신`;
 document.getElementById('fUpd').textContent = '마지막 데이터 갱신: ' + up.toLocaleString('ko-KR');
 renderToday(); render(); renderRanking(); renderHof(); renderFavs(); renderNewBanner();
+refreshMe(); document.getElementById('meBtn').onclick = ()=>openEmoji(); loadChat();
 { const sm = location.hash.match(/#fmap=([A-Za-z0-9]{6,10})/); if(sm) setTimeout(()=>loadSharedMap(sm[1]), 800); }
 { const fm = location.hash.match(/#fav=([A-Za-z0-9]{6,10})/); if(fm){ setTimeout(()=>{ importFavCode(fm[1]); history.replaceState(null,'',location.pathname); }, 1200); } }
 if(Object.keys(FAV.items).length) document.getElementById('foldFav').open = true;
