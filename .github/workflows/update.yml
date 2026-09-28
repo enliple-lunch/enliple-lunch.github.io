@@ -2,8 +2,9 @@ name: 점심지도 데이터 갱신
 
 on:
   schedule:
-    # 매일 09:20 KST (= 00:20 UTC), 주말 포함
-    - cron: '20 0 * * *'
+    # 매일 06:07 KST (= 전날 21:07 UTC), 주말 포함
+    # GitHub 예약 실행이 몇 시간씩 밀려서(09:20 예약 → 실제 14시대) 일찍 걸어둠
+    - cron: '7 21 * * *'
   workflow_dispatch:
 
 permissions:
