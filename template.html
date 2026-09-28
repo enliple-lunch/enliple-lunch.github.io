@@ -824,6 +824,21 @@ html.dark .fbrand .fl.dark{display:inline}
   .sec-h h2,.rank-h h2,.poll-h h2,.sharedmap h2{font-size:17px}
   .md h3{font-size:20px}
 }
+
+/* ================= 좌우 여백 통일 ================= */
+/* --gut: 화면 가장자리 ~ 카드 바깥선, --pad: 카드 바깥선 ~ 안쪽 글자 */
+:root{--gut:10px;--pad:12px}
+@media(min-width:561px){:root{--gut:16px;--pad:16px}}
+@media(min-width:768px){:root{--gut:20px;--pad:18px}}
+.wrap{padding-left:var(--gut);padding-right:var(--gut)}
+.wx,.newbn,.a2hs,.sharedmap,.poll,.hero,.rank,.ctrl,.fold>summary,.fold .fb{padding-left:var(--pad);padding-right:var(--pad)}
+.rank-grid,.grid,.alts,.cands,.hof,.mis,.flist,.feedlist{min-width:0}
+.rank-grid>*,.grid>*,.alts>*,.cands>*,.feedlist>*{min-width:0}
+.rank-grid{grid-template-columns:minmax(0,1fr)}
+@media(min-width:620px){.rank-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:980px){.rank-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:560px){.grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}}
 </style>
 </head>
 <body>
