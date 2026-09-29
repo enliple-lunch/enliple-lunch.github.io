@@ -436,7 +436,7 @@ html:not(.dark) .rainbtn{color:#1f6fb8}
 .phbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:12px;padding:11px;border-radius:12px;background:var(--soft);border:1.5px dashed var(--line2);color:var(--tx2);font-size:14px;font-weight:700}
 /* ================= CHAT ================= */
 .chatbox{height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:3px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:12px;scrollbar-width:thin}
-@media(max-width:620px){.chatbox{height:340px}}
+@media(max-width:620px){.chatbox{height:300px}}
 .cday{align-self:center;font-size:11.5px;color:var(--tx3);background:var(--soft);border-radius:999px;padding:3px 10px;margin:8px 0 4px}
 .cm{display:flex;gap:8px;align-items:flex-end;max-width:86%}
 .cm.me{align-self:flex-end;flex-direction:row-reverse}
@@ -903,6 +903,16 @@ html.dark .fbrand .fl.dark{display:inline}
     <button class="pollmk" id="pollMk">🗳️ 우리 팀 투표 만들기 <small style="font-weight:600;opacity:.8">· 링크 받은 사람만 보여요</small></button>
   </div>
 
+  <details class="fold chatfold" id="foldChat" open>
+    <summary><span>🗨️ 점심 수다방 <span id="chatCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
+    <div class="fb">
+      <div class="chatbox" id="chatList"><div class="cempty">불러오는 중…</div></div>
+      <div class="chatq" id="chatQ"></div>
+      <div class="chatin"><button class="chatav" id="chatMe" title="프로필 변경"></button><input id="chatText" maxlength="300" placeholder="아무 얘기나 (점심 아니어도 OK) · Enter로 전송" autocomplete="off"><button class="btn p" id="chatSend">전송</button></div>
+      <div class="mhint">익명 닉네임으로 대화해요. 개인정보·업무 기밀은 쓰지 마세요 🙏 · 최근 150개까지 보여요</div>
+    </div>
+  </details>
+
   <section class="rank" id="rank">
     <button class="champ" id="champ"></button>
     <div class="rank-h">
@@ -940,15 +950,6 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb"><div class="feedlist" id="feed"><div class="cempty">아직 후기가 없어요. 첫 후기를 남겨보세요 🙌</div></div></div>
   </details>
 
-  <details class="fold" id="foldChat">
-    <summary><span>🗨️ 점심 수다방 <span id="chatCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
-    <div class="fb">
-      <div class="chatbox" id="chatList"><div class="cempty">불러오는 중…</div></div>
-      <div class="chatq" id="chatQ"></div>
-      <div class="chatin"><button class="chatav" id="chatMe" title="프로필 변경"></button><input id="chatText" maxlength="300" placeholder="아무 얘기나 (점심 아니어도 OK) · Enter로 전송" autocomplete="off"><button class="btn p" id="chatSend">전송</button></div>
-      <div class="mhint">익명 닉네임으로 대화해요. 개인정보·업무 기밀은 쓰지 마세요 🙏 · 최근 150개까지 보여요</div>
-    </div>
-  </details>
 
   <details class="fold" id="foldRadar" open>
     <summary><span>🗺️ 맛지도 <span id="mapCnt" style="color:var(--tx3);font-weight:600;font-size:12px"></span></span></summary>
@@ -1801,9 +1802,12 @@ document.getElementById('chatQ').onclick = e=>{ const b=e.target.closest('button
 document.getElementById('chatSend').onclick = sendChat;
 document.getElementById('chatText').addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.isComposing){ e.preventDefault(); sendChat(); } });
 document.getElementById('chatMe').onclick = ()=>openEmoji();
-document.getElementById('foldChat').addEventListener('toggle', e=>{ CHAT_OPEN = e.target.open; if(CHAT_OPEN){ document.getElementById('chatList').dataset.first=''; loadChat(); } else renderChat(); });
-setInterval(()=>{ if(document.visibilityState==='visible') loadChat(); }, CHAT_OPEN ? 10000 : 20000);
-setInterval(()=>{ if(CHAT_OPEN && document.visibilityState==='visible') loadChat(); }, 8000);
+{ const fc = document.getElementById('foldChat'); if(LS.get('gl_chat_fold')==='closed') fc.open = false; CHAT_OPEN = fc.open; }
+document.getElementById('foldChat').addEventListener('toggle', e=>{ const was = CHAT_OPEN; CHAT_OPEN = e.target.open; LS.set('gl_chat_fold', CHAT_OPEN?'open':'closed'); if(CHAT_OPEN && !was){ document.getElementById('chatList').dataset.first=''; loadChat(); } else if(!CHAT_OPEN) renderChat(); });
+// 수다방이 화면에 보일 때만 자주(10초) 새로고침, 안 보이면 1분마다 (무료 요금제 트래픽 절약)
+let CHAT_VIS = true; try{ CHAT_VIS = false; new IntersectionObserver(es=>{ const v = es[0].isIntersecting; if(v && !CHAT_VIS && CHAT_OPEN) loadChat(); CHAT_VIS = v; }).observe(document.getElementById('foldChat')); }catch(e){ CHAT_VIS = true; }
+setInterval(()=>{ if(document.visibilityState==='visible' && CHAT_OPEN && CHAT_VIS) loadChat(); }, 10000);
+setInterval(()=>{ if(document.visibilityState==='visible' && !(CHAT_OPEN && CHAT_VIS)) loadChat(); }, 60000);
 /* ======================= 명예의 전당 ======================= */
 function renderChamp(){
   const el = document.getElementById('champ'); if(!el) return;
