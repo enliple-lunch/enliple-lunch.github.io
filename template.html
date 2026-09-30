@@ -95,44 +95,26 @@ html.dark .logo{background:#fff;border-color:transparent}
 h1 .q{color:inherit}
 h1{font-size:21px;font-weight:800;letter-spacing:-.5px}
 @media(min-width:768px){h1{font-size:26px}.logo{width:46px;height:46px;padding:8px}}
-.subline{display:none!important}
+.subline{color:var(--tx3);font-size:13px;margin-top:2px}
 .themeBtn{margin-left:auto;width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line2);display:grid;place-items:center;font-size:19px;box-shadow:var(--shadow);flex:none}
 .themeBtn:active{transform:scale(.92)}
 #meBtn{margin-left:8px}
 .guidelink{color:var(--ac);font-weight:800;text-decoration:none}
 .guidelink:hover{text-decoration:underline}
-.guidebtn{color:var(--tx)}
-.guidebtn .gi{font-size:16px;line-height:1}
-@media(max-width:560px){.guidebtn .gl{display:none}.guidebtn.mepill{padding:0 9px}}
 .mepill{display:flex;align-items:center;gap:6px;height:40px;padding:0 12px 0 8px;border-radius:12px;background:var(--card);border:1px solid var(--line2);box-shadow:var(--shadow);font-size:13.5px;font-weight:700;color:var(--tx);max-width:190px;flex:none}
 .mepill .pic{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--on-ac);display:grid;place-items:center;flex:none}
 .mepill .mini{font-size:15px}
 .mepill #meNickH{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mepill:active{transform:scale(.95)}
 @media(max-width:560px){.mepill #meNickH{display:none}.mepill .mini{display:none}.mepill{padding:0 7px}}
-.lkcard{background:var(--soft);border:1px solid var(--line2);border-radius:14px;padding:11px 12px;margin:4px 0 12px}
-.lkcard .t{font-size:14px;font-weight:800;display:flex;align-items:center;gap:6px}
+.lkcard{background:linear-gradient(135deg,rgba(62,166,255,.16),rgba(127,191,49,.10));border:1.5px solid rgba(62,166,255,.45);border-radius:16px;padding:12px 14px;margin:4px 0 12px}
+.lkcard .t{font-size:14.5px;font-weight:800;display:flex;align-items:center;gap:6px}
 .lkcard .t .st{margin-left:auto;font-size:12px;font-weight:800;padding:3px 8px;border-radius:8px;background:var(--t-nv-bg);color:var(--t-nv-tx)}
-.lkcard .d{font-size:12px;color:var(--tx3);margin-top:3px;line-height:1.45}
-.lkcard .bt{display:flex;gap:8px;margin-top:9px}
-.lkcard .bt .btn{min-height:38px;font-size:13px;padding:8px 10px}
+.lkcard .d{font-size:12.5px;color:var(--tx2);margin-top:4px;line-height:1.5}
+.lkcard .bt{display:flex;gap:8px;margin-top:10px}
 .lkcard .bt .btn{flex:1}
-.lkcode{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg2);border:1.5px dashed rgba(62,166,255,.55);border-radius:12px;padding:8px 8px 8px 14px;margin:10px 0 4px}
-.lkcode b{font-size:22px;font-weight:900;letter-spacing:3px;color:#3ea6ff;user-select:all;-webkit-user-select:all;font-variant-numeric:tabular-nums;white-space:nowrap}
-.lkcode .btn{min-height:34px;padding:6px 11px;font-size:12.5px;flex:none}
-.lkhint{font-size:11.5px;color:var(--tx3);line-height:1.45}
-.lkin{display:flex;gap:8px;margin-top:10px}
-.lkin[hidden]{display:none}
-.lkin input{flex:1;min-width:0;background:var(--bg2);border:1.5px solid var(--line2);border-radius:11px;padding:10px 12px;color:var(--tx);font-size:16px;font-weight:800;letter-spacing:2px;text-transform:uppercase;outline:none}
-.lkin input:focus{border-color:#3ea6ff}
-.lkin input::placeholder{letter-spacing:0;font-weight:600;text-transform:none;color:var(--tx3)}
-.lkin .btn{flex:none}
-.lkmsg{font-size:12.5px;color:var(--tx2);line-height:1.5}
-.lkmsg:not(:empty){margin-top:8px}
-.lkmsg .bad{color:var(--t-r)}
-.lkask{background:var(--bg2);border:1px solid var(--line2);border-radius:12px;padding:10px 12px}
-.lkask small{color:var(--tx3)}
-
+.lkcode{text-align:center;font-size:34px;font-weight:900;letter-spacing:7px;color:#3ea6ff;background:var(--bg2);border:2px dashed rgba(62,166,255,.55);border-radius:14px;padding:10px 0;margin:10px 0 4px;user-select:all}
+.lkhint{text-align:center;font-size:12px;color:var(--tx3);margin-bottom:6px}
 .lkban{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:linear-gradient(90deg,rgba(62,166,255,.16),transparent);border:1px solid rgba(62,166,255,.4);border-radius:13px;padding:10px 12px;margin-bottom:12px;font-size:13.5px;color:var(--tx)}
 .lkban b{font-weight:800}
 .lkban .go{margin-left:auto;font-weight:800;color:#3ea6ff;white-space:nowrap;font-size:12.5px}
@@ -331,6 +313,20 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .mlegend button,.mlegend .ml-sp{display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:var(--tx2);padding:5px 9px;border-radius:9px;background:var(--soft);border:1px solid var(--line)}
 .mlegend button.on{background:var(--mc,#ffd23f);color:#fff;border-color:transparent;box-shadow:0 0 0 2px rgba(255,255,255,.25) inset}
 .mlegend button.on i{border-color:#fff}
+.b.sus{background:rgba(255,159,28,.95);color:#1a1000}
+.susbox{margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(255,159,28,.10);border:1px solid rgba(255,159,28,.45);font-size:13.5px;line-height:1.65;color:var(--tx2)}
+.susbox b{color:var(--tx)}
+.gonebox{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line2);display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;color:var(--tx3)}
+.gonebox span{margin-right:auto}
+.gonebox button,.hidlist button{font-size:12.5px;font-weight:700;padding:6px 11px;border-radius:10px;background:var(--soft);border:1px solid var(--line2);color:var(--tx2);cursor:pointer}
+.gonebox button.on,.hidlist button.on{background:var(--ac);color:var(--on-ac);border-color:var(--ac)}
+.gonebox button[data-gv="1"].on{background:#ff4d3d;border-color:#ff4d3d;color:#fff}
+.hidlist details{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 14px}
+.hidlist summary{cursor:pointer;padding:12px 0;font-size:13.5px;font-weight:700;color:var(--tx2)}
+.hidlist summary small{font-weight:500;color:var(--tx3);margin-left:6px}
+.hidlist .hrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.hidlist .hrow div{flex:1;min-width:0;font-size:13.5px}
+.hidlist .hrow small{display:block;color:var(--tx3);font-size:12px}
 .mk-crowd{border-radius:50%;background:#ff4d6d;border:2px solid #fff;display:flex;align-items:center;justify-content:center;gap:1px;font-size:12px;color:#fff;box-shadow:0 4px 14px rgba(255,77,109,.5)}
 .mk-crowd b{font-size:13px;font-weight:900}
 .mlegend button[data-mk="구내식당"].on,.mlegend button[data-mk="__fav"].on,.mlegend button[data-mk="__rank"].on{color:#3a2600}
@@ -436,7 +432,7 @@ html:not(.dark) .rainbtn{color:#1f6fb8}
 .phbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:12px;padding:11px;border-radius:12px;background:var(--soft);border:1.5px dashed var(--line2);color:var(--tx2);font-size:14px;font-weight:700}
 /* ================= CHAT ================= */
 .chatbox{height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:3px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:12px;scrollbar-width:thin}
-@media(max-width:620px){.chatbox{height:300px}}
+@media(max-width:620px){.chatbox{height:340px}}
 .cday{align-self:center;font-size:11.5px;color:var(--tx3);background:var(--soft);border-radius:999px;padding:3px 10px;margin:8px 0 4px}
 .cm{display:flex;gap:8px;align-items:flex-end;max-width:86%}
 .cm.me{align-self:flex-end;flex-direction:row-reverse}
@@ -737,108 +733,6 @@ footer{margin-top:36px;padding:20px 0;border-top:1px solid var(--line);color:var
 html.dark .fbrand .fl.light{display:none}
 html.dark .fbrand .fl.dark{display:inline}
 .fbrand span{font-weight:700;color:var(--tx2)}
-
-
-.mtabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.mtabs button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:10px 12px;border-radius:13px;background:var(--soft);border:1.5px solid var(--line);color:var(--tx2);min-width:0}
-.mtabs button b{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.mtabs button small{font-size:11.5px;color:var(--tx3);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.mtabs button[data-mt="crew"].on{background:rgba(255,77,109,.14);border-color:#ff4d6d;color:var(--tx)}
-.mtabs button[data-mt="around"].on{background:rgba(127,191,49,.14);border-color:var(--ac);color:var(--tx)}
-.mtabs button.on small{color:var(--tx2)}
-.mapwrap{position:relative}
-.mapempty{position:absolute;inset:0;z-index:500;display:grid;place-items:center;pointer-events:none}
-.mapempty[hidden]{display:none}
-.mapempty>div{background:var(--card);border:1px solid var(--line2);box-shadow:var(--shadow);border-radius:14px;padding:12px 16px;text-align:center;font-size:13px;line-height:1.55;color:var(--tx2)}
-.mapempty b{color:var(--tx)}
-.crewtop:empty{display:none}
-.crewtop{margin-top:10px;display:flex;flex-direction:column;gap:6px}
-.crewtop .ct-h{font-size:12px;font-weight:800;color:var(--tx3)}
-.crewtop .ct{display:flex;align-items:center;gap:8px;text-align:left;background:var(--inset);border:1px solid var(--line);border-radius:11px;padding:8px 10px;font-size:13.5px}
-.crewtop .ct .k{width:20px;font-weight:800;color:#ff4d6d;flex:none;text-align:center}
-.crewtop .ct .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.crewtop .ct small{color:var(--tx3);white-space:nowrap;flex:none}
-.crewtop .ct .h{margin-left:auto;font-weight:800;color:#ff4d6d;flex:none}
-@media(max-width:560px){.mtabs button{padding:9px 10px}.mtabs button b{font-size:13px}.crewtop .ct small{display:none}}
-/* ================= MOBILE COMPACT (<=560px) ================= */
-.wxmore{display:none}
-@media(max-width:560px){
-  header{padding:14px 0 4px}
-  .brandrow{gap:9px}
-  .logo{width:36px;height:36px;border-radius:11px;padding:6px}
-  h1{font-size:19px}
-  .subline{font-size:12px;line-height:1.4}
-  .subline .sl-x,.subline .sl-c,.mx{display:none}
-  .subline>span{white-space:nowrap}
-  .themeBtn{width:36px;height:36px;border-radius:11px;font-size:17px}
-  .mepill{height:36px;border-radius:11px}
-  #meBtn,#themeBtn{margin-left:6px}
-  .wx{margin-top:10px;padding:11px 12px;border-radius:16px}
-  .wxtop{gap:10px}
-  .wxico{font-size:30px}
-  .wxtemp{font-size:21px;gap:6px}
-  .wxtemp small{font-size:12px}
-  .wxdesc{font-size:11.5px;margin-top:1px}
-  .wxmore{display:inline-flex;align-items:center;gap:4px;flex:none;align-self:center;font-size:12px;font-weight:700;color:var(--tx2);background:var(--inset);border:1px solid var(--line);border-radius:10px;padding:7px 9px;white-space:nowrap}
-  .wxmore b{color:var(--tx)}
-  .wxmore i{font-style:normal;color:var(--tx3)}
-  .wx:not(.open) #wxChips,.wx:not(.open) .wxright{display:none}
-  .wxtip{margin-top:8px;padding:8px 10px;font-size:13px;line-height:1.45;border-radius:11px}
-  .wxtip .wxlbl{display:none}
-  .wxchips{margin-top:9px;gap:5px}
-  .wxchip{font-size:11.5px;padding:4px 7px}
-  .wxhours{gap:5px;margin-top:8px}
-  .wxh{padding:6px 2px;border-radius:10px}
-  .wxh .i{font-size:19px;margin:2px 0}
-  .wxh .c{font-size:13.5px}
-  .wxh .p{font-size:11px}
-  .newbn{margin-top:10px;padding:8px 11px;font-size:13px;gap:8px;border-radius:13px}
-  .newbn>span:first-child{font-size:17px!important}
-  .newbn .nb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .newbn .nb br,.newbn .nb small{display:none}
-  .a2hs{font-size:12.5px}
-  .hero{margin-top:10px;padding:13px;border-radius:18px}
-  .hero-tag{font-size:12px;padding:5px 10px}
-  .reroll{font-size:13px;padding:7px 11px;min-height:34px}
-  .pickmain{grid-template-columns:100px minmax(0,1fr);grid-template-areas:"img name" "img meta" "menu menu" "act act";gap:4px 12px;margin-top:11px}
-  .pickbody{display:contents}
-  .pickimg{grid-area:img;aspect-ratio:1;border-radius:14px;align-self:start}
-  .pickname{grid-area:name;align-self:end;font-size:20px;letter-spacing:-.6px}
-  .pickmeta{grid-area:meta;align-self:start;flex-wrap:wrap;overflow:visible;mask-image:none;-webkit-mask-image:none;gap:4px;margin-top:4px;padding-bottom:0}
-  .pickmeta .tag{font-size:11px;padding:3px 7px;border-radius:7px}
-  .pickmenu{grid-area:menu;margin-top:10px;padding:10px 12px;border-radius:12px}
-  .pickmenu .mn{font-size:16px}
-  .pickmenu .dsc{font-size:12.5px}
-  .heroact{grid-area:act;margin-top:10px}
-  .btn{padding:10px 13px;font-size:13.5px;min-height:40px}
-  .winlbl{top:5px;left:5px;font-size:10.5px;padding:3px 7px}
-  .reel .col{font-size:38px;gap:12px}
-  .reel .win{height:50px}
-  .noimg{font-size:34px}
-  .noimg.ph .lb{font-size:10px;bottom:4px}
-  .alts{gap:7px;margin-top:11px}
-  .alt{padding:8px;gap:10px;border-radius:12px}
-  .alt .th{width:42px;height:42px;border-radius:10px}
-  .alt .nm{font-size:14px}
-  .alt .mt{font-size:11.5px}
-  .sec-h h2,.rank-h h2,.poll-h h2,.sharedmap h2{font-size:17px}
-  .md h3{font-size:20px}
-}
-
-/* ================= 좌우 여백 통일 ================= */
-/* --gut: 화면 가장자리 ~ 카드 바깥선, --pad: 카드 바깥선 ~ 안쪽 글자 */
-:root{--gut:10px;--pad:12px}
-@media(min-width:561px){:root{--gut:16px;--pad:16px}}
-@media(min-width:768px){:root{--gut:20px;--pad:18px}}
-.wrap{padding-left:var(--gut);padding-right:var(--gut)}
-.wx,.newbn,.a2hs,.sharedmap,.poll,.hero,.rank,.ctrl,.fold>summary,.fold .fb{padding-left:var(--pad);padding-right:var(--pad)}
-.rank-grid,.grid,.alts,.cands,.hof,.mis,.flist,.feedlist{min-width:0}
-.rank-grid>*,.grid>*,.alts>*,.cands>*,.feedlist>*{min-width:0}
-.rank-grid{grid-template-columns:minmax(0,1fr)}
-@media(min-width:620px){.rank-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:980px){.rank-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media(min-width:560px){.grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}}
 </style>
 </head>
 <body>
@@ -850,9 +744,9 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="logo"><img src="data:image/png;base64,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" alt="ENLiPLE"></div>
     <div style="min-width:0">
       <h1>오늘 뭐 먹지<span class="q">?</span></h1>
-      <div class="subline"><span class="sl-x">한신아이티타워 · 반경 500m · </span><span class="sl-c"><span id="mCnt">0</span>곳 · </span><span id="mUpd">–</span><span id="lunchCd"></span></div>
+      <div class="subline">한신아이티타워 · 반경 500m · <span id="mCnt">0</span>곳 · <span id="mUpd">–</span><span id="lunchCd"></span> · <a href="guide.html" class="guidelink">📖 이용 가이드</a></div>
     </div>
-    <a class="mepill guidebtn" id="guideBtn" href="guide.html" title="이용 가이드" style="text-decoration:none;margin-left:auto"><span class="gi">📖</span><span class="gl">이용 가이드</span></a><button class="mepill" id="meBtn" title="내 프로필 · 기기 연결"><span class="pic"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 20.5c.8-4.4 4.3-6.8 8.5-6.8s7.7 2.4 8.5 6.8z"/></svg></span><span id="meNickH">내 프로필</span><span id="meEmo" class="mini"></span></button><button class="themeBtn" id="themeBtn" title="밝게/어둡게">🌙</button>
+    <a class="themeBtn" id="guideBtn" href="guide.html" title="이용 가이드" style="text-decoration:none;margin-left:auto">❓</a><button class="mepill" id="meBtn" title="내 프로필 · 기기 연결"><span class="pic"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 20.5c.8-4.4 4.3-6.8 8.5-6.8s7.7 2.4 8.5 6.8z"/></svg></span><span id="meNickH">내 프로필</span><span id="meEmo" class="mini"></span></button><button class="themeBtn" id="themeBtn" title="밝게/어둡게">🌙</button>
   </div>
 
   <div class="wx" id="wx">
@@ -863,7 +757,6 @@ html.dark .fbrand .fl.dark{display:inline}
           <div class="wxtemp" id="wxTemp">불러오는 중…</div>
           <div class="wxdesc" id="wxDesc">구로디지털단지 날씨</div>
         </div>
-        <button class="wxmore" id="wxMore" aria-expanded="false">자세히 ▾</button>
       </div>
       <div class="wxchips" id="wxChips"></div>
       <div class="wxtip"><div class="wxlbl">🍽️ 오늘의 한 줄</div><div id="wxTip">날씨를 확인해서 오늘 어울리는 메뉴를 골라줄게.</div></div>
@@ -903,16 +796,6 @@ html.dark .fbrand .fl.dark{display:inline}
     <button class="pollmk" id="pollMk">🗳️ 우리 팀 투표 만들기 <small style="font-weight:600;opacity:.8">· 링크 받은 사람만 보여요</small></button>
   </div>
 
-  <details class="fold chatfold" id="foldChat" open>
-    <summary><span>🗨️ 점심 수다방 <span id="chatCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
-    <div class="fb">
-      <div class="chatbox" id="chatList"><div class="cempty">불러오는 중…</div></div>
-      <div class="chatq" id="chatQ"></div>
-      <div class="chatin"><button class="chatav" id="chatMe" title="프로필 변경"></button><input id="chatText" maxlength="300" placeholder="아무 얘기나 (점심 아니어도 OK) · Enter로 전송" autocomplete="off"><button class="btn p" id="chatSend">전송</button></div>
-      <div class="mhint">익명 닉네임으로 대화해요. 개인정보·업무 기밀은 쓰지 마세요 🙏 · 최근 150개까지 보여요</div>
-    </div>
-  </details>
-
   <section class="rank" id="rank">
     <button class="champ" id="champ"></button>
     <div class="rank-h">
@@ -950,20 +833,27 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb"><div class="feedlist" id="feed"><div class="cempty">아직 후기가 없어요. 첫 후기를 남겨보세요 🙌</div></div></div>
   </details>
 
+  <details class="fold" id="foldChat">
+    <summary><span>🗨️ 점심 수다방 <span id="chatCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
+    <div class="fb">
+      <div class="chatbox" id="chatList"><div class="cempty">불러오는 중…</div></div>
+      <div class="chatq" id="chatQ"></div>
+      <div class="chatin"><button class="chatav" id="chatMe" title="프로필 변경"></button><input id="chatText" maxlength="300" placeholder="아무 얘기나 (점심 아니어도 OK) · Enter로 전송" autocomplete="off"><button class="btn p" id="chatSend">전송</button></div>
+      <div class="mhint">익명 닉네임으로 대화해요. 개인정보·업무 기밀은 쓰지 마세요 🙏 · 최근 150개까지 보여요</div>
+    </div>
+  </details>
 
   <details class="fold" id="foldRadar" open>
-    <summary><span>🗺️ 맛지도 <span id="mapCnt" style="color:var(--tx3);font-weight:600;font-size:12px"></span></span></summary>
+    <summary><span>🗺️ 인라이플 맛집 지도 <span id="mapCnt" style="color:var(--tx3);font-weight:600;font-size:12px"></span></span></summary>
     <div class="fb">
-      <div class="mtabs" id="mTabs"><button data-mt="crew"><b>❤️ 인라이플 맛지도</b><small id="mtCrew">인라이플 사람들이 저장한 곳</small></button><button data-mt="around"><b>📍 회사 주변 맛지도</b><small id="mtAround">반경 500m 전체</small></button></div>
       <div class="maptools">
         <div class="mlegend" id="mLegend">
-          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><button data-mk="__fav">⭐ 저장만</button><button data-mk="__pick"><i style="background:#ff3d7f"></i>추천</button><button data-mk="__rank">🥇 랭킹</button>
+          <button data-mk="밥집"><i style="background:#7FBF31"></i>밥집</button><button data-mk="회식"><i style="background:#b36bff"></i>회식</button><button data-mk="카페"><i style="background:#3ea6ff"></i>카페</button><button data-mk="패스트푸드"><i style="background:#ff4d3d"></i>패스트푸드</button><button data-mk="구내식당"><i style="background:#ffd23f"></i>구내식당</button><button data-mk="__fav">⭐ 저장만</button><button data-mk="__crowd">❤️ 인라이플 픽</button><button data-mk="__pick"><i style="background:#ff3d7f"></i>추천</button><button data-mk="__rank">🥇 랭킹</button>
         </div>
         <label class="mchk"><input type="checkbox" id="mapSync" checked> 리스트 필터와 연동</label>
       </div>
-      <div class="mapwrap"><div id="map"></div><div class="mapempty" id="mapEmpty" hidden><div><b>아직 저장한 사람이 없어요</b><br>식당 카드에서 <b>☆ 저장</b>을 누르면<br>여기에 ❤️ 하트가 생겨요.</div></div></div>
-      <div class="crewtop" id="crewTop"></div>
-      <div class="mhint" id="mHint"></div>
+      <div id="map"></div>
+      <div class="mhint">❤️ 인라이플 픽 = 우리 회사 사람들이 ☆저장한 곳 (숫자는 저장한 사람 수) · 범례를 누르면 그 종류<b>만</b> 보여요 (여러 개 선택 가능, 다시 누르면 해제) · 점에 마우스를 올리면 이름·평점, 클릭하면 사진·가격·상세 · 가운데가 회사(100m 간격)</div>
     </div>
   </details>
 </header>
@@ -998,6 +888,7 @@ html.dark .fbrand .fl.dark{display:inline}
   </div>
   <div class="grid" id="grid"></div>
   <button class="more" id="more" style="display:none">더 보기</button>
+  <div class="hidlist" id="hidList"></div>
 </div>
 
 <footer>
@@ -1018,6 +909,14 @@ html.dark .fbrand .fl.dark{display:inline}
 /* ======================= 기본 ======================= */
 const D = window.LUNCH_DATA, L = D.list, C = D.meta.center;
 const BYID = Object.fromEntries(L.map(r=>[r.id,r]));
+// 폐업 처리: 제보로 숨긴 가게는 L에서 빼고 ALL_L에만 남김
+const ALL_L = L.slice();
+let GONE = {}, HIDDEN = new Set(ALL_L.filter(r=>r.hid).map(r=>r.id));
+function applyHidden(){ L.length = 0; ALL_L.forEach(r=>{ if(!HIDDEN.has(r.id)) L.push(r); }); }
+applyHidden();
+function goneCnt(rid){ const v = Object.values(GONE[rid]||{}); return { g: v.filter(x=>x===1).length, a: v.filter(x=>x===-1).length }; }
+function calcHidden(){ const s = new Set(); for(const rid in GONE){ const {g,a} = goneCnt(rid); if(g>=2 && g>a) s.add(rid); } return s; }
+function isSus(r){ if(!r || !r.sus) return false; if(goneCnt(r.id).a>0) return false; return !Object.values(STORE.visits[r.id]||{}).some(x=>Date.now()-x.ts < 60*864e5); }
 const FB = 'https://guro-lunch-default-rtdb.asia-southeast1.firebasedatabase.app';
 const EMO = {'햄버거':'🍔','김밥':'🍙','만두':'🥟','한식':'🍚','찌개,전골':'🍲','국밥':'🍜','해장국':'🍲','곰탕':'🍲','칼국수':'🍜','국수':'🍜','냉면':'🍜','분식':'🍢','떡볶이':'🍢','돈까스,우동':'🍛','일식':'🍣','초밥,롤':'🍣','일본식라면':'🍜','일식집':'🍣','참치회':'🍣','회':'🐟','해물,생선':'🐟','추어':'🐟','아구':'🐟','중국요리':'🥟','중식':'🥟','양꼬치':'🍢','양식':'🍝','이탈리안':'🍝','피자':'🍕','스테이크,립':'🥩','육류,고기':'🥩','정육식당':'🥩','갈비':'🥩','삼겹살':'🥩','불고기,두루치기':'🥩','족발,보쌈':'🥓','곱창,막창':'🥓','감자탕':'🍲','삼계탕':'🍗','닭요리':'🍗','치킨':'🍗','햄버거':'🍔','패스트푸드':'🍔','샌드위치':'🥪','샐러드':'🥗','베트남음식':'🍜','동남아음식':'🍛','아시아음식':'🍛','퓨전요리':'🍽️','멕시칸,브라질':'🌮','도시락':'🍱','김밥':'🍙','한식뷔페':'🍱','뷔페':'🍱','한정식':'🍱','구내식당':'🍱','커피전문점':'☕','카페':'☕','디저트카페':'🍰','제과,베이커리':'🥐','전통찻집':'🍵','북카페':'📖','호프,요리주점':'🍺','실내포장마차':'🍺','일본식주점':'🍶','샤브샤브':'🍲','두부전문점':'🍲','순대':'🍲','음식점':'🍽️'};
 const emo = c => EMO[c] || '🍽️';
@@ -1097,10 +996,10 @@ function pmLabel(v, type){ if(v==null) return null; const th = type==='pm25' ? [
 function renderWeather(){
   const box = document.getElementById('wx');
   if(!WX){ document.getElementById('wxTemp').textContent='날씨 불러오기 실패'; document.getElementById('wxIco').textContent='🌡️'; return; }
-  box.className = 'wx ' + (WX.kind==='rain'?'rain':WX.kind==='snow'?'snow':WX.t>=28?'hot':WX.t<=8?'cold':'') + (WX_OPEN?' open':'');
+  box.className = 'wx ' + (WX.kind==='rain'?'rain':WX.kind==='snow'?'snow':WX.t>=28?'hot':WX.t<=8?'cold':'');
   document.getElementById('wxIco').textContent = WX.icon;
   document.getElementById('wxTemp').innerHTML = `${WX.t}°C <small>체감 ${WX.at}°C · ${WX.label}</small>`;
-  document.getElementById('wxDesc').innerHTML = `<span class="mx">구로디지털단지 · </span>최고 ${WX.tmax}° / 최저 ${WX.tmin}°`;
+  document.getElementById('wxDesc').textContent = `구로디지털단지 · 최고 ${WX.tmax}° / 최저 ${WX.tmin}°`;
   const ch = [`<span class="wxchip">강수확률 <b>${WX.pop ?? 0}%</b></span>`,`<span class="wxchip">습도 <b>${WX.hum}%</b></span>`,`<span class="wxchip">바람 <b>${WX.wind}km/h</b></span>`];
   const p25 = pmLabel(WX.pm25,'pm25'), p10 = pmLabel(WX.pm10,'pm10');
   if(p25) ch.push(`<span class="wxchip ${p25[1]}">초미세먼지 <b>${p25[0]}</b> ${Math.round(WX.pm25)}</span>`);
@@ -1119,10 +1018,7 @@ function renderWeather(){
     const nowH = new Date().getHours();
     hb.innerHTML = `<div class="hl">⏰ ${WX.hours.tomorrow?'내일':'오늘'} 점심시간 예보</div>` + WX.hours.list.map(x=>{ const wc = WXC[x.code]||['','🌡️','']; const isNow = !WX.hours.tomorrow && nowH===x.hr; return `<div class="wxh ${isNow?'now':''}"><div class="t">${x.hr}시</div><div class="i">${wc[1]}</div><div class="c">${x.t}°</div><div class="p ${x.pop>=40?'rain':''}">☂ ${x.pop}%</div></div>`; }).join('');
   } else hb.innerHTML = '';
-  { const mb = document.getElementById('wxMore'); const h13 = (WX.hours && WX.hours.list || []).find(x=>x.hr===13); if(mb) mb.innerHTML = (h13 ? `${WX.hours.tomorrow?'내일 ':''}1시 <b>${h13.t}°</b> ☂${h13.pop}%` : '예보') + ` <i>${WX_OPEN?'▴':'▾'}</i>`; }
 }
-let WX_OPEN = false;
-document.getElementById('wxMore').onclick = ()=>{ WX_OPEN = !WX_OPEN; const b=document.getElementById('wx'); b.classList.toggle('open', WX_OPEN); document.getElementById('wxMore').setAttribute('aria-expanded', WX_OPEN); if(WX) renderWeather(); };
 
 /* ======================= 추천 ======================= */
 L.forEach(r=>{
@@ -1138,7 +1034,7 @@ let seedOffset = 0, TODAY = null;
 function pickToday(){
   const rule = wxRule(), wcats = rule ? rule.cats : [];
   const dp = rule && ['hot','rain','freeze','snow'].includes(rule.id) ? 1.5 : (rule && ['nice','cool'].includes(rule.id) ? 0.4 : 1);
-  let pool = L.filter(r=>(r.k==='밥집'||r.k==='구내식당') && r.pr && ((r.nsc||r.s||4) >= 3.3))
+  let pool = L.filter(r=>(r.k==='밥집'||r.k==='구내식당') && !r.sus && r.pr && ((r.nsc||r.s||4) >= 3.3))
     .map(r=>({ r, base: r.q + (wcats.includes(r.c)?1.5:0) + (RK[r.id]?0.5:0) - (r.d/520)*dp*0.6 }));
   const rnd = mulberry(todayKey() + seedOffset*7919 + (rule? rule.id.length*31 : 0));
   pool.sort((a,b)=>b.base-a.base);
@@ -1240,19 +1136,17 @@ function renderMap(){
   if(!MAP) return;
   MAP_LAYER.clearLayers(); MAP_SPECIAL.clearLayers(); MAP_MARKERS = {};
   const sync = document.getElementById('mapSync')?.checked;
-  const crew = !MAP_SHARED && MAP_MODE==='crew';
-  updateMapTabs(crew);
-  const shown = MAP_SHARED ? Object.keys(MAP_SHARED.items).filter(id=>BYID[id] && (MAP_SHARED.tab==='all' || (MAP_SHARED.items[id]||[]).includes(MAP_SHARED.tab))).map(id=>BYID[id]) : crew ? D.list.filter(r=>FAVCNT[r.id]) : (sync ? filtered() : L_ALL_FOR_MAP());
+  const shown = MAP_SHARED ? Object.keys(MAP_SHARED.items).filter(id=>BYID[id] && (MAP_SHARED.tab==='all' || (MAP_SHARED.items[id]||[]).includes(MAP_SHARED.tab))).map(id=>BYID[id]) : (sync ? filtered() : L_ALL_FOR_MAP());
   const pickIds = new Set(TODAY ? [TODAY.main?.id, ...(TODAY.alts||[]).map(a=>a.id)].filter(Boolean) : []);
   let n = 0; const SP_PTS = [];
   for(const r of shown){
     if(!r.la || !r.lo) continue;
-    if(!MAP_SHARED && !crew && MAP_ONLY.size && !(MAP_ONLY.has(r.k) || (MAP_ONLY.has('회식') && r.hs))) continue;
-    if(!MAP_SHARED && !crew && MAP_SP.size && !((MAP_SP.has('__fav') && isFav(r.id)) || (MAP_SP.has('__pick') && pickIds.has(r.id)) || (MAP_SP.has('__rank') && RK[r.id]) || (MAP_SP.has('__crowd') && FAVCNT[r.id]))) continue;
+    if(!MAP_SHARED && MAP_ONLY.size && !(MAP_ONLY.has(r.k) || (MAP_ONLY.has('회식') && r.hs))) continue;
+    if(!MAP_SHARED && MAP_SP.size && !((MAP_SP.has('__fav') && isFav(r.id)) || (MAP_SP.has('__pick') && pickIds.has(r.id)) || (MAP_SP.has('__rank') && RK[r.id]) || (MAP_SP.has('__crowd') && FAVCNT[r.id]))) continue;
     SP_PTS.push([r.la, r.lo]); n++;
     const isTop = RK[r.id] && RK[r.id]<=3, isPick = TODAY && TODAY.main && r.id===TODAY.main.id;
     let m;
-    if(crew && FAVCNT[r.id]){ const c = FAVCNT[r.id]; const sz = Math.min(44, 26 + c*3); m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-crowd" style="width:${sz}px;height:${sz}px">❤️<b>${c}</b></div>`, iconSize:[sz,sz], iconAnchor:[sz/2,sz/2] }), zIndexOffset: 600 + c }); }
+    if(!MAP_SHARED && MAP_SP.has('__crowd') && FAVCNT[r.id]){ const c = FAVCNT[r.id]; const sz = Math.min(44, 26 + c*3); m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-crowd" style="width:${sz}px;height:${sz}px">❤️<b>${c}</b></div>`, iconSize:[sz,sz], iconAnchor:[sz/2,sz/2] }), zIndexOffset: 600 + c }); }
     else if(MAP_SHARED){ const sf = MAP_SHARED.folders.find(x=>x.id===(MAP_SHARED.items[r.id]||[])[0]); m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-fav">${sf?sf.emoji:'⭐'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:700 }); }
     else if(isPick){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:'<div class="mk-pick">🍽️</div>', iconSize:[30,30], iconAnchor:[15,15] }), zIndexOffset:900 }); }
     else if(isTop){ m = window.L.marker([r.la,r.lo], { icon: window.L.divIcon({ className:'', html:`<div class="mk-top">${RK[r.id]===1?'🥇':RK[r.id]===2?'🥈':'🥉'}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset:800 }); }
@@ -1264,39 +1158,11 @@ function renderMap(){
     (isPick||isTop ? MAP_SPECIAL : MAP_LAYER).addLayer(m);
     MAP_MARKERS[r.id] = m;
   }
-  const mc = document.getElementById('mapCnt'); if(mc) mc.textContent = MAP_SHARED ? `· ${MAP_SHARED.nick}님 맛지도 (${n}곳)` : crew ? `· 인라이플 (${n}곳)` : `· 회사 주변 (${n}곳)`;
-  { const me = document.getElementById('mapEmpty'); if(me) me.hidden = !(crew && !n); }
-  if(crew){ if(n){ try{ const b = window.L.latLngBounds(SP_PTS); b.extend([C.lat,C.lon]); MAP.fitBounds(b.pad(0.2), {maxZoom:17}); }catch(e){} } else MAP.setView([C.lat,C.lon], 16); }
-  if(!MAP_SHARED && !crew && MAP_SP.size && n && n <= 40){ try{ const b = window.L.latLngBounds(SP_PTS); b.extend([C.lat,C.lon]); MAP.fitBounds(b.pad(0.2), {maxZoom:17}); }catch(e){} }
+  const mc = document.getElementById('mapCnt'); if(mc) mc.textContent = MAP_SHARED ? `· ${MAP_SHARED.nick}님 맛지도 (${n}곳)` : `(${n}곳)`;
+  if(!MAP_SHARED && MAP_SP.size && n && n <= 40){ try{ const b = window.L.latLngBounds(SP_PTS); b.extend([C.lat,C.lon]); MAP.fitBounds(b.pad(0.2), {maxZoom:17}); }catch(e){} }
   if(MAP_SHARED && n){ try{ const b = window.L.latLngBounds(shown.filter(r=>r.la).map(r=>[r.la,r.lo])); b.extend([C.lat,C.lon]); MAP.fitBounds(b.pad(0.15), {maxZoom:17}); }catch(e){} }
 }
 const L_ALL_FOR_MAP = () => D.list;
-let MAP_MODE = LS.get('gl_mapmode') || 'around';
-function updateMapTabs(crew){
-  const tabs = document.getElementById('mTabs'); if(!tabs) return;
-  tabs.style.display = MAP_SHARED ? 'none' : '';
-  tabs.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.mt===MAP_MODE));
-  const nCrew = Object.keys(FAVCNT).filter(id=>BYID[id]).length;
-  const mc = document.getElementById('mtCrew'); if(mc) mc.textContent = nCrew ? `저장한 곳 ${nCrew}곳` : '인라이플 사람들이 저장한 곳';
-  const ma = document.getElementById('mtAround'); if(ma) ma.textContent = `반경 500m · ${D.list.length}곳`;
-  const tools = document.querySelector('#foldRadar .maptools'); if(tools) tools.style.display = crew ? 'none' : '';
-  const hint = document.getElementById('mHint');
-  if(hint) hint.innerHTML = MAP_SHARED ? '' : crew
-    ? '❤️ 숫자 = 그 가게를 ☆저장한 인라이플 사람 수 · 누가 저장했는지는 안 보여요 · 하트를 누르면 사진·가격·상세'
-    : '범례를 누르면 그 종류<b>만</b> 보여요 (여러 개 선택, 다시 누르면 해제) · 점을 누르면 사진·가격·상세 · 가운데가 회사(100m 간격)';
-  const top = document.getElementById('crewTop');
-  if(top){
-    const list = crew ? Object.entries(FAVCNT).filter(([id])=>BYID[id]).sort((a,b)=>b[1]-a[1]).slice(0,5) : [];
-    top.innerHTML = list.length ? '<div class="ct-h">❤️ 많이 저장한 곳</div>' + list.map(([id,c],i)=>{ const r=BYID[id]; return `<button class="ct" data-id="${id}"><span class="k">${i+1}</span><span class="nm">${esc(r.n)}</span><small>${esc(r.c)} · ${distTxt(r.d)}</small><span class="h">❤️ ${c}</span></button>`; }).join('') : '';
-    top.onclick = e=>{ const b=e.target.closest('.ct'); if(b && BYID[b.dataset.id]) focusOnMap(BYID[b.dataset.id]); };
-  }
-}
-document.getElementById('mTabs').onclick = e=>{
-  const b = e.target.closest('button[data-mt]'); if(!b || b.dataset.mt===MAP_MODE) return;
-  MAP_MODE = b.dataset.mt; LS.set('gl_mapmode', MAP_MODE);
-  if(MAP && MAP_MODE==='around') MAP.setView([C.lat,C.lon], 16);
-  if(MAP) renderMap(); else updateMapTabs(MAP_MODE==='crew');
-};
 function drawRadar(){ renderMap(); } // 호환 (테마 전환·추천 갱신 시 호출됨)
 function focusOnMap(r){
   const d = document.getElementById('foldRadar'); if(!d.open){ d.open = true; }
@@ -1333,13 +1199,11 @@ let CMTCNT = {}, RK = {}, VISITED_THIS_MONTH = new Set(), PMETA = {}, UPH_LOADED
 D.list.forEach(r=>{ r.ph0 = r.ph || ''; });
 
 async function loadAll(){
-  const NODES = ['comments','reactions','clikes','visits','requests','polls','votes','pmeta','favpub'];
+  const NODES = ['comments','reactions','clikes','visits','requests','polls','votes','pmeta','favpub','gone'];
   const got = await Promise.all(NODES.map(n=>fbGet('/'+n)));
   const all = {}; NODES.forEach((n,i)=>all[n]=got[i]||{});
   PMETA = all.pmeta || {}; loadUserPhotos();
   FAVCNT = {}; for(const uid in (all.favpub||{})){ for(const rid in (all.favpub[uid]||{})) FAVCNT[rid] = (FAVCNT[rid]||0) + 1; }
-  if(!LS.get('gl_mapmode') && Object.keys(FAVCNT).length>=5) MAP_MODE = 'crew';
-  setTimeout(renderMap, 0);
   STORE = { comments: all.comments||{}, reactions: all.reactions||{}, visits: all.visits||{}, requests: all.requests||{}, clikes: all.clikes||{}, polls: all.polls||{}, votes: all.votes||{} };
   renderMissions(); renderPolls(); renderHof();
   if(document.getElementById('reqList')) renderReqList();
@@ -1350,7 +1214,42 @@ async function loadAll(){
   RK = calcRanking('m0').shopRank;
   { const {s,e} = periodRange('m0'); VISITED_THIS_MONTH = new Set(); for(const rid in STORE.visits) for(const k in STORE.visits[rid]){ const x=STORE.visits[rid][k]; if(x.ts>=s&&x.ts<e) VISITED_THIS_MONTH.add(rid); } for(const rid in STORE.comments) for(const k in STORE.comments[rid]){ const x=STORE.comments[rid][k]; if(x.ts>=s&&x.ts<e) VISITED_THIS_MONTH.add(rid); } }
   renderRanking();
+  GONE = all.gone || {};
+  { const nh = calcHidden(); const changed = nh.size !== HIDDEN.size || [...nh].some(x=>!HIDDEN.has(x)); HIDDEN = nh; if(changed){ applyHidden(); const t = TODAY ? [TODAY.main, ...(TODAY.alts||[])].filter(Boolean) : []; if(t.some(r=>HIDDEN.has(r.id))) renderToday(); if(MAP) renderMap(); } }
+  renderHidList();
   render();
+}
+function renderHidList(){
+  const el = document.getElementById('hidList'); if(!el) return;
+  const hs = ALL_L.filter(r=>HIDDEN.has(r.id));
+  if(!hs.length){ el.innerHTML = ''; return; }
+  el.innerHTML = `<details><summary>🚫 폐업 제보로 숨긴 가게 ${hs.length}곳 <small>잘못 숨겨졌으면 되살려주세요</small></summary>${hs.map(r=>{ const c = goneCnt(r.id), mine = (GONE[r.id]||{})[ME.uid]; return `<div class="hrow"><div><b>${esc(r.n)}</b><small>${r.c} · ${r.d}m · 🚫${c.g} ✅${c.a}</small></div><button data-alive="${r.id}" class="${mine===-1?'on':''}">✅ 영업해요</button></div>`; }).join('')}</details>`;
+  el.querySelectorAll('[data-alive]').forEach(b=>b.onclick=()=>voteGone(b.dataset.alive, -1));
+}
+async function voteGone(rid, v){
+  GONE[rid] = await fbGet('/gone/'+rid) || {};
+  const mine = GONE[rid][ME.uid];
+  const p = '/gone/'+rid+'/'+ME.uid;
+  if(mine===v){ if(await fbDel(p)) delete GONE[rid][ME.uid]; }
+  else { if(v===1 && !confirm('정말 없어진 가게인가요?\n2명 이상 제보하면 모두에게서 숨겨져요.')) return; if(await fbPut(p, v)) GONE[rid][ME.uid] = v; else { toast('저장 실패 😢'); return; } }
+  const wasHidden = HIDDEN.has(rid);
+  HIDDEN = calcHidden();
+  const nowHidden = HIDDEN.has(rid);
+  if(wasHidden !== nowHidden){
+    applyHidden();
+    if(nowHidden){ toast('🚫 제보 고마워요. 2명 이상 제보해서 숨겼어요'); if(CUR && CUR.id===rid) closeModal(); }
+    else toast('✅ 다시 보이게 했어요');
+    const t = TODAY ? [TODAY.main, ...(TODAY.alts||[])].filter(Boolean) : []; if(t.some(r=>r.id===rid)) renderToday();
+    if(MAP) renderMap();
+  } else if(mine!==v) toast(v===1 ? '🚫 제보 고마워요. 한 명만 더 제보하면 숨겨져요' : '✅ 영업 중이라고 알려줬어요');
+  renderHidList(); render();
+  if(CUR && CUR.id===rid && !nowHidden) renderGoneBox();
+}
+function renderGoneBox(){
+  const r = CUR, el = document.getElementById('goneBox'); if(!r || !el) return;
+  const c = goneCnt(r.id), mine = (GONE[r.id]||{})[ME.uid];
+  el.innerHTML = `<span>혹시 없어진 가게인가요?</span><button data-gv="1" class="${mine===1?'on':''}">🚫 없어졌어요${c.g?' '+c.g:''}</button><button data-gv="-1" class="${mine===-1?'on':''}">✅ 영업해요${c.a?' '+c.a:''}</button>`;
+  el.querySelectorAll('[data-gv]').forEach(b=>b.onclick=()=>voteGone(r.id, +b.dataset.gv));
 }
 function ago(ts){ const s = Math.floor((Date.now()-ts)/1000); if(s<60) return '방금'; if(s<3600) return Math.floor(s/60)+'분 전'; if(s<86400) return Math.floor(s/3600)+'시간 전'; return Math.floor(s/86400)+'일 전'; }
 function renderFeed(items){
@@ -1802,12 +1701,9 @@ document.getElementById('chatQ').onclick = e=>{ const b=e.target.closest('button
 document.getElementById('chatSend').onclick = sendChat;
 document.getElementById('chatText').addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.isComposing){ e.preventDefault(); sendChat(); } });
 document.getElementById('chatMe').onclick = ()=>openEmoji();
-{ const fc = document.getElementById('foldChat'); if(LS.get('gl_chat_fold')==='closed') fc.open = false; CHAT_OPEN = fc.open; }
-document.getElementById('foldChat').addEventListener('toggle', e=>{ const was = CHAT_OPEN; CHAT_OPEN = e.target.open; LS.set('gl_chat_fold', CHAT_OPEN?'open':'closed'); if(CHAT_OPEN && !was){ document.getElementById('chatList').dataset.first=''; loadChat(); } else if(!CHAT_OPEN) renderChat(); });
-// 수다방이 화면에 보일 때만 자주(10초) 새로고침, 안 보이면 1분마다 (무료 요금제 트래픽 절약)
-let CHAT_VIS = true; try{ CHAT_VIS = false; new IntersectionObserver(es=>{ const v = es[0].isIntersecting; if(v && !CHAT_VIS && CHAT_OPEN) loadChat(); CHAT_VIS = v; }).observe(document.getElementById('foldChat')); }catch(e){ CHAT_VIS = true; }
-setInterval(()=>{ if(document.visibilityState==='visible' && CHAT_OPEN && CHAT_VIS) loadChat(); }, 10000);
-setInterval(()=>{ if(document.visibilityState==='visible' && !(CHAT_OPEN && CHAT_VIS)) loadChat(); }, 60000);
+document.getElementById('foldChat').addEventListener('toggle', e=>{ CHAT_OPEN = e.target.open; if(CHAT_OPEN){ document.getElementById('chatList').dataset.first=''; loadChat(); } else renderChat(); });
+setInterval(()=>{ if(document.visibilityState==='visible') loadChat(); }, CHAT_OPEN ? 10000 : 20000);
+setInterval(()=>{ if(CHAT_OPEN && document.visibilityState==='visible') loadChat(); }, 8000);
 /* ======================= 명예의 전당 ======================= */
 function renderChamp(){
   const el = document.getElementById('champ'); if(!el) return;
@@ -1894,7 +1790,7 @@ function card(r){
   const rt = rating(r), cc = CMTCNT[r.id]||0;
   return `<div class="c" data-id="${r.id}">
     <div class="im">${imgTag(r,34)}
-      <div class="badges"><span class="b walk">${r.d}m</span>${RK[r.id]&&RK[r.id]<=3?`<span class="b rank">🏆${RK[r.id]}</span>`:''}${r.nw?'<span class="b top">🆕</span>':''}${(r.hs||r.k==='회식')?'<span class="b hs">🍻</span>':''}${FAVCNT[r.id]>=2?`<span class="b" style="background:rgba(255,77,109,.95);color:#fff">❤️${FAVCNT[r.id]}</span>`:''}</div>
+      <div class="badges"><span class="b walk">${r.d}m</span>${RK[r.id]&&RK[r.id]<=3?`<span class="b rank">🏆${RK[r.id]}</span>`:''}${r.nw?'<span class="b top">🆕</span>':''}${(r.hs||r.k==='회식')?'<span class="b hs">🍻</span>':''}${FAVCNT[r.id]>=2?`<span class="b" style="background:rgba(255,77,109,.95);color:#fff">❤️${FAVCNT[r.id]}</span>`:''}${isSus(r)?'<span class="b sus">⚠️ 폐업?</span>':''}</div>
       <button class="favbtn ${isFav(r.id)?'on':''}" data-fav="${r.id}" title="즐겨찾기">${isFav(r.id)?favIcon(r.id):'☆'}</button><a class="nvbtn" href="${naverUrl(r)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="네이버지도">🟢</a>
     </div>
     <div class="bd">
@@ -1958,6 +1854,7 @@ function openModal(r){
         <button class="btn g" id="mMap" title="지도에서 보기">📍</button>
         <button class="btn g" id="mShare" title="여기 가자고 공유">📤</button>
       </div>
+      ${isSus(r)?`<div class="susbox">⚠️ <b>폐업했을 수도 있어요.</b><br>1년 넘게 후기가 없고 네이버지도에서도 안 보여요.<br>가보셨다면 아래 <b>✅ 영업해요</b>나 <b>🚫 없어졌어요</b>로 알려주세요.</div>`:''}
       <button class="phbtn" id="phBtn">📸 ${PMETA[r.id]?'사진 바꾸기':(r.ph0?'직접 찍은 사진 올리기':'사진이 없어요 · 첫 사진 올리기')}</button>
       <div class="visitbox">
         <div class="vt" id="vText"></div>
@@ -1975,6 +1872,7 @@ function openModal(r){
         </div>
         <div class="clist" id="clist"><div class="cempty">불러오는 중…</div></div>
       </div>
+      <div class="gonebox" id="goneBox"></div>
     </div>`;
   document.getElementById('ov').classList.add('on');
   document.body.style.overflow='hidden';
@@ -1992,7 +1890,8 @@ function openModal(r){
   if(mMoreBtn) mMoreBtn.onclick = ()=>{ const x = document.getElementById('mMore'); const open = x.classList.toggle('open'); mMoreBtn.textContent = open ? '메뉴 접기 ▴' : `메뉴 ${menus.length-8}개 더 보기 ▾`; };
   document.querySelectorAll('#md .jump button').forEach(b=>b.onclick=()=>{ const t = document.getElementById(b.dataset.j); if(t) t.scrollIntoView({behavior:'smooth', block:'start'}); });
   document.querySelectorAll('#rxs .rx').forEach(b=>b.onclick=()=>toggleReaction(b.dataset.e));
-  renderVisit(); loadReactions(); loadComments();
+  renderVisit(); loadReactions(); loadComments(); renderGoneBox();
+  fbGet('/gone/'+r.id).then(g=>{ GONE[r.id] = g||{}; if(CUR===r) renderGoneBox(); });
 }
 function closeModal(){ document.getElementById('ov').classList.remove('on'); document.body.style.overflow=''; CUR=null; }
 document.getElementById('ov').onclick = e=>{ if(e.target.id==='ov') closeModal(); };
@@ -2016,7 +1915,7 @@ async function toggleVisit(){
     if(await fbDel(p)){ delete STORE.visits[r.id][vid]; toast('체크 취소했어요'); }
   } else {
     const rec = { ts: Date.now(), uid: ME.uid, nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8) };
-    if(await fbPut(p, rec)){ (STORE.visits[r.id] ||= {})[vid] = rec; toast('맛점 체크 완료 🍽️ 후기도 남겨주면 +2점!'); }
+    if(await fbPut(p, rec)){ (STORE.visits[r.id] ||= {})[vid] = rec; toast('맛점 체크 완료 🍽️ 후기도 남겨주면 +2점!'); if(goneCnt(r.id).g && (GONE[r.id]||{})[ME.uid]!==-1){ if(await fbPut('/gone/'+r.id+'/'+ME.uid, -1)){ (GONE[r.id] ||= {})[ME.uid] = -1; renderGoneBox(); renderHidList(); } } }
     else toast('저장 실패 😢');
   }
   renderVisit(); RK = calcRanking('m0').shopRank; renderRanking(); renderMissions(); render();
@@ -2139,50 +2038,29 @@ function renderReqList(){
 document.getElementById('reqOpen').onclick = ()=>openRequest('');
 
 /* ======================= 이모지/닉네임 ======================= */
-function lkCodeHtml(code){ return `<div class="lkcode"><b>${code.slice(0,4)} ${code.slice(4)}</b><button class="btn g" id="lkCopy">📋 복사</button></div><div class="lkhint">다른 기기에서 👤 → 📥 코드 입력에 넣으세요 · 남에게 주지 마세요</div>`; }
 function openEmoji(){
   document.getElementById('epkb').innerHTML = `
     <h4>내 프로필</h4>
     <div class="nkrow"><input id="nkIn" maxlength="24" value="${esc(ME.nick)}" placeholder="닉네임"><button class="btn g" id="nkRand">🎲</button></div>
-    <div class="lkcard" id="lkCard"><div class="t">📱 폰 · PC 같은 나로 쓰기 ${LS.get('gl_pcode')?'<span class="st">연결됨 ✓</span>':''}</div><div class="d">가입 없이 코드 하나로 닉네임·미션·배지를 합쳐요.</div><div id="lkOut">${LS.get('gl_pcode')?lkCodeHtml(LS.get('gl_pcode')):''}</div><div class="bt"><button class="btn p" id="lkMake">${LS.get('gl_pcode')?'🔑 내 코드 보기':'🔑 내 코드 만들기'}</button><button class="btn g" id="lkUse">📥 코드 입력</button></div><div class="lkin" id="lkIn" hidden><input id="lkCode" maxlength="9" placeholder="다른 기기의 코드 8자리" autocomplete="off" autocapitalize="characters" spellcheck="false"><button class="btn p" id="lkGo">연결</button></div><div class="lkmsg" id="lkMsg"></div></div>
+    <div class="lkcard" id="lkCard"><div class="t">📱 폰 · PC 같은 나로 쓰기 ${LS.get('gl_pcode')?'<span class="st">연결 코드 있음 ✓</span>':''}</div><div id="lkOut">${LS.get('gl_pcode')?`<div class="lkcode">${LS.get('gl_pcode')}</div><div class="lkhint">↑ 내 연결 코드 · 다른 기기에서 입력하세요</div>`:''}</div><div class="d">가입 없이 <b>연결 코드</b> 하나로 폰과 PC의 닉네임·미션·배지·투표를 합쳐요.<br>① 지금 기기에서 <b>코드 만들기</b> → ② 다른 기기에서 오른쪽 위 👤 → <b>코드로 연결</b></div><div class="bt"><button class="btn p" id="lkMake">${LS.get('gl_pcode')?'🔑 코드 다시 보기':'🔑 코드 만들기'}</button><button class="btn g" id="lkUse">📥 코드로 연결</button></div></div>
     <div class="egrp" style="margin-top:4px">내 이모지</div>
     ${Object.entries(EMOJI_SET).map(([g,list])=>`<div class="egrp">${g}</div><div class="egrid">${list.map(e=>`<button class="ee${e===ME.emoji?' on':''}" data-e="${e}">${e}</button>`).join('')}</div>`).join('')}
     <div style="display:flex;gap:8px;margin-top:18px"><button class="btn g full" onclick="closeEmoji()">취소</button><button class="btn p full" id="nkSave">저장</button></div>`;
   document.getElementById('epk').classList.add('on'); document.body.style.overflow='hidden';
   let sel = ME.emoji;
   document.querySelectorAll('#epkb .ee').forEach(b=>b.onclick=()=>{ sel=b.dataset.e; document.querySelectorAll('#epkb .ee').forEach(x=>x.classList.toggle('on',x===b)); });
-  const lkMsg = (h)=>{ document.getElementById('lkMsg').innerHTML = h; };
-  const lkCopy = async (code)=>{ try{ await navigator.clipboard.writeText(code); toast('코드가 복사됐어요 📋'); }catch(e){ const el=document.querySelector('#lkOut .lkcode b'); if(el){ const rg=document.createRange(); rg.selectNodeContents(el); const s=getSelection(); s.removeAllRanges(); s.addRange(rg); } toast('코드를 길게 눌러 복사하세요'); } };
-  const bindCopy = (code)=>{ const b=document.getElementById('lkCopy'); if(b) b.onclick = ()=>lkCopy(code); };
-  if(LS.get('gl_pcode')) bindCopy(LS.get('gl_pcode'));
   document.getElementById('lkMake').onclick = async ()=>{
-    const btn = document.getElementById('lkMake'); if(btn.disabled) return;
     let code = LS.get('gl_pcode'); if(!code){ const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; code=''; for(let i=0;i<8;i++) code += ch[Math.floor(Math.random()*ch.length)]; }
-    btn.disabled = true; const bt0 = btn.textContent; btn.textContent = '⏳ 만드는 중…';
     const ok = await fbPut('/profiles/'+code, { uid: ME.uid, nick: ME.nick.slice(0,24), emoji: ME.emoji.slice(0,8), ts: Date.now() });
-    btn.disabled = false; btn.textContent = bt0;
-    if(!ok){ lkMsg('<span class="bad">인터넷 연결을 확인하고 다시 눌러 주세요.</span>'); return; }
-    LS.set('gl_pcode', code); btn.textContent = '🔑 내 코드 보기';
-    document.getElementById('lkOut').innerHTML = lkCodeHtml(code); bindCopy(code); lkMsg('');
-    lkCopy(code);
+    if(!ok){ toast('실패 😢'); return; } LS.set('gl_pcode', code);
+    document.getElementById('lkOut').innerHTML = `<div class="lkcode">${code}</div><div class="lkhint">↑ 내 연결 코드 · 다른 기기에서 오른쪽 위 👤 → 📥 코드로 연결에 입력 (남에게 주지 마세요)</div>`; document.getElementById('lkCard').scrollIntoView({block:'start', behavior:'smooth'}); try{ navigator.clipboard.writeText(code); toast('코드가 복사됐어요 📋'); }catch(e){}
   };
-  document.getElementById('lkUse').onclick = ()=>{ const w=document.getElementById('lkIn'); w.hidden = !w.hidden; lkMsg(''); if(!w.hidden) setTimeout(()=>document.getElementById('lkCode').focus(), 50); };
-  document.getElementById('lkCode').onkeydown = e=>{ if(e.key==='Enter') document.getElementById('lkGo').click(); };
-  document.getElementById('lkGo').onclick = async ()=>{
-    const code = (document.getElementById('lkCode').value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
-    if(code.length!==8){ lkMsg('<span class="bad">코드는 8자리예요. 다시 확인해 주세요.</span>'); return; }
-    if(code===LS.get('gl_pcode')){ lkMsg('이 기기에서 만든 코드예요. <b>다른 기기</b>에서 입력해 주세요.'); return; }
-    lkMsg('⏳ 확인 중…');
-    const p = await fbGet('/profiles/'+code);
-    if(!p || !p.uid){ lkMsg('<span class="bad">코드를 찾을 수 없어요. 글자를 다시 확인해 주세요.</span>'); return; }
-    lkMsg(`<div class="lkask"><b>${esc(p.emoji||'🙂')} ${esc(p.nick)}</b> 프로필로 바꿀까요?<br><small>이 기기의 닉네임·미션·배지가 그 프로필로 바뀌어요.</small><div class="bt"><button class="btn g" id="lkNo">취소</button><button class="btn p" id="lkYes">네, 연결할게요</button></div></div>`);
-    document.getElementById('lkNo').onclick = ()=>lkMsg('');
-    document.getElementById('lkYes').onclick = ()=>{
-      const oldUid = ME.uid;
-      ME = { uid: p.uid, nick: p.nick, emoji: p.emoji || ME.emoji }; saveMe(); LS.set('gl_pcode', code);
-      if(oldUid && oldUid!==ME.uid){ fbDel('/favpub/'+oldUid); if(Object.keys(FAV.items||{}).length) pushFavPub(); }
-      closeEmoji(); toast(`✅ ${p.nick}(으)로 연결됐어요`); refreshMe(); loadAll(); loadChat();
-    };
+  document.getElementById('lkUse').onclick = async ()=>{
+    const code = (prompt('다른 기기에서 만든 연결 코드 8자리')||'').trim().toUpperCase(); if(code.length<6) return;
+    const p = await fbGet('/profiles/'+code); if(!p || !p.uid){ toast('코드를 찾을 수 없어요'); return; }
+    if(!confirm(`"${p.nick}" 프로필로 연결할까요?\n이 기기의 닉네임·미션·배지가 그 프로필로 바뀌어요.`)) return;
+    ME = { uid: p.uid, nick: p.nick, emoji: p.emoji || ME.emoji }; saveMe(); LS.set('gl_pcode', code);
+    closeEmoji(); toast(`✅ ${p.nick}(으)로 연결됐어요`); refreshMe(); loadAll(); loadChat();
   };
   document.getElementById('nkRand').onclick = ()=>{ const rnd=a=>a[Math.floor(Math.random()*a.length)]; document.getElementById('nkIn').value = rnd(ADJ)+' '+rnd(ANI); };
   document.getElementById('nkSave').onclick = ()=>{
