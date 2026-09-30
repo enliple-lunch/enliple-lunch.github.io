@@ -316,7 +316,7 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .b.sus{background:rgba(255,159,28,.95);color:#1a1000}
 .susbox{margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(255,159,28,.10);border:1px solid rgba(255,159,28,.45);font-size:13.5px;line-height:1.65;color:var(--tx2)}
 .susbox b{color:var(--tx)}
-.gonebox{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line2);display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;color:var(--tx3)}
+.gonebox{margin-top:10px;padding:9px 12px;border-radius:12px;background:var(--soft);border:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;color:var(--tx2)}
 .gonebox span{margin-right:auto}
 .gonebox button,.hidlist button{font-size:12.5px;font-weight:700;padding:6px 11px;border-radius:10px;background:var(--soft);border:1px solid var(--line2);color:var(--tx2);cursor:pointer}
 .gonebox button.on,.hidlist button.on{background:var(--ac);color:var(--on-ac);border-color:var(--ac)}
@@ -1248,7 +1248,7 @@ async function voteGone(rid, v){
 function renderGoneBox(){
   const r = CUR, el = document.getElementById('goneBox'); if(!r || !el) return;
   const c = goneCnt(r.id), mine = (GONE[r.id]||{})[ME.uid];
-  el.innerHTML = `<span>혹시 없어진 가게인가요?</span><button data-gv="1" class="${mine===1?'on':''}">🚫 없어졌어요${c.g?' '+c.g:''}</button><button data-gv="-1" class="${mine===-1?'on':''}">✅ 영업해요${c.a?' '+c.a:''}</button>`;
+  el.innerHTML = `<span>🏚️ 가보니 문 닫았나요?</span><button data-gv="1" class="${mine===1?'on':''}">🚫 없어졌어요${c.g?' '+c.g:''}</button><button data-gv="-1" class="${mine===-1?'on':''}">✅ 영업해요${c.a?' '+c.a:''}</button>`;
   el.querySelectorAll('[data-gv]').forEach(b=>b.onclick=()=>voteGone(r.id, +b.dataset.gv));
 }
 function ago(ts){ const s = Math.floor((Date.now()-ts)/1000); if(s<60) return '방금'; if(s<3600) return Math.floor(s/60)+'분 전'; if(s<86400) return Math.floor(s/3600)+'시간 전'; return Math.floor(s/86400)+'일 전'; }
@@ -1854,12 +1854,13 @@ function openModal(r){
         <button class="btn g" id="mMap" title="지도에서 보기">📍</button>
         <button class="btn g" id="mShare" title="여기 가자고 공유">📤</button>
       </div>
-      ${isSus(r)?`<div class="susbox">⚠️ <b>폐업했을 수도 있어요.</b><br>1년 넘게 후기가 없고 네이버지도에서도 안 보여요.<br>가보셨다면 아래 <b>✅ 영업해요</b>나 <b>🚫 없어졌어요</b>로 알려주세요.</div>`:''}
+      ${isSus(r)?`<div class="susbox">⚠️ <b>폐업했을 수도 있어요.</b><br>1년 넘게 후기가 없고 네이버지도에서도 안 보여요.<br>가보셨다면 <b>먹었어요</b> 아래 버튼으로 알려주세요.</div>`:''}
       <button class="phbtn" id="phBtn">📸 ${PMETA[r.id]?'사진 바꾸기':(r.ph0?'직접 찍은 사진 올리기':'사진이 없어요 · 첫 사진 올리기')}</button>
       <div class="visitbox">
         <div class="vt" id="vText"></div>
         <button class="btn v" id="vBtn">🍽️ 오늘 여기서 먹었어요</button>
       </div>
+      <div class="gonebox" id="goneBox"></div>
       <div class="jump"><button data-j="mMenu">📋 메뉴 ${menus.length}</button><button data-j="mCmt">💬 후기 <span id="jCnt">0</span></button></div>
       ${menus.length?`<div class="menul" id="mMenu"><h4>메뉴 ${menus.length}개</h4>${menus.slice(0,8).map(menuRow).join('')}${menus.length>8?`<div class="mmore" id="mMore">${menus.slice(8).map(menuRow).join('')}</div><button class="morebtn" id="mMoreBtn">메뉴 ${menus.length-8}개 더 보기 ▾</button>`:''}</div>`:'<div class="menul" id="mMenu"><h4>등록된 메뉴 정보가 없어요</h4></div>'}
       <div class="rxbox"><h4>한 방 평가</h4><div class="rxs" id="rxs">${REACTIONS.map(e=>`<button class="rx" data-e="${e}">${e}<span>0</span></button>`).join('')}</div></div>
@@ -1872,7 +1873,6 @@ function openModal(r){
         </div>
         <div class="clist" id="clist"><div class="cempty">불러오는 중…</div></div>
       </div>
-      <div class="gonebox" id="goneBox"></div>
     </div>`;
   document.getElementById('ov').classList.add('on');
   document.body.style.overflow='hidden';
