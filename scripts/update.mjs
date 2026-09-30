@@ -39,6 +39,7 @@ async function kdetail(id) {
         headers: { pf: 'web', referer: `https://place.map.kakao.com/${id}`, origin: 'https://place.map.kakao.com', 'user-agent': UA },
         signal: T()
       });
+      if (r.status === 404) return { __gone: 1 };
       if (!r.ok) { await sleep(400); continue; }
       return await r.json();
     } catch (e) { await sleep(600); }
@@ -170,8 +171,10 @@ for (let i = 0; i < ids.length; i += CONC) {
   await Promise.all(ids.slice(i, i + CONC).map(async id => {
     const j = await kdetail(id);
     if (!j) return;
+    if (j.__gone) { details[id] = { gone: 1 }; return; }
     const s = j.summary || {};
     details[id] = {
+      lb: (j.blog_review?.reviews || []).map(x => x.registered_at).filter(Boolean).sort().reverse()[0] || null,
       name: s.name, cat: s.category?.name, cat1: s.category?.name1, lat: s.point?.lat, lon: s.point?.lon,
       addr: s.address?.disp, tel: s.phone_numbers?.[0]?.tel, photo: s.main_photo_url, status: s.status,
       score: j.kakaomap_review?.score_set?.average_score, rc: j.kakaomap_review?.score_set?.review_count,
@@ -304,10 +307,21 @@ const firstRun = Object.keys(seen).length === 0;
 if (firstRun) prevIds.forEach(id => { seen[id] = { f: null, l: TODAY }; });
 const NEW_DAYS = 14;
 
+// 제외 목록 (급식·식자재 업체 등, 식당 아님): exclude.json { id: "사유" }
+let EXCLUDE = {};
+try { EXCLUDE = JSON.parse(await fs.readFile(path.join(ROOT, 'exclude.json'), 'utf8')); } catch (e) { }
+// 직원 폐업 제보: /gone/{rid}/{uid} = 1(없어졌어요) | -1(영업해요) → 2명 이상 & 반대보다 많으면 숨김
+let GONE = {};
+try { GONE = (await (await fetch(FBURL + '/gone.json', { signal: T() })).json()) || {}; } catch (e) { }
+const isHidden = id => { const v = Object.values(GONE[id] || {}); const g = v.filter(x => x === 1).length, a = v.filter(x => x === -1).length; return g >= 2 && g > a; };
+// 폐업 의심: 네이버에서 못 찾음 + 1년 넘게 블로그 후기 없음 + 카카오 후기 5개 미만
+const isSus = (nid, lb, rc) => !nid && (!lb || daysBetween(lb.slice(0, 10), TODAY) > 365) && (rc || 0) < 5;
+let hiddenCnt = 0, susCnt = 0, goneCnt = 0;
 const list = [], added = [];
 for (const [id, b] of base) {
   const d = details[id];
-  if (!d) continue;
+  if (!d || d.gone) continue;
+  if (EXCLUDE[id]) continue;
   if (d.status && d.status !== 'Y') continue;
   if (d.cat1 && d.cat1 !== '음식점') continue; // 카카오 대분류가 음식점이 아니면 제외
   const name = d.name || b.name;
@@ -348,17 +362,25 @@ for (const [id, b] of base) {
     nbr: naver[id]?.nbr || prevById.get(id)?.nbr || 0,
     nsc: naver[id]?.nsc || prevById.get(id)?.nsc || null
   });
+  { const it = list[list.length - 1]; if (isSus(it.nid, d.lb, d.rc)) { it.sus = 1; susCnt++; } if (isHidden(id)) { it.hid = 1; hiddenCnt++; } }
 }
 // 이번에 검색에서 빠진 곳: 최근 7일 안에 본 적 있으면 직전 정보로 유지 (검색 흔들림 보정)
 const inList = new Set(list.map(r => r.id));
 let kept = 0;
+{ // 유지 후보가 카카오에서 지워졌는지 확인
+  const cand = [...prevById.keys()].filter(id => !inList.has(id) && !details[id]);
+  for (let i = 0; i < cand.length; i += 6) { await Promise.all(cand.slice(i, i + 6).map(async id => { const j = await kdetail(id); if (j?.__gone) details[id] = { gone: 1 }; })); await sleep(120); }
+}
 for (const [id, r] of prevById) {
   if (inList.has(id)) continue;
+  if (details[id]?.gone) { goneCnt++; continue; }
+  if (EXCLUDE[id]) continue;
   if (seen[id]?.req) seen[id].l = TODAY;
   const sn = seen[id];
   if (sn && sn.l && (daysBetween(sn.l, TODAY) <= 7 || sn.req)) {
     const fsd = sn.f;
-    list.push({ ...r, nw: fsd && daysBetween(fsd, TODAY) <= NEW_DAYS ? 1 : 0 });
+    const kr = { ...r, nw: fsd && daysBetween(fsd, TODAY) <= NEW_DAYS ? 1 : 0 }; delete kr.hid; if (isHidden(id)) { kr.hid = 1; hiddenCnt++; }
+    list.push(kr);
     kept++;
   }
 }
@@ -376,6 +398,6 @@ const tpl = await fs.readFile(path.join(ROOT, 'template.html'), 'utf8');
 await fs.writeFile(path.join(ROOT, 'index.html'), tpl.replace('<script src="data.js"></script>', '<script>' + dataJs + '</script>'), 'utf8');
 
 const closed = [...prevIds].filter(id => !list.some(r => r.id === id)).length;
-const summary = `[4/4] 총 ${list.length}곳 / 오늘 신규 ${added.length} / 검색에서 빠졌지만 유지 ${kept} / 제외 ${closed} / 네이버 매칭 ${payload.meta.naverMatched}\n신규: ${added.length ? added.join(' · ') : '없음'}${reqLog.length ? '\n요청: ' + reqLog.join(' / ') : ''}`;
+const summary = `[4/4] 총 ${list.length}곳 / 오늘 신규 ${added.length} / 검색에서 빠졌지만 유지 ${kept} / 제외 ${closed} / 네이버 매칭 ${payload.meta.naverMatched} / 카카오 삭제 ${goneCnt} / 폐업 의심 ${susCnt} / 제보로 숨김 ${hiddenCnt}\n신규: ${added.length ? added.join(' · ') : '없음'}${reqLog.length ? '\n요청: ' + reqLog.join(' / ') : ''}`;
 console.log(summary);
 await fs.writeFile(path.join(ROOT, 'last-run.txt'), `${new Date().toISOString()}\n${summary}\n`, 'utf8');
