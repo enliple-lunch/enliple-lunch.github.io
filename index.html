@@ -419,6 +419,9 @@ html.dark .leaflet-bar a{background:var(--card);color:var(--tx);border-color:var
 .a2hs a{font-weight:800;color:#3ea6ff;white-space:nowrap;text-decoration:none;font-size:13px}
 .a2hs .x{width:28px;height:28px;border-radius:50%;background:var(--soft);color:var(--tx3);flex:none}
 .newbn{margin-top:12px;display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,rgba(245,165,36,.18),rgba(245,165,36,.04));border:1px solid rgba(245,165,36,.4);border-radius:16px;padding:11px 14px;font-size:14px}
+.newbn{align-items:flex-start}
+.newbn .nbi{font-size:20px;line-height:21px;height:21px;display:flex;align-items:center;flex:none}
+.newbn .x{align-self:center}
 .newbn .nb{flex:1;min-width:0;line-height:1.5}
 .newbn .nb a{font-weight:800;color:var(--tx);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .newbn .x{width:28px;height:28px;border-radius:50%;background:var(--soft);color:var(--tx3);flex:none}
@@ -1609,7 +1612,7 @@ function renderNewBanner(){
   const today = ymd(); if(LS.get('gl_nb')===today){ el.innerHTML=''; return; }
   const nw = D.list.filter(r=>r.nw && (r.k==='밥집'||r.k==='구내식당'||r.hs||r.k==='카페'||r.k==='패스트푸드')).sort((a,b)=>(b.fs||'').localeCompare(a.fs||'')).slice(0,4);
   if(!nw.length){ el.innerHTML=''; return; }
-  el.innerHTML = `<span style="font-size:22px">🆕</span><div class="nb"><b>새로 생긴 곳</b> · ${nw.map(r=>`<a data-id="${r.id}">${esc(r.n)}</a>`).join(' · ')}<br><small style="color:var(--tx3)">첫 방문 인증하면 🆕 얼리어답터 배지!</small></div><button class="x" title="오늘은 그만 보기">✕</button>`;
+  el.innerHTML = `<span class="nbi">🆕</span><div class="nb"><b>새로 생긴 곳</b> · ${nw.map(r=>`<a data-id="${r.id}">${esc(r.n)}</a>`).join(' · ')}<br><small style="color:var(--tx3)">첫 방문 인증하면 🆕 얼리어답터 배지!</small></div><button class="x" title="오늘은 그만 보기">✕</button>`;
   el.querySelectorAll('a[data-id]').forEach(a=>a.onclick=()=>openModal(BYID[a.dataset.id]));
   el.querySelector('.x').onclick = ()=>{ LS.set('gl_nb', today); el.innerHTML=''; };
 }
