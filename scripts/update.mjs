@@ -100,6 +100,25 @@ async function collectQuery(q) { for (let p = 1; p <= 6; p++) { const j = await 
 for (let i = 0; i < QUERIES.length; i += 5) { await Promise.all(QUERIES.slice(i, i + 5).map(collectQuery)); }
 console.log(`[1/4] 반경 ${RADIUS}m 후보 ${base.size}곳`);
 
+/* ---------- 1.2 수동 포함 목록: include.json { 카카오ID: "가게명" } ----------
+   카카오 키워드 검색에서 자꾸 빠지는 곳을 고정으로 넣는다. (제외는 exclude.json) */
+let INCLUDE = {};
+try { INCLUDE = JSON.parse(await fs.readFile(path.join(ROOT, 'include.json'), 'utf8')); } catch (e) { }
+let incHit = 0;
+for (const [iid, iname] of Object.entries(INCLUDE)) {
+  if (base.has(iid)) { base.get(iid).req = 1; incHit++; continue; }
+  for (const q of [iname, '구로동 ' + iname, '구로디지털단지 ' + iname]) {
+    const j = await ksearch(q, 1);
+    const hit = (j.place || []).find(p => String(p.confirmid) === String(iid));
+    if (hit) {
+      base.set(hit.confirmid, { id: hit.confirmid, name: hit.name, lat: +hit.lat, lon: +hit.lon, dist: hav(+hit.lat, +hit.lon), addr: hit.new_address || hit.address, tel: hit.tel, c2: hit.cate_name_depth2, req: 1 });
+      incHit++; break;
+    }
+    await sleep(80);
+  }
+}
+console.log(`[1.2/4] 수동 포함 ${incHit}/${Object.keys(INCLUDE).length}곳`);
+
 /* ---------- 1.5 직원 추가 요청 처리 (Firebase /requests) ---------- */
 const FBURL = 'https://guro-lunch-default-rtdb.asia-southeast1.firebasedatabase.app';
 const nn = s => (s || '').replace(/\s+/g, '').replace(/[()\[\]·・.,'"&#-]/g, '').toLowerCase();
@@ -341,6 +360,7 @@ for (const [id, b] of base) {
     if (!firstRun) added.push(`${name}(${cat}, ${b.dist}m${med ? ', ' + med.toLocaleString('ko-KR') + '원' : ''})`);
   }
   seen[id].l = TODAY;
+  if (b.req) seen[id].req = 1; // 요청·수동 포함으로 들어온 곳은 검색에서 빠져도 계속 유지
   const fsd = seen[id].f;
   const isNew = !!fsd && daysBetween(fsd, TODAY) <= NEW_DAYS;
 
