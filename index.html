@@ -96,6 +96,7 @@ h1 .q{color:inherit}
 h1{font-size:21px;font-weight:800;letter-spacing:-.5px}
 @media(min-width:768px){h1{font-size:26px}.logo{width:46px;height:46px;padding:8px}}
 .subline{color:var(--tx3);font-size:13px;margin-top:2px}
+header h1{white-space:nowrap}
 .themeBtn{margin-left:auto;width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line2);display:grid;place-items:center;font-size:19px;box-shadow:var(--shadow);flex:none}
 .themeBtn:active{transform:scale(.92)}
 #meBtn{margin-left:8px}
@@ -724,7 +725,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 .rqd b{font-size:14px;font-weight:700;color:var(--tx)}
 .rqd small{font-size:12px;color:var(--tx3);flex:1}
 .rqd span{font-size:12.5px;font-weight:700;color:var(--t-hot-tx)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + var(--safe-b));background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:13px;font-size:14.5px;font-weight:600;z-index:2200;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
+.toast{white-space:pre-line;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + var(--safe-b));background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:13px;font-size:14.5px;font-weight:600;z-index:2200;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(-6px)}
 footer{margin-top:36px;padding:20px 0;border-top:1px solid var(--line);color:var(--tx3);font-size:12.5px;line-height:1.7}
 .fbrand{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -744,7 +745,7 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="logo"><img src="data:image/png;base64,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" alt="ENLiPLE"></div>
     <div style="min-width:0">
       <h1>오늘 뭐 먹지<span class="q">?</span></h1>
-      <div class="subline">한신아이티타워 · 반경 500m · <span id="mCnt">0</span>곳 · <span id="mUpd">–</span><span id="lunchCd"></span> · <a href="guide.html" class="guidelink">📖 이용 가이드</a></div>
+      <div class="subline" hidden style="display:none">한신아이티타워 · 반경 500m · <span id="mCnt">0</span>곳 · <span id="mUpd">–</span><span id="lunchCd"></span> · <a href="guide.html" class="guidelink">📖 이용 가이드</a></div>
     </div>
     <a class="themeBtn" id="guideBtn" href="guide.html" title="이용 가이드" style="text-decoration:none;margin-left:auto">❓</a><button class="mepill" id="meBtn" title="내 프로필 · 기기 연결"><span class="pic"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 20.5c.8-4.4 4.3-6.8 8.5-6.8s7.7 2.4 8.5 6.8z"/></svg></span><span id="meNickH">내 프로필</span><span id="meEmo" class="mini"></span></button><button class="themeBtn" id="themeBtn" title="밝게/어둡게">🌙</button>
   </div>
@@ -809,7 +810,7 @@ html.dark .fbrand .fl.dark{display:inline}
       <div class="rbox"><h3>🍱 우리 회사 취향 <span>카테고리 분포</span></h3><div id="rkCat"></div></div>
       <div class="rbox"><h3>🆕 새로 생긴 곳</h3><ol class="rlist" id="rkNew"></ol></div>
     </div>
-    <div class="rnote">맛집 점수 = 🍽️먹었어요 ×3 + 후기 ×2 + 좋아요 반응 ×1 − 👎. 가게 상세에서 "오늘 여기서 먹었어요"를 누르면 랭킹에 반영돼요. 후기 옆 👍를 누르면 베스트 한 줄에 올라가요.</div>
+    <div class="rnote">맛집 점수 = 🍽️먹었어요 ×3 + 후기 ×2 + 좋아요 반응 ×1 − 👎.<br>가게 상세에서 "오늘 여기서 먹었어요"를 누르면 랭킹에 반영돼요.<br>후기 옆 👍를 누르면 베스트 한 줄에 올라가요.</div>
   </section>
 
   <details class="fold" id="foldHof">
@@ -830,7 +831,7 @@ html.dark .fbrand .fl.dark{display:inline}
 
   <details class="fold" id="foldFeed" open>
     <summary><span>💬 방금 올라온 한 줄 후기 <span id="feedCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
-    <div class="fb"><div class="feedlist" id="feed"><div class="cempty">아직 후기가 없어요. 첫 후기를 남겨보세요 🙌</div></div></div>
+    <div class="fb"><div class="feedlist" id="feed"><div class="cempty">아직 후기가 없어요.<br>첫 후기를 남겨보세요 🙌</div></div></div>
   </details>
 
   <details class="fold" id="foldChat">
@@ -839,7 +840,7 @@ html.dark .fbrand .fl.dark{display:inline}
       <div class="chatbox" id="chatList"><div class="cempty">불러오는 중…</div></div>
       <div class="chatq" id="chatQ"></div>
       <div class="chatin"><button class="chatav" id="chatMe" title="프로필 변경"></button><input id="chatText" maxlength="300" placeholder="아무 얘기나 (점심 아니어도 OK) · Enter로 전송" autocomplete="off"><button class="btn p" id="chatSend">전송</button></div>
-      <div class="mhint">익명 닉네임으로 대화해요. 개인정보·업무 기밀은 쓰지 마세요 🙏 · 최근 150개까지 보여요</div>
+      <div class="mhint">익명 닉네임으로 대화해요.<br>개인정보·업무 기밀은 쓰지 마세요 🙏 · 최근 150개까지 보여요</div>
     </div>
   </details>
 
@@ -895,8 +896,8 @@ html.dark .fbrand .fl.dark{display:inline}
   <div style="margin-bottom:10px"><a href="guide.html" class="guidelink" style="font-size:14px">📖 처음이라면 이용 가이드부터 →</a></div>
   <div class="fbrand"><img class="fl light" src="data:image/png;base64,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" alt="ENLiPLE"><span>구로 한신아이티타워 점심지도</span></div>
   데이터: 카카오맵 · 네이버 플레이스 · 날씨 Open-Meteo · 매일 09:20 자동 갱신<br>
-  가격은 등록 메뉴 중앙값이라 실제와 다를 수 있어요. · <span id="fUpd"></span><br>
-  후기는 익명 닉네임으로 저장돼요. 개인정보는 넣지 마세요.
+  가격은 등록 메뉴 중앙값이라 실제와 다를 수 있어요.<br><span id="fUpd"></span><br>
+  후기는 익명 닉네임으로 저장돼요.<br>개인정보는 넣지 마세요.
 </footer>
 </div>
 
@@ -968,14 +969,14 @@ const saveMe = () => LS.set('gl_me', JSON.stringify(ME));
 const WXC = {0:['맑음','☀️','clear'],1:['대체로 맑음','🌤️','clear'],2:['구름 조금','⛅','clear'],3:['흐림','☁️','cloud'],45:['안개','🌫️','cloud'],48:['서리 안개','🌫️','cloud'],51:['이슬비','🌦️','rain'],53:['이슬비','🌦️','rain'],55:['이슬비','🌧️','rain'],56:['얼어붙는 이슬비','🌧️','rain'],57:['얼어붙는 이슬비','🌧️','rain'],61:['약한 비','🌦️','rain'],63:['비','🌧️','rain'],65:['강한 비','🌧️','rain'],66:['얼어붙는 비','🌧️','rain'],67:['얼어붙는 비','🌧️','rain'],71:['약한 눈','🌨️','snow'],73:['눈','❄️','snow'],75:['많은 눈','❄️','snow'],77:['싸락눈','🌨️','snow'],80:['소나기','🌦️','rain'],81:['소나기','🌧️','rain'],82:['강한 소나기','⛈️','rain'],85:['눈 소나기','🌨️','snow'],86:['눈 소나기','❄️','snow'],95:['천둥번개','⛈️','rain'],96:['천둥번개 우박','⛈️','rain'],99:['천둥번개 우박','⛈️','rain']};
 let WX = null;
 const WX_RULES = [
-  { id:'rain', test:w=>w.kind==='rain', cats:['칼국수','국수','국밥','해장국','곰탕','찌개,전골','감자탕','순대','일본식라면','중국요리','중식','삼계탕','샤브샤브','두부전문점','추어'], line:()=>`비 오네. <b>뜨끈한 국물</b> 당기는 날이야. 우산 챙기고 가까운 데로 가자.` },
-  { id:'snow', test:w=>w.kind==='snow', cats:['국밥','해장국','칼국수','찌개,전골','감자탕','곰탕','삼계탕','일본식라면','샤브샤브'], line:()=>`눈 와. <b>따끈한 탕·국밥</b>으로 몸부터 녹이자.` },
-  { id:'freeze', test:w=>w.t<=2, cats:['국밥','해장국','곰탕','감자탕','찌개,전골','삼계탕','칼국수','샤브샤브','육류,고기'], line:(w)=>`체감 <b>${w.at}°C</b>, 손 시린 날씨. <b>뜨거운 국물</b> 아니면 답이 없어.` },
-  { id:'cold', test:w=>w.t<=9, cats:['찌개,전골','국밥','칼국수','해장국','감자탕','일본식라면','중국요리','육류,고기','순대','곰탕'], line:(w)=>`쌀쌀해(체감 <b>${w.at}°C</b>). <b>국물 있는 한식</b>이 무난해.` },
-  { id:'cool', test:w=>w.t<=17, cats:['한식','돈까스,우동','육류,고기','일식','초밥,롤','양식','분식','중국요리','베트남음식'], line:()=>`딱 <b>걷기 좋은 날씨</b>. 평소보다 조금 멀어도 괜찮아.` },
-  { id:'nice', test:w=>w.t<=24, cats:['양식','이탈리안','샐러드','초밥,롤','일식','한식','베트남음식','스테이크,립','피자','샌드위치'], line:(w)=>`<b>${w.t}°C</b>, 산책 겸 멀리 가도 좋은 날. 밖에서 커피 한 잔까지 각.` },
-  { id:'warm', test:w=>w.t<=29, cats:['냉면','국수','초밥,롤','회','샐러드','베트남음식','분식','일식','김밥','샌드위치'], line:(w)=>`<b>${w.t}°C</b>로 덥네. <b>시원한 면·회·샐러드</b> 쪽이 좋아.` },
-  { id:'hot', test:()=>true, cats:['냉면','국수','회','초밥,롤','샐러드','베트남음식','제과,베이커리','카페','김밥'], line:(w)=>`<b>${w.t}°C</b> 폭염. <b>가깝고 시원한 곳</b>만 골랐어. 멀리 가지 말자.` }
+  { id:'rain', test:w=>w.kind==='rain', cats:['칼국수','국수','국밥','해장국','곰탕','찌개,전골','감자탕','순대','일본식라면','중국요리','중식','삼계탕','샤브샤브','두부전문점','추어'], line:()=>`비 오네.<br><b>뜨끈한 국물</b> 당기는 날이야.<br>우산 챙기고 가까운 데로 가자.` },
+  { id:'snow', test:w=>w.kind==='snow', cats:['국밥','해장국','칼국수','찌개,전골','감자탕','곰탕','삼계탕','일본식라면','샤브샤브'], line:()=>`눈 와.<br><b>따끈한 탕·국밥</b>으로 몸부터 녹이자.` },
+  { id:'freeze', test:w=>w.t<=2, cats:['국밥','해장국','곰탕','감자탕','찌개,전골','삼계탕','칼국수','샤브샤브','육류,고기'], line:(w)=>`체감 <b>${w.at}°C</b>, 손 시린 날씨.<br><b>뜨거운 국물</b> 아니면 답이 없어.` },
+  { id:'cold', test:w=>w.t<=9, cats:['찌개,전골','국밥','칼국수','해장국','감자탕','일본식라면','중국요리','육류,고기','순대','곰탕'], line:(w)=>`쌀쌀해(체감 <b>${w.at}°C</b>).<br><b>국물 있는 한식</b>이 무난해.` },
+  { id:'cool', test:w=>w.t<=17, cats:['한식','돈까스,우동','육류,고기','일식','초밥,롤','양식','분식','중국요리','베트남음식'], line:()=>`딱 <b>걷기 좋은 날씨</b>.<br>평소보다 조금 멀어도 괜찮아.` },
+  { id:'nice', test:w=>w.t<=24, cats:['양식','이탈리안','샐러드','초밥,롤','일식','한식','베트남음식','스테이크,립','피자','샌드위치'], line:(w)=>`<b>${w.t}°C</b>, 산책 겸 멀리 가도 좋은 날.<br>밖에서 커피 한 잔까지 각.` },
+  { id:'warm', test:w=>w.t<=29, cats:['냉면','국수','초밥,롤','회','샐러드','베트남음식','분식','일식','김밥','샌드위치'], line:(w)=>`<b>${w.t}°C</b>로 덥네.<br><b>시원한 면·회·샐러드</b> 쪽이 좋아.` },
+  { id:'hot', test:()=>true, cats:['냉면','국수','회','초밥,롤','샐러드','베트남음식','제과,베이커리','카페','김밥'], line:(w)=>`<b>${w.t}°C</b> 폭염.<br><b>가깝고 시원한 곳</b>만 골랐어.<br>멀리 가지 말자.` }
 ];
 const wxRule = () => WX ? WX_RULES.find(r=>r.test(WX)) : null;
 async function loadWeather(){
@@ -1006,7 +1007,7 @@ function renderWeather(){
   if(p10) ch.push(`<span class="wxchip ${p10[1]}">미세먼지 <b>${p10[0]}</b> ${Math.round(WX.pm10)}</span>`);
   document.getElementById('wxChips').innerHTML = ch.join('');
   const rule = wxRule(); let tip = rule ? rule.line(WX) : '';
-  if(p25 && (p25[1]==='y'||p25[1]==='r')) tip += ' 미세먼지 안 좋으니 <b>이동 짧은 곳</b> 추천.';
+  if(p25 && (p25[1]==='y'||p25[1]==='r')) tip += '<br>미세먼지 안 좋으니 <b>이동 짧은 곳</b> 추천.';
   const rain13 = (WX.hours && WX.hours.list || []).find(x=>x.hr===13);
   const rainy = WX.kind==='rain' || WX.kind==='snow' || (rain13 && rain13.pop>=60);
   document.documentElement.classList.toggle('rainy', !!rainy);
@@ -1175,7 +1176,7 @@ document.getElementById('mapSync').onchange = renderMap;
 document.getElementById('mLegend').onclick = e=>{
   const b = e.target.closest('button[data-mk]'); if(!b) return; const k = b.dataset.mk;
   if(k.startsWith('__')){ if(MAP_SP.has(k)) MAP_SP.delete(k); else MAP_SP.add(k); MAP_FAVONLY = MAP_SP.has('__fav'); b.classList.toggle('on', MAP_SP.has(k)); b.style.setProperty('--mc', SP_COLOR[k]); renderMap();
-    if(MAP_SP.has(k)){ if(k==='__fav' && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요. ☆를 눌러 저장해보세요'); else if(k==='__rank' && !Object.keys(RK).length) toast('이번 달 랭킹 기록이 아직 없어요'); else if(k==='__pick') toast('오늘 추천 점심 4곳만 보여요'); else if(k==='__rank') toast('이번 달 랭킹 TOP 10만 보여요'); else if(k==='__crowd') toast(Object.keys(FAVCNT).length ? `❤️ 인라이플 사람들이 저장한 ${Object.keys(FAVCNT).length}곳 · 숫자는 저장한 사람 수` : '아직 아무도 저장 안 했어요. 첫 ☆를 눌러보세요'); }
+    if(MAP_SP.has(k)){ if(k==='__fav' && !Object.keys(FAV.items).length) toast('아직 저장한 곳이 없어요.\n☆를 눌러 저장해보세요'); else if(k==='__rank' && !Object.keys(RK).length) toast('이번 달 랭킹 기록이 아직 없어요'); else if(k==='__pick') toast('오늘 추천 점심 4곳만 보여요'); else if(k==='__rank') toast('이번 달 랭킹 TOP 10만 보여요'); else if(k==='__crowd') toast(Object.keys(FAVCNT).length ? `❤️ 인라이플 사람들이 저장한 ${Object.keys(FAVCNT).length}곳 · 숫자는 저장한 사람 수` : '아직 아무도 저장 안 했어요.\n첫 ☆를 눌러보세요'); }
     return; }
   if(MAP_ONLY.has(k)) MAP_ONLY.delete(k); else MAP_ONLY.add(k);
   document.querySelectorAll('#mLegend button[data-mk]').forEach(x=>{ if(x.dataset.mk==='__fav') return; const on = MAP_ONLY.has(x.dataset.mk); x.classList.toggle('on', on); x.style.setProperty('--mc', KIND_COLOR[x.dataset.mk]); });
@@ -1237,11 +1238,11 @@ async function voteGone(rid, v){
   const nowHidden = HIDDEN.has(rid);
   if(wasHidden !== nowHidden){
     applyHidden();
-    if(nowHidden){ toast('🚫 제보 고마워요. 2명 이상 제보해서 숨겼어요'); if(CUR && CUR.id===rid) closeModal(); }
+    if(nowHidden){ toast('🚫 제보 고마워요.\n2명 이상 제보해서 숨겼어요'); if(CUR && CUR.id===rid) closeModal(); }
     else toast('✅ 다시 보이게 했어요');
     const t = TODAY ? [TODAY.main, ...(TODAY.alts||[])].filter(Boolean) : []; if(t.some(r=>r.id===rid)) renderToday();
     if(MAP) renderMap();
-  } else if(mine!==v) toast(v===1 ? '🚫 제보 고마워요. 한 명만 더 제보하면 숨겨져요' : '✅ 영업 중이라고 알려줬어요');
+  } else if(mine!==v) toast(v===1 ? '🚫 제보 고마워요.\n한 명만 더 제보하면 숨겨져요' : '✅ 영업 중이라고 알려줬어요');
   renderHidList(); render();
   if(CUR && CUR.id===rid && !nowHidden) renderGoneBox();
 }
@@ -1255,7 +1256,7 @@ function ago(ts){ const s = Math.floor((Date.now()-ts)/1000); if(s<60) return '�
 function renderFeed(items){
   document.getElementById('feedCnt').textContent = items.length? `(${items.length})` : '';
   const el = document.getElementById('feed');
-  if(!items.length){ el.innerHTML = '<div class="cempty">아직 후기가 없어요. 첫 후기를 남겨보세요 🙌</div>'; return; }
+  if(!items.length){ el.innerHTML = '<div class="cempty">아직 후기가 없어요.<br>첫 후기를 남겨보세요 🙌</div>'; return; }
   el.innerHTML = items.map(it=>{ const r = BYID[it.rid]; if(it.visit) return `<div class="fitem visit" data-rid="${it.rid}"><div class="fav">${it.emoji}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'?'}</span><span class="nick">${esc(it.nick)}${badgeOf(it.uid)}</span><span>·</span><span>${ago(it.ts)}</span></div><div class="ftext" style="color:var(--tx2)">🍽️ 여기서 먹었어요</div></div></div>`; return `<div class="fitem" data-rid="${it.rid}"><div class="fav">${it.emoji||'🙂'}</div><div class="fbody"><div class="fmeta"><span class="shop">${r?esc(r.n):'알 수 없는 가게'}</span><span class="nick">${esc(it.nick)}</span><span>·</span><span>${ago(it.ts)}</span>${(n=>n?`<span class="flike">👍 ${n}</span>`:'')(Object.keys((STORE.clikes[it.rid]||{})[it.cid]||{}).length)}</div><div class="ftext">${esc(it.text)}</div></div></div>`; }).join('');
   el.querySelectorAll('.fitem').forEach(e=>e.onclick=()=>{ const r=BYID[e.dataset.rid]; if(r) openModal(r); });
 }
@@ -1308,15 +1309,15 @@ function renderRanking(){
     shopEl.innerHTML = R.shops.map((x,i)=>{ const r=BYID[x.id]; return li(i, rimg(r), esc(r.n), `${r.c} · ${r.d<=30?'건물 안':r.d+'m'} · ${parts(x)}`, x.score+'점', r.id); }).join('');
     shopEl.classList.toggle('short', R.shops.length<=5);
   } else {
-    shopEl.innerHTML = `<div class="rempty">${pr.kind==='d0'?'오늘 기록이 아직 없어요. 점심 먹고 "오늘 여기서 먹었어요" 누르면 오늘의 1등! 🥇':pr.kind==='m0'?'이번 달 기록이 아직 없어요. 먼저 먹고 "오늘 여기서 먹었어요" 누르면 1등! 🥇':'이 기간 기록이 없어요.'}</div>`;
+    shopEl.innerHTML = `<div class="rempty">${pr.kind==='d0'?'오늘 기록이 아직 없어요.<br>점심 먹고 "오늘 여기서 먹었어요" 누르면 오늘의 1등! 🥇':pr.kind==='m0'?'이번 달 기록이 아직 없어요.<br>먼저 먹고 "오늘 여기서 먹었어요" 누르면 1등! 🥇':'이 기간 기록이 없어요.'}</div>`;
     shopEl.classList.add('short');
   }
   // 2) 이번 주 핫플 (최근 7일, 기간 선택과 무관)
   const hot = statsIn(Date.now()-7*86400e3, Date.now()+1).slice(0,5);
-  document.getElementById('rkHot').innerHTML = hot.length ? hot.map((x,i)=>{ const r=BYID[x.id]; return li(i, rimg(r), esc(r.n), `${r.c} · ${parts(x)}`, x.score+'점', r.id); }).join('') : `<div class="rempty">이번 주엔 아직 기록이 없어요. 오늘 점심 먹고 체크하면 바로 1위 🔥</div>`;
+  document.getElementById('rkHot').innerHTML = hot.length ? hot.map((x,i)=>{ const r=BYID[x.id]; return li(i, rimg(r), esc(r.n), `${r.c} · ${parts(x)}`, x.score+'점', r.id); }).join('') : `<div class="rempty">이번 주엔 아직 기록이 없어요.<br>오늘 점심 먹고 체크하면 바로 1위 🔥</div>`;
   // 3) 베스트 한 줄
   const bestEl = document.getElementById('rkBest');
-  bestEl.innerHTML = R.best.length ? R.best.map((c,i)=>{ const r=BYID[c.rid]; return `<li class="rli click ${i===0?'first':''}" data-id="${c.rid}"><span class="rk ${i<3?'m':''}">${c.likes?medal(i):'·'}</span><span class="ri">${c.emoji||'🙂'}</span><div class="rt"><div class="bq">${esc(c.text)}<small>${r?esc(r.n):'?'} · ${esc(c.nick)}</small></div></div><span class="rs like">👍 ${c.likes}</span></li>`; }).join('') : `<div class="rempty">아직 후기가 없어요. 후기에 👍를 누르면 여기 올라와요 💬</div>`;
+  bestEl.innerHTML = R.best.length ? R.best.map((c,i)=>{ const r=BYID[c.rid]; return `<li class="rli click ${i===0?'first':''}" data-id="${c.rid}"><span class="rk ${i<3?'m':''}">${c.likes?medal(i):'·'}</span><span class="ri">${c.emoji||'🙂'}</span><div class="rt"><div class="bq">${esc(c.text)}<small>${r?esc(r.n):'?'} · ${esc(c.nick)}</small></div></div><span class="rs like">👍 ${c.likes}</span></li>`; }).join('') : `<div class="rempty">아직 후기가 없어요.<br>후기에 👍를 누르면 여기 올라와요 💬</div>`;
   // 4) 취향 분포
   const catEl = document.getElementById('rkCat');
   catEl.innerHTML = R.cats.length ? R.cats.map(x=>`<div class="catrow"><span class="cn">${emo(x.c)} ${x.c}</span><div class="cb"><i style="width:${Math.max(6, Math.round(x.v/R.cats[0].v*100))}%"></i></div><span class="cp">${x.pct}%</span></div>`).join('') + `<div class="rmore">먹었어요·후기·반응을 합쳐서 계산</div>` : `<div class="rempty">기록이 쌓이면 우리 회사가 어떤 음식을 좋아하는지 보여줘요 🍱</div>`;
@@ -1325,7 +1326,7 @@ function renderRanking(){
   const ymd0 = d0.toISOString().slice(0,10), ymd1 = new Date(d1.getTime()+9*3600e3).toISOString().slice(0,10);
   const nw = L.filter(r=>r.fs && r.fs>=ymd0 && r.fs<=ymd1).sort((a,b)=>b.fs.localeCompare(a.fs)).slice(0,5);
   document.getElementById('rkNew').innerHTML = nw.length ? nw.map(r=>`<li class="rli click" data-id="${r.id}"><span class="rk">🆕</span><span class="ri">${rimg(r)}</span><div class="rt"><b>${esc(r.n)}</b><small>${r.c} · ${r.d}m · ${r.fs.slice(5).replace('-','/')} 발견</small></div></li>`).join('')
-    : `<div class="rempty">${pr.kind==='d0'?'오늘 새로 발견된 곳은 없어요. 매일 아침 9:20에 확인해요 👀':pr.kind==='m0'?'이번 달 새로 발견된 곳은 아직 없어요. 매일 아침 자동으로 확인 중 👀':'이 기간에 새로 발견된 곳이 없어요.'}</div>`;
+    : `<div class="rempty">${pr.kind==='d0'?'오늘 새로 발견된 곳은 없어요.<br>매일 아침 9:20에 확인해요 👀':pr.kind==='m0'?'이번 달 새로 발견된 곳은 아직 없어요.<br>매일 아침 자동으로 확인 중 👀':'이 기간에 새로 발견된 곳이 없어요.'}</div>`;
   document.querySelectorAll('#rank .rli.click').forEach(el=>el.onclick=()=>openModal(BYID[el.dataset.id]));
 }
 document.getElementById('rkSeg').onclick = e=>{ const b=e.target.closest('button'); if(!b) return; RK_PERIOD=b.dataset.p; document.querySelectorAll('#rkSeg button').forEach(x=>x.classList.toggle('on',x===b)); renderRanking(); };
@@ -1360,7 +1361,7 @@ function renderPolls(){
     const voters = T.voters.slice(0,12).map(v=>`<span title="${esc(v.nick)}">${v.emoji}</span>`).join('') + (T.voters.length>12?` +${T.voters.length-12}`:'');
     const head = st==='live' ? `<span class="pst live">투표 중 · ${fmtHM(p.deadline)} 마감</span>` : `<span class="pst end">마감 ${fmtHM(p.deadline)}</span>`;
     const result = st==='end' ? (T.winners.length===1 ? `<div class="poll-sub">🎉 결과: <b>${esc(BYID[T.winners[0]]?.n||'')}</b> (${T.max}표) · 오늘은 여기다!</div>` : T.winners.length>1 ? (()=>{ const seed = [...p.id].reduce((a,c)=>a*31+c.charCodeAt(0)|0, 7); const pick = T.winners[Math.abs(seed)%T.winners.length]; return `<div class="poll-sub">🤝 동률! ${T.winners.map(w=>esc(BYID[w]?.n||'')).join(' vs ')} <button class="tiebtn" data-draw="${p.id}">🎲 대신 뽑아줘</button><span id="tie-${p.id}" class="tieres"></span></div>`; })() : `<div class="poll-sub">아무도 투표 안 했어요 🥲</div>`) : `<div class="poll-sub">${esc(p.emoji||'🙂')} ${esc(p.nick||'익명')} 님이 만듦 · 🔒 링크 받은 사람만 보여요 · 탭하면 투표, 다시 탭하면 변경</div>`;
-    return `<div class="poll ${st}" id="poll-${p.id}"><button class="pclose" data-hide="${p.id}" title="이 기기에서 숨기기">✕</button><div class="poll-h"><h2>🗳️ ${esc(p.title)}</h2>${head}</div>${result}<div class="cands">${cands}</div><div class="poll-f"><div class="voters">${T.total? voters+' <span style="font-size:13px">'+T.total+'명 참여</span>' : '아직 아무도 안 눌렀어요. 첫 표 주인공 되기 👆'}</div><button class="btn g" data-share="${p.id}">${st==='end'?'📤 결과 공유':'📤 초대 링크'}</button>${p.uid===ME.uid?`<button class="btn g" data-del="${p.id}">삭제</button>`:''}</div></div>`;
+    return `<div class="poll ${st}" id="poll-${p.id}"><button class="pclose" data-hide="${p.id}" title="이 기기에서 숨기기">✕</button><div class="poll-h"><h2>🗳️ ${esc(p.title)}</h2>${head}</div>${result}<div class="cands">${cands}</div><div class="poll-f"><div class="voters">${T.total? voters+' <span style="font-size:13px">'+T.total+'명 참여</span>' : '아직 아무도 안 눌렀어요.<br>첫 표 주인공 되기 👆'}</div><button class="btn g" data-share="${p.id}">${st==='end'?'📤 결과 공유':'📤 초대 링크'}</button>${p.uid===ME.uid?`<button class="btn g" data-del="${p.id}">삭제</button>`:''}</div></div>`;
   }).join('');
   el.querySelectorAll('.cand').forEach(b=>b.onclick=()=>vote(b.dataset.pid, b.dataset.rid));
   el.querySelectorAll('[data-share]').forEach(b=>b.onclick=()=>sharePoll(b.dataset.share));
@@ -1390,7 +1391,7 @@ async function sharePoll(pid){
     ? (win ? `🍽️ 오늘 점심은 ${win.n}! (${T2.max}표)\n${win.c} · ${distTxt(win.d)}${win.pr?' · 약 '+won(win.pr):''}\n${naverUrl(win)}` : `🗳️ ${p.title} 결과: ${T2.winners.map(w=>BYID[w]?.n).filter(Boolean).join(' vs ')} 동률 🤝`)
     : `🗳️ ${p.title}\n후보: ${names}\n${fmtHM(p.deadline)} 마감! 한 번만 눌러줘 👉`;
   if(navigator.share){ try{ await navigator.share({ title: p.title, text, url }); return; }catch(e){ if(e.name==='AbortError') return; } }
-  try{ await navigator.clipboard.writeText(text + '\n' + url); toast('링크 복사됐어요. 카톡/웍스에 붙여넣기 📋'); }catch(e){ prompt('링크를 복사하세요', url); }
+  try{ await navigator.clipboard.writeText(text + '\n' + url); toast('링크 복사됐어요.\n카톡/웍스에 붙여넣기 📋'); }catch(e){ prompt('링크를 복사하세요', url); }
 }
 function openPollMaker(){
   const base = TODAY ? [TODAY.main, ...TODAY.alts].filter(Boolean) : [];
@@ -1410,7 +1411,7 @@ function openPollMaker(){
         ${picked.length<4?`<div class="pksearch"><input id="plQ" placeholder="후보 추가: 가게 이름 검색" autocomplete="off"><div class="pkres" id="plRes"></div></div>`:''}
         <div class="rqdl" style="margin-top:8px">마감 시간</div>
         <div class="dlrow">${opts.map(o=>`<button data-dl="${o.t}" class="${o.t===dl?'on':''}">${o.l}</button>`).join('')}</div>
-        <div class="reqnote">🔒 <b>메인 화면에는 안 떠요.</b> 만들면 링크가 생기고, 그 링크를 받은 사람만 투표를 볼 수 있어요. 팀 단톡·네이버웍스에 붙여넣기 → 받는 사람은 눌러서 한 번에 투표. 로그인 없음.</div>
+        <div class="reqnote">🔒 <b>메인 화면에는 안 떠요.</b> 만들면 링크가 생기고, 그 링크를 받은 사람만 투표를 볼 수 있어요.<br>팀 단톡·네이버웍스에 붙여넣기 → 받는 사람은 눌러서 한 번에 투표.<br>로그인 없음.</div>
         <div style="display:flex;gap:8px"><button class="btn g full" onclick="closeEmoji()">취소</button><button class="btn p full" id="plGo" ${picked.length<2?'disabled':''}>투표 만들기</button></div>
       </div>`;
     box.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{ picked = picked.filter(x=>x!==b.dataset.rm); draw(); });
@@ -1427,7 +1428,7 @@ function openPollMaker(){
       MY_POLLS.add(pid);
       await loadAll();
       const url = pollLink(pid);
-      box.innerHTML = `<h4>🎉 투표 만들어졌어요</h4><div class="reqnote">아래 링크를 팀 단톡에 붙여넣으면 끝. <b>링크 받은 사람만</b> 볼 수 있고 메인에는 안 떠요.<br>마감 <b>${fmtHM(dl)}</b> 이후엔 결과가 자동으로 표시되고, "결과 공유"로 어디 가는지 한 줄로 보낼 수 있어요.</div><div class="sharebox"><input readonly value="${url}" id="plUrl"><button class="btn g" id="plCopy">복사</button></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn p full" id="plShare">📤 공유하기</button><button class="btn g full" onclick="closeEmoji();document.getElementById('polls').scrollIntoView({behavior:'smooth'})">투표 보기</button></div>`;
+      box.innerHTML = `<h4>🎉 투표 만들어졌어요</h4><div class="reqnote">아래 링크를 팀 단톡에 붙여넣으면 끝.<br><b>링크 받은 사람만</b> 볼 수 있고 메인에는 안 떠요.<br>마감 <b>${fmtHM(dl)}</b> 이후엔 결과가 자동으로 표시되고, "결과 공유"로 어디 가는지 한 줄로 보낼 수 있어요.</div><div class="sharebox"><input readonly value="${url}" id="plUrl"><button class="btn g" id="plCopy">복사</button></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn p full" id="plShare">📤 공유하기</button><button class="btn g full" onclick="closeEmoji();document.getElementById('polls').scrollIntoView({behavior:'smooth'})">투표 보기</button></div>`;
       document.getElementById('plCopy').onclick = async ()=>{ try{ await navigator.clipboard.writeText(url); toast('복사됐어요 📋'); }catch(e){ document.getElementById('plUrl').select(); } };
       document.getElementById('plShare').onclick = ()=>sharePoll(pid);
     };
@@ -1442,7 +1443,7 @@ async function shareShop(r){
   const url = naverUrl(r);
   const text = `🍽️ 오늘 점심 ${r.n} 어때?\n${r.c} · ${distTxt(r.d)}${r.pr?' · 약 '+won(r.pr):''}${r.nsc?' · 네이버 ★'+r.nsc:''}\n1시에 로비에서 보자 👋`;
   if(navigator.share){ try{ await navigator.share({ title: r.n, text, url }); return; }catch(e){ if(e.name==='AbortError') return; } }
-  try{ await navigator.clipboard.writeText(text + '\n' + url); toast('복사됐어요. 단톡에 붙여넣기 📋'); }catch(e){ prompt('복사하세요', text + '\n' + url); }
+  try{ await navigator.clipboard.writeText(text + '\n' + url); toast('복사됐어요.\n단톡에 붙여넣기 📋'); }catch(e){ prompt('복사하세요', text + '\n' + url); }
 }
 function drawTie(pid){
   const p = STORE.polls[pid]; if(!p) return; const T = tally(pid, p); if(T.winners.length<2) return;
@@ -1512,7 +1513,7 @@ function renderFavs(){ if(typeof renderShared==='function' && SHARED) renderShar
   const box = document.getElementById('favBox'); if(!box) return;
   const ids = Object.keys(FAV.items).filter(id=>BYID[id]);
   document.getElementById('favCnt').textContent = ids.length ? `(${ids.length})` : '';
-  if(!ids.length){ box.innerHTML = `<div class="rempty">가게 카드의 <b>☆</b>나 상세 화면의 <b>☆</b>를 눌러 저장해보세요. 네이버지도처럼 폴더로 나눠 담을 수 있어요 (예: 회식 후보, 혼밥, 비 오는 날).<br>저장은 이 기기에만 되고, 아래 "다른 기기로 옮기기"로 폰↔PC 이동이나 폴더 공유도 돼요.</div><div class="ftools"><button id="fImport">📥 코드로 가져오기</button></div>`; document.getElementById('fImport').onclick = importFavPrompt; return; }
+  if(!ids.length){ box.innerHTML = `<div class="rempty">가게 카드의 <b>☆</b>나 상세 화면의 <b>☆</b>를 눌러 저장해보세요.<br>네이버지도처럼 폴더로 나눠 담을 수 있어요 (예: 회식 후보, 혼밥, 비 오는 날).<br>저장은 이 기기에만 되고, 아래 "다른 기기로 옮기기"로 폰↔PC 이동이나 폴더 공유도 돼요.</div><div class="ftools"><button id="fImport">📥 코드로 가져오기</button></div>`; document.getElementById('fImport').onclick = importFavPrompt; return; }
   if(FAV_TAB!=='all' && !FAV.folders.find(f=>f.id===FAV_TAB)) FAV_TAB='all';
   const cnt = fid => ids.filter(id=>(FAV.items[id]||[]).includes(fid)).length;
   const tabs = `<div class="ftabs"><button class="ftab ${FAV_TAB==='all'?'on':''}" data-t="all">전체<small>${ids.length}</small></button>${FAV.folders.map(f=>`<button class="ftab ${FAV_TAB===f.id?'on':''}" data-t="${f.id}" style="--fc:${FAV_COLOR[f.emoji]||'#ffd23f'}">${f.emoji} ${esc(f.name)}<small>${cnt(f.id)}</small></button>`).join('')}</div>`;
@@ -1530,7 +1531,7 @@ function renderFavs(){ if(typeof renderShared==='function' && SHARED) renderShar
 }
 function openFavManage(){
   const draw = ()=>{
-    document.getElementById('epkb').innerHTML = `<h4>✏️ 폴더 관리</h4><div class="fpick">${FAV.folders.map(f=>`<div class="fpk" style="cursor:default"><span class="fe" style="background:${(FAV_COLOR[f.emoji]||'#ffd23f')}33">${f.emoji}</span><input data-rn="${f.id}" value="${esc(f.name)}" maxlength="16" style="flex:1;background:none;border:none;outline:none;color:var(--tx);font-size:14px;font-weight:700;min-width:0">${f.id==='f0'?'<small style="color:var(--tx3)">기본</small>':`<button class="fx" data-del="${f.id}" style="font-size:12px;color:var(--tx3);padding:6px 8px;border-radius:8px;background:var(--soft)">삭제</button>`}</div>`).join('')}</div><div class="reqnote">이름은 바로 고쳐져요. 폴더를 지워도 가게가 다른 폴더에 있으면 그대로 남아요.</div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn p full" onclick="closeEmoji()">완료</button></div>`;
+    document.getElementById('epkb').innerHTML = `<h4>✏️ 폴더 관리</h4><div class="fpick">${FAV.folders.map(f=>`<div class="fpk" style="cursor:default"><span class="fe" style="background:${(FAV_COLOR[f.emoji]||'#ffd23f')}33">${f.emoji}</span><input data-rn="${f.id}" value="${esc(f.name)}" maxlength="16" style="flex:1;background:none;border:none;outline:none;color:var(--tx);font-size:14px;font-weight:700;min-width:0">${f.id==='f0'?'<small style="color:var(--tx3)">기본</small>':`<button class="fx" data-del="${f.id}" style="font-size:12px;color:var(--tx3);padding:6px 8px;border-radius:8px;background:var(--soft)">삭제</button>`}</div>`).join('')}</div><div class="reqnote">이름은 바로 고쳐져요.<br>폴더를 지워도 가게가 다른 폴더에 있으면 그대로 남아요.</div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn p full" onclick="closeEmoji()">완료</button></div>`;
     document.querySelectorAll('#epkb [data-rn]').forEach(i=>i.onchange=()=>{ const f=FAV.folders.find(x=>x.id===i.dataset.rn); if(f){ f.name=(i.value.trim()||f.name).slice(0,16); saveFav(); } });
     document.querySelectorAll('#epkb [data-del]').forEach(b=>b.onclick=()=>{ const f=FAV.folders.find(x=>x.id===b.dataset.del); if(!f || !confirm(`"${f.name}" 폴더를 지울까요?`)) return; FAV.folders = FAV.folders.filter(x=>x.id!==f.id); for(const k in FAV.items){ FAV.items[k]=FAV.items[k].filter(x=>x!==f.id); if(!FAV.items[k].length) delete FAV.items[k]; } saveFav(); draw(); });
   };
@@ -1543,7 +1544,7 @@ async function shareFavs(){
   const base = location.origin + location.pathname;
   const mapUrl = base + '#fmap=' + FAV.code, copyUrl = base + '#fav=' + FAV.code;
   document.getElementById('epkb').innerHTML = `<h4>📤 내 맛지도 공유</h4>
-    <div class="reqnote">🗺️ <b>맛지도 링크</b>를 보내면 받은 사람이 <b>${esc(ME.nick)}님의 맛지도</b>를 폴더별 목록과 지도로 볼 수 있어요. 링크는 <b>한 번만 보내면</b> 내가 저장·삭제하는 대로 자동으로 업데이트돼요.</div>
+    <div class="reqnote">🗺️ <b>맛지도 링크</b>를 보내면 받은 사람이 <b>${esc(ME.nick)}님의 맛지도</b>를 폴더별 목록과 지도로 볼 수 있어요.<br>링크는 <b>한 번만 보내면</b> 내가 저장·삭제하는 대로 자동으로 업데이트돼요.</div>
     <div class="sharebox"><input readonly value="${mapUrl}" id="fUrl"><button class="btn g" id="fCopy">복사</button></div>
     <div style="display:flex;gap:8px;margin-top:10px"><button class="btn p full" id="fShareGo">🗺️ 맛지도 공유하기</button></div>
     <div class="rqdl" style="margin-top:16px">내 다른 기기(폰↔PC)로 옮기기</div>
@@ -1643,7 +1644,7 @@ function renderMissions(){
   const now = new Date(); const left = new Date(now.getFullYear(), now.getMonth()+1, 1) - now; const dleft = Math.ceil(left/86400e3);
   const nickOf = {}; for(const rid in STORE.comments) for(const k in STORE.comments[rid]){ const c=STORE.comments[rid][k]; if(c&&c.uid) nickOf[c.uid]={n:c.nick,e:c.emoji,ts:c.ts}; } for(const rid in STORE.visits) for(const k in STORE.visits[rid]){ const v=STORE.visits[rid][k]; if(v&&v.uid&&(!nickOf[v.uid]||v.ts>nickOf[v.uid].ts)) nickOf[v.uid]={n:v.nick||'익명',e:v.emoji||'🙂',ts:v.ts}; }
   const board = Object.entries(b).filter(([,a])=>a.length).sort((x,y)=>y[1].length-x[1].length).slice(0,8);
-  const boardHtml = board.length ? `<div class="egrp" style="margin-top:0">🏅 이달의 배지 보드</div><div class="bboard">${board.map(([uid,a])=>`<span class="bu ${uid===ME.uid?'me':''}">${esc(nickOf[uid]?.e||'🙂')} <b>${esc(nickOf[uid]?.n||'익명')}</b> ${a.join('')}</span>`).join('')}</div>` : `<div class="egrp" style="margin-top:0">🏅 이달의 배지 보드</div><div class="rempty" style="padding:0 2px 10px">아직 배지 받은 사람이 없어요. 첫 배지의 주인공이 되어봐요!</div>`;
+  const boardHtml = board.length ? `<div class="egrp" style="margin-top:0">🏅 이달의 배지 보드</div><div class="bboard">${board.map(([uid,a])=>`<span class="bu ${uid===ME.uid?'me':''}">${esc(nickOf[uid]?.e||'🙂')} <b>${esc(nickOf[uid]?.n||'익명')}</b> ${a.join('')}</span>`).join('')}</div>` : `<div class="egrp" style="margin-top:0">🏅 이달의 배지 보드</div><div class="rempty" style="padding:0 2px 10px">아직 배지 받은 사람이 없어요.<br>첫 배지의 주인공이 되어봐요!</div>`;
   const lkBan = `<button class="lkban" onclick="openEmoji();setTimeout(()=>document.getElementById('lkCard')?.scrollIntoView({block:'center'}),100)"><span style="font-size:20px">📱</span><span>${LS.get('gl_pcode')?'<b>기기 연결 코드 있음</b> · 다른 기기에서도 배지 이어가기':'<b>폰이랑 PC 배지 합치기</b> · 가입 없이 연결 코드로'}</span><span class="go">${LS.get('gl_pcode')?'코드 보기 ›':'연결하기 ›'}</span></button>`;
   box.innerHTML = lkBan + boardHtml + `<div class="rempty" style="padding:0 2px 10px">${now.getMonth()+1}월 미션 · ${dleft}일 남음 · 달성하면 닉네임 옆에 배지가 붙어요 ${(b[ME.uid]||[]).length?'· 내 배지 '+b[ME.uid].join(''):''}</div><div class="mis">` + MISSIONS.map(m=>{ const v = Math.min(m.goal, m.f(mine)); const ok = v>=m.goal; return `<div class="mi2 ${ok?'done':''}"><span class="bd">${m.badge}</span><div class="tx"><b>${m.name}</b><small>${m.desc}</small><div class="pb"><i style="width:${Math.round(v/m.goal*100)}%"></i></div></div><span class="pc">${ok?'달성!':v+'/'+m.goal}</span></div>`; }).join('') + '</div>';
   const now2 = (b[ME.uid]||[]).join('');
@@ -1670,7 +1671,7 @@ function renderChat(){
   document.getElementById('chatCnt').innerHTML = CHAT_OPEN ? (CHAT.length?`(${CHAT.length})`:'') : (unread ? `<span class="newdot">새 ${unread}</span>` : (CHAT.length?`(${CHAT.length})`:''));
   if(!CHAT_OPEN) return;
   const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
-  if(!CHAT.length){ box.innerHTML = '<div class="cempty" style="margin:auto">아직 조용해요. 첫 마디를 던져보세요 👋</div>'; return; }
+  if(!CHAT.length){ box.innerHTML = '<div class="cempty" style="margin:auto">아직 조용해요.<br>첫 마디를 던져보세요 👋</div>'; return; }
   let html = '', prevDay = '', prevUid = '', prevTs = 0;
   for(const m of CHAT){
     const d = new Date(m.ts), day = `${d.getMonth()+1}월 ${d.getDate()}일 (${['일','월','화','수','목','금','토'][d.getDay()]})`;
@@ -1725,7 +1726,7 @@ function renderHof(){
   if(minTs!==Infinity){ let d = new Date(new Date(minTs).getFullYear(), new Date(minTs).getMonth(), 1); while(d.getTime() < thisMonth){ const s=d.getTime(), e=new Date(d.getFullYear(), d.getMonth()+1, 1).getTime(); const top = statsIn(s,e).slice(0,5); if(top.length) months.push({ label: `${d.getFullYear()}년 ${d.getMonth()+1}월`, top, total: statsIn(s,e).length }); d = new Date(d.getFullYear(), d.getMonth()+1, 1); } }
   months.reverse();
   document.getElementById('hofCnt').textContent = months.length ? `(${months.length}개월)` : '';
-  if(!months.length){ const nxt = new Date(now.getFullYear(), now.getMonth()+1, 1); el.innerHTML = `<div class="rempty">매달 1일에 지난달 1~5위를 여기 박제해요. 첫 발표는 <b>${nxt.getMonth()+1}월 1일</b>! 이번 달 기록이 그대로 역사가 돼요 🏛️</div>`; return; }
+  if(!months.length){ const nxt = new Date(now.getFullYear(), now.getMonth()+1, 1); el.innerHTML = `<div class="rempty">매달 1일에 지난달 1~5위를 여기 박제해요.<br>첫 발표는 <b>${nxt.getMonth()+1}월 1일</b>! 이번 달 기록이 그대로 역사가 돼요 🏛️</div>`; return; }
   el.innerHTML = '<div class="hof">' + months.map(m=>`<div class="hofm"><h4>${m.label}<span>${m.total}곳 기록</span></h4>${m.top.map((x,i)=>{ const r=BYID[x.id]; return `<div class="hofr ${i===0?'gold':''}" data-id="${x.id}"><span class="m">${medal(i)}</span><span class="ri">${rimg(r)}</span><b>${esc(r.n)}</b><small>${x.score}점</small></div>`; }).join('')}</div>`).join('') + '</div>';
   el.querySelectorAll('.hofr').forEach(e=>e.onclick=()=>openModal(BYID[e.dataset.id]));
 }
@@ -1868,7 +1869,7 @@ function openModal(r){
         <h4>💬 직원 후기 <span id="cCnt"></span></h4>
         <div class="me"><div class="av" id="meAv">${ME.emoji}</div><div class="nk" id="meNick">${esc(ME.nick)}</div><button onclick="openEmoji()">프로필 변경</button></div>
         <div class="cform">
-          <textarea id="cText" maxlength="300" placeholder="먹고 온 후기 남겨주세요. (맛, 대기, 가성비, 꿀조합 등)"></textarea>
+          <textarea id="cText" maxlength="300" placeholder="먹고 온 후기 남겨주세요.&#10;(맛, 대기, 가성비, 꿀조합 등)"></textarea>
           <div class="cformbot"><button class="btn p" id="cSend">후기 올리기</button><span class="cnt"><span id="cLen">0</span>/300</span></div>
         </div>
         <div class="clist" id="clist"><div class="cempty">불러오는 중…</div></div>
@@ -1952,7 +1953,7 @@ async function loadComments(){
   const shown = SHOW_ALL_C ? arr : arr.slice(0,3);
   const CL = STORE.clikes[r.id] || {};
   el.innerHTML = arr.length ? shown.map(c=>{ const lk = CL[c.cid]||{}; const n = Object.keys(lk).length; const mine = !!lk[ME.uid]; return `<div class="ci"><div class="av">${c.emoji||'🙂'}</div><div class="cb"><div class="ch"><b>${esc(c.nick)}</b>${badgeOf(c.uid)}<span>${ago(c.ts)}</span>${c.uid===ME.uid?`<button class="del" data-cid="${c.cid}">삭제</button>`:''}</div><div class="cx">${esc(c.text)}</div><div class="cf"><button class="clike ${mine?'on':''}" data-cid="${c.cid}">👍 <span>${n||'공감'}</span></button></div></div></div>`; }).join('')
-    : '<div class="cempty">아직 후기가 없어요. 첫 번째로 남겨보세요 🙌</div>';
+    : '<div class="cempty">아직 후기가 없어요.<br>첫 번째로 남겨보세요 🙌</div>';
   if(arr.length > 3){
     const tb = document.createElement('button'); tb.className = 'morebtn';
     if(SHOW_ALL_C){ tb.textContent = '후기 접기 ▴'; tb.onclick = ()=>{ SHOW_ALL_C = false; loadComments(); document.getElementById('mCmt').scrollIntoView({block:'start'}); }; }
@@ -1990,7 +1991,7 @@ function openRequest(prefill){
       <input id="rqName" maxlength="40" placeholder="가게 이름 (예: 송가직화제육)" value="${esc(prefill||'')}" autocomplete="off">
       <div class="rqdup" id="rqDup"></div>
       <input id="rqHint" maxlength="80" placeholder="위치 힌트 (선택, 예: 지타워몰 지하 / 디지털로26길)">
-      <div class="reqnote"><b>띄어쓰기나 지점명은 달라도 괜찮아요.</b> 카카오맵에서 반경 500m 안 가게 중 이름이 가장 비슷한 곳을 골라요. 오타도 어느 정도 잡혀요.<br>이름이 흔한 가게(예: 우리집, 감동)는 <b>위치 힌트</b>를 꼭 넣어주세요.<br>매일 아침 9시 20분에 처리되고, 아래 "최근 요청"에서 <b>어떤 가게로 매칭됐는지 주소와 함께</b> 확인할 수 있어요. 틀리면 힌트를 넣어 다시 요청하면 돼요.</div>
+      <div class="reqnote"><b>띄어쓰기나 지점명은 달라도 괜찮아요.</b> 카카오맵에서 반경 500m 안 가게 중 이름이 가장 비슷한 곳을 골라요.<br>오타도 어느 정도 잡혀요.<br>이름이 흔한 가게(예: 우리집, 감동)는 <b>위치 힌트</b>를 꼭 넣어주세요.<br>매일 아침 9시 20분에 처리되고, 아래 "최근 요청"에서 <b>어떤 가게로 매칭됐는지 주소와 함께</b> 확인할 수 있어요.<br>틀리면 힌트를 넣어 다시 요청하면 돼요.</div>
       <div style="display:flex;gap:8px"><button class="btn g full" onclick="closeEmoji()">취소</button><button class="btn p full" id="rqSend">요청 보내기</button></div>
     </div>
     <div class="reqlist" id="reqList"></div>`;
@@ -2012,9 +2013,9 @@ function openRequest(prefill){
     if(name.length<2){ toast('가게 이름을 2글자 이상 입력해주세요'); return; }
     const nn = s=>s.replace(/\s+/g,'').toLowerCase();
     const dup = L.find(r=>nn(r.n).includes(nn(name)) || nn(name).includes(nn(r.n)));
-    if(dup && !confirm(`"${dup.n}"이(가) 이미 리스트에 있어요. 그래도 요청할까요?`)) return;
+    if(dup && !confirm(`"${dup.n}"이(가) 이미 리스트에 있어요.\n그래도 요청할까요?`)) return;
     const already = Object.values(STORE.requests||{}).find(r=>r.status==='pending' && nn(r.name)===nn(name));
-    if(already){ toast('이미 요청된 가게예요. 내일 아침 반영돼요 🙌'); return; }
+    if(already){ toast('이미 요청된 가게예요.\n내일 아침 반영돼요 🙌'); return; }
     const b = document.getElementById('rqSend'); b.disabled=true; b.textContent='보내는 중…';
     const ok = await fbPost('/requests', { name: name.slice(0,40), hint: hint.slice(0,80), ts: Date.now(), uid: ME.uid, nick: ME.nick.slice(0,24), status:'pending' });
     b.disabled=false; b.textContent='요청 보내기';
@@ -2030,7 +2031,7 @@ function renderReqList(){
     if(r.status==='pending') return `요청 ${ago(r.ts)} · 다음 갱신 때 처리`;
     if(r.status==='added') return `→ <b>${esc(r.matched||r.name)}</b>${r.addr?` · ${esc(r.addr)}`:''}${r.dist!=null?` · ${r.dist}m`:''}${r.score?` · 이름 유사도 ${r.score}%`:''}`;
     if(r.status==='far') return `가장 비슷한 곳: <b>${esc(r.matched||'')}</b>${r.addr?` · ${esc(r.addr)}`:''} · ${r.dist}m (500m 밖)`;
-    return '카카오맵에서 비슷한 이름을 못 찾았어요. 정확한 이름이나 위치 힌트를 넣어 다시 요청해주세요.';
+    return '카카오맵에서 비슷한 이름을 못 찾았어요.<br>정확한 이름이나 위치 힌트를 넣어 다시 요청해주세요.';
   };
   el.innerHTML = arr.length ? `<h5>최근 요청</h5>` + arr.map(r=>`<div class="rqi col"><div class="rqi1"><span class="st ${r.status}">${ST[r.status]||r.status}</span><span class="nm">${esc(r.name)}</span>${r.status!=='pending'?`<button class="rqagain" data-n="${esc(r.name)}">다시 요청</button>`:''}</div><div class="rqi2">${line2(r)}</div></div>`).join('') : '';
   el.querySelectorAll('.rqagain').forEach(b=>b.onclick=()=>{ document.getElementById('rqName').value = b.dataset.n; document.getElementById('rqName').dispatchEvent(new Event('input')); document.getElementById('rqHint').focus(); document.getElementById('rqHint').scrollIntoView({block:'center'}); toast('위치 힌트를 넣어서 다시 보내주세요'); });
@@ -2086,7 +2087,7 @@ document.getElementById('kinds').onclick = e=>{
   else if(b.id==='chipBld'){ state.bld=!state.bld; b.classList.toggle('on',state.bld); if(state.bld) toast('비 와도 우산 없이 가는 우리 건물 가게만 ☔'); }
   else if(b.id==='chipFav'){ state.fav=!state.fav; b.classList.toggle('on',state.fav); }
   else if(b.id==='chipCheap'){ state.cheap=!state.cheap; b.classList.toggle('on',state.cheap); }
-  else if(b.id==='chipVirgin'){ state.virgin=!state.virgin; b.classList.toggle('on',state.virgin); if(state.virgin) toast('이번 달 아직 아무도 안 간 밥집만 보여요. 첫 개척자가 되어봐요 🧭'); }
+  else if(b.id==='chipVirgin'){ state.virgin=!state.virgin; b.classList.toggle('on',state.virgin); if(state.virgin) toast('이번 달 아직 아무도 안 간 밥집만 보여요.\n첫 개척자가 되어봐요 🧭'); }
   else { state.kind=b.dataset.k; document.querySelectorAll('.chip[data-k]').forEach(x=>x.classList.toggle('on',x===b)); }
   state.limit=30; render();
 };
