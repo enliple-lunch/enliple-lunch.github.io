@@ -308,6 +308,18 @@ for (const [id, b] of base) {
 }
 console.log(`[3/4] 개별 검색 추가 매칭 ${nvHit} (총 ${Object.keys(naver).length})`);
 
+/* ---------- 3.5 네이버 보강: naver.json ----------
+   link:   { 카카오ID: [네이버ID, 방문리뷰수] }  카카오 가게에 네이버 정보 수동 연결(이름이 달라 자동 매칭 안 되는 곳)
+   places: [ {...} ]                           카카오맵에 없고 네이버지도에만 있는 가게 (id는 'n'+네이버ID) */
+let NVX = { link: {}, places: [] };
+try { NVX = { link: {}, places: [], ...JSON.parse(await fs.readFile(path.join(ROOT, 'naver.json'), 'utf8')) }; } catch (e) { }
+for (const [kid, v] of Object.entries(NVX.link || {})) {
+  const [lnid, lvr] = Array.isArray(v) ? v : [v, 0];
+  const bk = nvBulk.get(String(lnid));
+  naver[kid] = { nid: String(lnid), nvr: bk?.vr || lvr || 0, nbr: bk?.br || 0, nsc: bk?.sc || null, img: bk?.img || '' };
+}
+console.log(`[3.5/4] 네이버 수동 연결 ${Object.keys(NVX.link || {}).length}곳 / 네이버 전용 ${(NVX.places || []).length}곳`);
+
 /* ---------- 4. 기존 데이터 diff + 파일 쓰기 ---------- */
 let prevIds = new Set();
 const prevById = new Map();
@@ -383,6 +395,22 @@ for (const [id, b] of base) {
     nsc: naver[id]?.nsc || prevById.get(id)?.nsc || null
   });
   { const it = list[list.length - 1]; if (isSus(it.nid, d.lb, d.rc)) { it.sus = 1; susCnt++; } if (isHidden(id)) { it.hid = 1; hiddenCnt++; } }
+}
+// 네이버 전용 가게 추가 (카카오 쪽에 같은 네이버ID가 이미 연결돼 있으면 중복이라 생략)
+for (const p of (NVX.places || [])) {
+  if (!p || !p.id || EXCLUDE[p.id]) continue;
+  if (list.some(r => r.nid && String(r.nid) === String(p.nid))) continue;
+  const bk = nvBulk.get(String(p.nid));
+  if (!seen[p.id]) {
+    seen[p.id] = { f: p.fresh ? TODAY : null, l: TODAY, req: 1, src: 'naver' };
+    if (p.fresh) added.push(`${p.n}(${p.c}, ${p.d}m${p.pr ? ', ' + p.pr.toLocaleString('ko-KR') + '원' : ''}, 네이버)`);
+  }
+  seen[p.id].l = TODAY;
+  const fsd = seen[p.id].f;
+  const it = { ...p, nvr: bk?.vr || p.nvr || 0, nbr: bk?.br || p.nbr || 0, nsc: bk?.sc || p.nsc || null, ph: p.ph || bk?.img || '', nw: fsd && daysBetween(fsd, TODAY) <= NEW_DAYS ? 1 : 0, ...(isHS(p.c) ? { hs: 1 } : {}), ...(fsd ? { fs: fsd } : {}) };
+  delete it.fresh;
+  if (isHidden(p.id)) { it.hid = 1; hiddenCnt++; }
+  list.push(it);
 }
 // 이번에 검색에서 빠진 곳: 최근 7일 안에 본 적 있으면 직전 정보로 유지 (검색 흔들림 보정)
 const inList = new Set(list.map(r => r.id));
