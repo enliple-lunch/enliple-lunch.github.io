@@ -984,18 +984,39 @@ const WX_RULES = [
   { id:'hot', test:()=>true, cats:['냉면','국수','회','초밥,롤','샐러드','베트남음식','제과,베이커리','카페','김밥'], line:(w)=>`<b>${w.t}°C</b> 폭염.<br><b>가깝고 시원한 곳</b>만 골랐어.<br>멀리 가지 말자.` }
 ];
 const wxRule = () => WX ? WX_RULES.find(r=>r.test(WX)) : null;
+// 날씨: Open-Meteo가 안 되면(회사망·서버 장애 등) MET Norway로 대체, 둘 다 안 되면 최근 저장값 사용
+const fetchT = (url, ms=6000) => { const ctl = new AbortController(); const tm = setTimeout(()=>ctl.abort(), ms); return fetch(url, {signal: ctl.signal}).then(r=>{ clearTimeout(tm); if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).catch(e=>{ clearTimeout(tm); throw e; }); };
+const MET_CODE = s => { s = String(s||'').replace(/_(day|night|polartwilight)$/,''); const T = { clearsky:0, fair:1, partlycloudy:2, cloudy:3, fog:45, lightrain:61, rain:63, heavyrain:65, lightrainshowers:80, rainshowers:81, heavyrainshowers:82, lightsleet:66, sleet:67, heavysleet:67, lightsleetshowers:66, sleetshowers:67, heavysleetshowers:67, lightsnow:71, snow:73, heavysnow:75, lightsnowshowers:85, snowshowers:85, heavysnowshowers:86 }; if(s.includes('thunder')) return 95; return T[s] ?? 3; };
+async function wxFromMet(){
+  const j = await fetchT(`https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${C.lat.toFixed(4)}&lon=${C.lon.toFixed(4)}`, 8000);
+  const ts = j.properties.timeseries;
+  const kst = t => new Date(new Date(t).getTime() + 9*3600e3);
+  const day0 = kst(Date.now()).toISOString().slice(0,10);
+  const time=[], temp=[], code=[], pop=[];
+  for(const x of ts){ const k = kst(x.time); const ds = k.toISOString().slice(0,10); const di = ds===day0 ? 0 : (new Date(ds) - new Date(day0) === 86400e3 ? 1 : -1); if(di<0) continue; const idx = di*24 + k.getUTCHours(); const n1 = x.data.next_1_hours; if(!n1) continue; time[idx]=x.time; temp[idx]=x.data.instant.details.air_temperature; code[idx]=MET_CODE(n1.summary?.symbol_code); const pp = n1.details?.probability_of_precipitation; const amt = n1.details?.precipitation_amount || 0; pop[idx] = pp!=null ? Math.round(pp) : (amt>=0.1 ? Math.min(95, 60+Math.round(amt*15)) : 0); }
+  const now = ts[0].data.instant.details, n1 = ts[0].data.next_1_hours || ts[0].data.next_6_hours;
+  const today = temp.slice(0,24).filter(v=>v!=null), todayPop = pop.slice(0,24).filter(v=>v!=null);
+  return { current:{ temperature_2m:now.air_temperature, apparent_temperature: now.apparent_air_temperature ?? now.air_temperature, relative_humidity_2m: Math.round(now.relative_humidity), weather_code: MET_CODE(n1?.summary?.symbol_code), wind_speed_10m: now.wind_speed*3.6 },
+           daily:{ temperature_2m_max:[today.length?Math.max(...today):now.air_temperature], temperature_2m_min:[today.length?Math.min(...today):now.air_temperature], precipitation_probability_max:[todayPop.length?Math.max(...todayPop):0] },
+           hourly:{ time, temperature_2m:temp, weather_code:code, precipitation_probability:pop } };
+}
 async function loadWeather(){
-  try{ const c = JSON.parse(LS.get('gl_wx')||'null'); if(c && Date.now()-c.t < 15*60e3 && c.wx){ WX = c.wx; renderWeather(); renderToday(); if(Date.now()-c.t < 5*60e3) return; } }catch(e){}
+  let cached = null;
+  try{ cached = JSON.parse(LS.get('gl_wx')||'null'); if(cached && Date.now()-cached.t < 15*60e3 && cached.wx){ WX = cached.wx; renderWeather(); renderToday(); if(Date.now()-cached.t < 5*60e3) return; } }catch(e){}
   try{
     const u = `https://api.open-meteo.com/v1/forecast?latitude=${C.lat}&longitude=${C.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSeoul&forecast_days=2`;
     const aq = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${C.lat}&longitude=${C.lon}&current=pm10,pm2_5&timezone=Asia%2FSeoul`;
-    const [r1,r2] = await Promise.all([fetch(u).then(r=>r.json()), fetch(aq).then(r=>r.json()).catch(()=>null)]);
+    const [r1,r2] = await Promise.all([ fetchT(u, 6000).catch(()=>wxFromMet()), fetchT(aq, 6000).catch(()=>null) ]);
     const c = r1.current, d = r1.daily, wc = WXC[c.weather_code] || ['–','🌡️','cloud'];
     WX = { t:Math.round(c.temperature_2m), at:Math.round(c.apparent_temperature), hum:c.relative_humidity_2m, wind:Math.round(c.wind_speed_10m), label:wc[0], icon:wc[1], kind:wc[2],
            tmax:Math.round(d.temperature_2m_max[0]), tmin:Math.round(d.temperature_2m_min[0]), pop:d.precipitation_probability_max[0], pm10:r2?.current?.pm10 ?? null, pm25:r2?.current?.pm2_5 ?? null,
-           hours:(function(){ const h=r1.hourly; if(!h) return null; const now=new Date(); const useTomorrow = now.getHours()>=16; const day = useTomorrow ? 1 : 0; const out=[]; for(const hr of [12,13,14,15]){ const idx = day*24+hr; if(h.time[idx]===undefined) continue; out.push({hr, t:Math.round(h.temperature_2m[idx]), code:h.weather_code[idx], pop:h.precipitation_probability[idx] ?? 0}); } return {tomorrow:useTomorrow, list:out}; })() };
+           hours:(function(){ const h=r1.hourly; if(!h) return null; const now=new Date(); const useTomorrow = now.getHours()>=16; const day = useTomorrow ? 1 : 0; const out=[]; for(const hr of [12,13,14,15]){ const idx = day*24+hr; if(h.time[idx]==null || h.temperature_2m[idx]==null) continue; out.push({hr, t:Math.round(h.temperature_2m[idx]), code:h.weather_code[idx], pop:h.precipitation_probability[idx] ?? 0}); } return {tomorrow:useTomorrow, list:out}; })() };
     LS.set('gl_wx', JSON.stringify({ t: Date.now(), wx: WX }));
-  }catch(e){ if(!WX) WX = null; }
+  }catch(e){
+    // 두 곳 다 실패: 12시간 안에 받아둔 값이 있으면 그걸 보여주고, 1분 뒤 다시 시도
+    if(!WX && cached && cached.wx && Date.now()-cached.t < 12*3600e3) WX = cached.wx;
+    setTimeout(loadWeather, 60e3);
+  }
   renderWeather(); renderToday();
 }
 function pmLabel(v, type){ if(v==null) return null; const th = type==='pm25' ? [15,35,75] : [30,80,150]; if(v<=th[0]) return ['좋음','g']; if(v<=th[1]) return ['보통','']; if(v<=th[2]) return ['나쁨','y']; return ['매우나쁨','r']; }
