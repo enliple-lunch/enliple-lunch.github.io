@@ -839,7 +839,7 @@ html.dark .fbrand .fl.dark{display:inline}
     <div class="fb"><div class="feedlist" id="feed"><div class="cempty">아직 후기가 없어요.<br>첫 후기를 남겨보세요 🙌</div></div></div>
   </details>
 
-  <details class="fold" id="foldChat">
+  <details class="fold" id="foldChat" open>
     <summary><span>🗨️ 점심 수다방 <span id="chatCnt" style="color:var(--tx3);font-weight:600;font-size:13px"></span></span></summary>
     <div class="fb">
       <div class="chatbox" id="chatList"><div class="cempty">불러오는 중…</div></div>
@@ -1679,7 +1679,7 @@ function renderMissions(){
 }
 function refreshMe(){ const a=document.getElementById('meEmo'); if(a) a.textContent = ME.emoji; const nh=document.getElementById('meNickH'); if(nh) nh.textContent = ME.nick; const c=document.getElementById('chatMe'); if(c) c.textContent = ME.emoji; }
 /* ======================= 점심 수다방 ======================= */
-let CHAT = [], CHATLK = {}, CHAT_LAST_SEND = 0, CHAT_OPEN = false;
+let CHAT = [], CHATLK = {}, CHAT_LAST_SEND = 0, CHAT_OPEN = !!document.getElementById('foldChat')?.open;
 const CHAT_SEEN = { get(){ return +(LS.get('gl_chat_seen')||0); }, set(t){ LS.set('gl_chat_seen', String(t)); } };
 const CHAT_Q = ['🍚 오늘 뭐 먹어요?','☕ 커피 한 잔 할 사람?','😴 식곤증 온다…','🍻 오늘 회식 어디?','🌧️ 비 오는데 어디 가지','🎉 불금!','🤔 여기 맛있어요?','👍 추천 감사!'];
 async function loadChat(){
